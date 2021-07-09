@@ -5,6 +5,7 @@
 + React
 + TypeScript
 + Next.js
+    + support ssr and csr, code splitting, fast refresh
 + GraphQL
 + Apollo Client
 + Emotion
