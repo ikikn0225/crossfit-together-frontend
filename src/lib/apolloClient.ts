@@ -5,10 +5,9 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
 export const client = new ApolloClient({ 
-    uri: 'http://localhost:3000/graphql', 
+    uri: 'http://localhost:3001/graphql', 
     cache: new InMemoryCache() 
 }); 
-
 // const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
 // // localStorage.clear();
 // export const isLoggedInVar = makeVar(Boolean(token));
