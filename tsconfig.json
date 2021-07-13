@@ -12,8 +12,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "jsxImportSource": "@emotion/react"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "apollo.config.js"],
+  "exclude": ["node_modules"],
+  "types": ["node", "react-emotion"]
 }
