@@ -13,6 +13,10 @@ import nuberLogo from "../images/logo.svg";
 // import { loginMutation, loginMutationVariables } from "../__generated__/loginMutation";
 import { jsx, css } from '@emotion/react'
 import styled from '@emotion/styled'
+import { loginMutation, loginMutationVariables } from "../__generated__/loginMutation";
+import { authTokenVar, isLoggedInVar } from "./api/apolloClient";
+import { Button } from "../components/botton";
+import { FormError } from "../components/form-error";
 
 const DivStyle = styled.div`
     screen:h-screen;
@@ -39,29 +43,29 @@ const Login = () => {
     const { register, getValues, formState: { errors }, handleSubmit, formState } = useForm<ILoginForm>({
         mode:"onChange",
     });
-    // const onCompleted = (data: loginMutation) => {
-    //     const { login:{ error, ok, token }, } = data;
-    //     if(ok && token) {
-    //         localStorage.setItem(LOCALSTORAGE_TOKEN, token);
-            // authTokenVar(token);
-            // isLoggedInVar(true);
-    //     }
-    // }
-    // const [loginMutation, { data:loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
-    //     onCompleted,
-    // });
+    const onCompleted = (data: loginMutation) => {
+        const { login:{ error, ok, token }, } = data;
+        if(ok && token) {
+            localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+            authTokenVar(token);
+            isLoggedInVar(true);
+        }
+    }
+    const [loginMutation, { data:loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
+        onCompleted,
+    });
     const onSubmit = () => {
-        // if(!loading){
-        //     const { email, password } = getValues();
-        //     loginMutation({
-        //         variables: {
-        //             loginInput: {
-        //                 email,
-        //                 password,
-        //             }
-        //         },
-        //     },
-        // )}
+        if(!loading){
+            const { email, password } = getValues();
+            loginMutation({
+                variables: {
+                    loginInput: {
+                        email,
+                        password,
+                    }
+                },
+            },
+        )}
     }; 
     return (
         <DivStyle>
@@ -82,12 +86,12 @@ const Login = () => {
                         placeholder="Email"
                         className="input"
                     />
-                    {/* {errors.email?.message && (  
+                    {errors.email?.message && (  
                         <FormError errorMessage={errors.email?.message} />
                     )}
                     {errors.email?.type === "pattern" && (  
                         <FormError errorMessage={"Please enter a valid email"} />
-                    )} */}
+                    )}
                     <input  
                         {...register("password", {
                             required: "Password is required",
@@ -97,11 +101,13 @@ const Login = () => {
                         placeholder="Password"
                         className="input"
                     />
-                    {/* {errors.password?.message && (
+                    {errors.password?.message && (
                         <FormError errorMessage={errors.password?.message} />
-                    )} */}
-                    {/* <Button canClick={formState.isValid} loading={loading} actionText={"Log in"} />
-                    {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />} */}
+                    )}
+
+                    <Button canClick={formState.isValid} loading={loading} actionText={"Log in"} />
+
+                    {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
                 </form>
                 <div>
                     New to Nuber? <Link href="/create-account" >Create Account</Link>

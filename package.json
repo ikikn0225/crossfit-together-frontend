@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run apollo:codegen & next dev -p 3001",
+    "apollo:codegen": "rimraf src/__generated__ && npx apollo client:codegen src/__generated__ --target=typescript --outputFlat",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -15,6 +16,9 @@
     "@apollo/react-hooks": "^4.0.0",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "apollo-boost": "^0.4.9",
     "apollo-client": "^2.6.10",
     "apollo-codegen-typescript": "^0.40.3",
@@ -31,6 +35,7 @@
     "lodash": "^4.17.21",
     "next": "^11.0.1",
     "next-cookies": "^2.0.3",
+    "next-images": "^1.8.1",
     "next-with-apollo": "^5.2.1",
     "react": "^17.0.2",
     "react-apollo": "^3.1.5",

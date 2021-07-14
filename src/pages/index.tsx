@@ -1,40 +1,46 @@
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider, useReactiveVar } from '@apollo/client'
 import { GetServerSideProps } from 'next'
-import { client } from './api/apolloClient'
-import { LoggedOutRouter } from '../routers/logged-out-router'
+import { client, isLoggedInVar } from './api/apolloClient'
 import styled from '@emotion/styled'
 import { css, Global, keyframes, jsx } from '@emotion/react'
+import Image from "next/image";
+import logo from "../images/ikikn.jpg"
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/dist/client/router'
+import Login from './login'
 
 const bodyFillColor = `black`;
 
 const Container = styled.div`
-  position: relative;
-  width: 100vw;
-  height: 100vh; 
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh; 
+`
+const fadeout = keyframes`
+from { opacity: 1; }
+to { opacity: 0; }
+`
+const DivAnime = styled.div`
+  animation: ${fadeout} 5s; 
+  animation-fill-mode: forwards;
 `
 
-const DivStyle = styled.div`
-  display: inline-block;
-  // font-size: 24px;
-  color:white;
-  border-radius: 4px;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: -25px 0 0 -25px;
-  // &:hover {
-  //   color: white;
-  // }
-`
-
-const Home = () => { 
-  return ( 
-    <ApolloProvider client={client}>
-      <Container>
-        <DivStyle>
-          여기에 이미지
-        </DivStyle>
+const Home = () => {
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const router = useRouter();
+  useEffect(() => {
+    setTimeout(() => {
+      if(!isLoggedIn) {
+        router.push('/login');
+      }
+    }, 4000);
+  })
+  return (
+    <>
+        <DivAnime>
+          <Image src={logo} />
+        </DivAnime>
 
       <Global
       styles={css`
@@ -58,8 +64,7 @@ const Home = () => {
             },
           }}
         />
-        </Container>
-    </ApolloProvider>
+    </>
   ) 
 }
 
