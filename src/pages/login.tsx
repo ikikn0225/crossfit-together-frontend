@@ -52,7 +52,11 @@ interface ILoginForm {
     password: string;
 }
 
+<<<<<<< HEAD
 export const Login = () => {
+=======
+const Login = () => {
+>>>>>>> 8e111242616cba49ca9e864e5e451ddadb972a39
     const { register, getValues, formState: { errors }, handleSubmit, formState } = useForm<ILoginForm>({
         mode:"onChange",
     });
@@ -81,6 +85,7 @@ export const Login = () => {
         )}
     }; 
     return (
+<<<<<<< HEAD
         <BigContainer>
             <Helmet>
                 <title>Login | CrossfiTogether</title>
@@ -88,6 +93,16 @@ export const Login = () => {
             <SmallContainer>
                 <img src="../../public/images/ikikn.jpg" />
                 <FormStyle>
+=======
+        <DivStyle>
+            <Head>
+                <title>Login | Nuber Eats</title>
+            </Head>
+            <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
+                {/* <img src={nuberLogo} className="w-52 mb-10" /> */}
+                <h4 className="w-full font-medium text-left text-3xl mb-5">Welcome back!</h4>
+                <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3 mt-5 mb-5 w-full">
+>>>>>>> 8e111242616cba49ca9e864e5e451ddadb972a39
                     <input 
                         {...register("email", {
                             required: "Email is required",
@@ -116,6 +131,7 @@ export const Login = () => {
                     {errors.password?.message && (
                         <FormError errorMessage={errors.password?.message} />
                     )}
+<<<<<<< HEAD
                     <Button canClick={formState.isValid} loading={loading} actionText={"Log in"} />
                     {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
                 </FormStyle>
@@ -126,3 +142,19 @@ export const Login = () => {
         </BigContainer>
     );
 };
+=======
+
+                    <Button canClick={formState.isValid} loading={loading} actionText={"Log in"} />
+
+                    {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
+                </form>
+                <div>
+                    New to Nuber? <Link href="/create-account" >Create Account</Link>
+                </div>
+            </div>
+        </DivStyle>
+    );
+};
+
+export default Login
+>>>>>>> 8e111242616cba49ca9e864e5e451ddadb972a39
