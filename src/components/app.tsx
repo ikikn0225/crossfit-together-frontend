@@ -1,10 +1,14 @@
-import { css, Global, keyframes, jsx } from '@emotion/react';
 import React, { useEffect } from 'react';
 import { LoggedOutRouter } from '../router/logged-out-router';
-import styled from '@emotion/styled'
 import { isLoggedInVar } from '../apollo';
 import { useReactiveVar } from '@apollo/client';
-import { LoggedInRouter } from '../router/logged-in-router';
+import Footer from './footer';
+import { LoggedInRouter } from '@/router/logged-in-router';
+import { useDarkMode } from '@/hooks/useDarkMode';
+import { dark, light, fontSizes, fontWeights } from "@/theme/theme";
+import styled, { ThemeProvider } from 'styled-components';
+import Toggle from './dark-mode-toggle';
+
 
 // const fade = keyframes`
 //   0%,100% { opacity: 0 }
@@ -25,8 +29,23 @@ import { LoggedInRouter } from '../router/logged-in-router';
 
 export const App = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const [themeMode, toggleTheme] = useDarkMode();
+  const theme =
+    themeMode === "light"
+      ? { mode: light, fontSizes, fontWeights }
+      : { mode: dark, fontSizes, fontWeights };
 
-  return isLoggedIn ? <LoggedInRouter/> : <LoggedOutRouter/>;
+  return (
+    <>
+      <ThemeProvider theme={theme}>
+      <Toggle themeMode={themeMode} toggleTheme={toggleTheme} />
+        <CommonStyle>
+          {isLoggedIn ? <LoggedInRouter /> : <LoggedOutRouter/> }
+          <Footer/>
+        </CommonStyle>
+      </ThemeProvider>
+    </>
+  )
 
     // return (
     //   <>
@@ -45,3 +64,8 @@ export const App = () => {
     //     </>
     // );
 }
+
+const CommonStyle = styled.div`
+  background-color: ${({ theme }) => theme.mode.mainBackground};
+  color: ${({ theme }) => theme.mode.primaryText};
+`;

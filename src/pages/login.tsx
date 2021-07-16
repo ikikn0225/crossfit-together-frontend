@@ -8,9 +8,9 @@ import { useForm, useFormState } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
-// import logo_white from "../../public/images/logo_white.jpg";
+// import {logo_white} from "../../public/images/logo_white.jpg";
 import { loginMutation, loginMutationVariables } from "../__generated__/loginMutation";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 const BigContainer = styled.div`
     height: 100vh;
@@ -57,6 +57,8 @@ export const Login = () => {
         mode:"onChange",
     });
     const onCompleted = (data: loginMutation) => {
+        console.log(data);
+        
         const { login:{ error, ok, token }, } = data;
         if(ok && token) {
             localStorage.setItem(LOCALSTORAGE_TOKEN, token);
@@ -70,6 +72,8 @@ export const Login = () => {
     const onSubmit = () => {
         if(!loading){
             const { email, password } = getValues();
+            console.log(email, password);
+            
             loginMutation({
                 variables: {
                     loginInput: {
@@ -87,7 +91,7 @@ export const Login = () => {
             </Helmet>
             <SmallContainer>
                 <img src="../../public/images/ikikn.jpg" />
-                <FormStyle>
+                <FormStyle  onSubmit={handleSubmit(onSubmit)}>
                     <input 
                         {...register("email", {
                             required: "Email is required",
