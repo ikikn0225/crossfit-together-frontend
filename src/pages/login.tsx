@@ -90,7 +90,7 @@ export const Login = () => {
                 <title>Login | CrossfiTogether</title>
             </Helmet>
             <SmallContainer>
-                <img src="../../public/images/ikikn.jpg" />
+                <img src="../../public/images/logol_black_font_white_bg_fake.jpg" />
                 <FormStyle  onSubmit={handleSubmit(onSubmit)}>
                     <input 
                         {...register("email", {
@@ -120,11 +120,11 @@ export const Login = () => {
                     {errors.password?.message && (
                         <FormError errorMessage={errors.password?.message} />
                     )}
-                    <Button canClick={formState.isValid} loading={loading} actionText={"Log in"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"Log in"}></Button>
                     {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
                 </FormStyle>
                 <div>
-                    New to Nuber? <Link to="/create-account" className=" text-green-600 hover:underline" >Create Account</Link>
+                    New to CrossfiTogether? <Link to="/create-account" className=" text-green-600 hover:underline" >Create Account</Link>
                 </div>
             </SmallContainer>
         </BigContainer>

@@ -8,6 +8,7 @@ import { useDarkMode } from '@/hooks/useDarkMode';
 import { dark, light, fontSizes, fontWeights } from "@/theme/theme";
 import styled, { ThemeProvider } from 'styled-components';
 import Toggle from './dark-mode-toggle';
+import GlobalStyle from '@/theme/global-styles';
 
 
 // const fade = keyframes`
@@ -38,9 +39,10 @@ export const App = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-      <Toggle themeMode={themeMode} toggleTheme={toggleTheme} />
+        <GlobalStyle />
+        <Toggle themeMode={themeMode} toggleTheme={toggleTheme} />
         <CommonStyle>
-          {isLoggedIn ? <LoggedInRouter /> : <LoggedOutRouter/> }
+          {isLoggedIn ? <LoggedInRouter /> : <LoggedOutRouter /> }
           <Footer/>
         </CommonStyle>
       </ThemeProvider>

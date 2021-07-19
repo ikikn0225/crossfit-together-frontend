@@ -1,6 +1,7 @@
 const path = require('path');
 var webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const cleanWebpackPlugin = require('clean-webpack-plugin');
 
 const prod = process.env.NODE_ENV === 'production';
 
@@ -21,6 +22,7 @@ module.exports = {
         rules: [
         {
             test: /\.tsx?$/,
+            exclude: /(node_modules)/,
             use: ['babel-loader', 'ts-loader'],
         },
         { 
@@ -40,6 +42,7 @@ module.exports = {
     },
 
     plugins: [
+        new CleanWebpackPlugin(),
         new webpack.ProvidePlugin({
             React: 'react',
         }),
@@ -52,6 +55,7 @@ module.exports = {
     devServer: {
         historyApiFallback: true,
         inline: true,
+        overlay: true,
         port: 3000,
         hot: true,
         publicPath: '/',

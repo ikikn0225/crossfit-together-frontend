@@ -1,3 +1,4 @@
+import { LOCALSTORAGE_TOKEN } from "@/constants";
 import { useMe } from "@/hooks/useMe"
 import styled from "styled-components";
 
@@ -11,12 +12,20 @@ const NotVerify = styled.div`
 
 
 export const Header:React.FC = () => {
-    const { data } = useMe();
-    console.log(data);
+    const { client, data } = useMe();
+    const logOutClick = () => {
+
+        client.cache.reset().then(() => {
+            localStorage.setItem(LOCALSTORAGE_TOKEN, '');
+            location.reload();
+        })
+    }
     
     return (
         <>
-            {!data?.me.verified && (
+            {data?.me.verified 
+            ? <button onClick={logOutClick}>Logout</button>
+            :(
                 <NotVerify>
                     <span>Please verify your email.</span>
                 </NotVerify>

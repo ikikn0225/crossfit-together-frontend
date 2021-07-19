@@ -1,8 +1,11 @@
 import { Header } from "@/components/header";
 import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import { useMe } from "../hooks/useMe";
 import styled from 'styled-components';
+import { useApolloClient } from "@apollo/client";
+import { LOCALSTORAGE_TOKEN } from "@/constants";
+import { NotFound } from "@/pages/404";
 
 const LoadingStyle = styled.div`
     height: 100vh;
@@ -19,7 +22,14 @@ const LoadingSpanStyle = styled.span`
 `;
 
 export const LoggedInRouter = () => {
-    const { data, loading, error } = useMe();
+    const { client, data, loading, error } = useMe();
+    const logOutClick = () => {
+
+        client.cache.reset().then(() => {
+            localStorage.setItem(LOCALSTORAGE_TOKEN, '');
+            location.reload();
+        })
+    }
     if (!data || loading || error) {
         return (
             <LoadingStyle>
@@ -30,7 +40,12 @@ export const LoggedInRouter = () => {
     return (
         <Router>
             <Header />
-            <h1>{data.me.email}</h1>
+            <Switch>
+                <h1>{data.me.email}</h1>
+                <Route>
+                    <NotFound />
+                </Route>
+            </Switch>
         </Router>
     );
 }
