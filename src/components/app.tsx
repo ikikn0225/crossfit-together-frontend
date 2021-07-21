@@ -42,7 +42,7 @@ export const App = () => {
         <GlobalStyle />
         <Toggle themeMode={themeMode} toggleTheme={toggleTheme} />
         <CommonStyle>
-          {isLoggedIn ? <LoggedInRouter /> : <LoggedOutRouter /> }
+          {isLoggedIn ? <LoggedInRouter /> : <LoggedOutRouter themeMode={themeMode} /> }
           <Footer/>
         </CommonStyle>
       </ThemeProvider>

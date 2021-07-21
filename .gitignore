@@ -16,7 +16,10 @@ node_modules/
 # production
 /build
 
-.babel.config.js
+.babelrc
+.package-lock.json
+.package.json
+
 
 # misc
 .DS_Store

@@ -14,17 +14,22 @@ import styled from "styled-components";
 
 const BigContainer = styled.div`
     height: 100vh;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    position:relative;
+    // display: flex;
+    // align-items: center;
+    // flex-direction: column;
 `
 
 const SmallContainer = styled.div`
     width: 100%;
     max-width: 640px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    // display: flex;
+    // align-items: center;
+    // flex-direction: column;
 `
 const ImgStyle = styled.img`
     width: 13rem;
@@ -52,7 +57,11 @@ interface ILoginForm {
     password: string;
 }
 
-export const Login = () => {
+interface ILoginTheme {
+    themeMode: string;
+}
+
+export const Login = ({themeMode}:ILoginTheme) => {
     const { register, getValues, formState: { errors }, handleSubmit, formState } = useForm<ILoginForm>({
         mode:"onChange",
     });
@@ -90,7 +99,10 @@ export const Login = () => {
                 <title>Login | CrossfiTogether</title>
             </Helmet>
             <SmallContainer>
-                <img src="../../public/images/logol_black_font_white_bg_fake.jpg" />
+                {themeMode === "light" 
+                ? <img src="../../public/images/logo_white.jpg" />
+                : <img src="../../public/images/logo_black.jpg" />
+                }
                 <FormStyle  onSubmit={handleSubmit(onSubmit)}>
                     <input 
                         {...register("email", {

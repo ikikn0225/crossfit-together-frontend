@@ -4,7 +4,11 @@ import { Login } from "../pages/login";
 import { CreateAccount } from "../pages/create-account";
 import { NotFound } from "../pages/404";
 
-export const LoggedOutRouter = () => {
+interface ILoggedOutRouterTheme {
+    themeMode: string;
+}
+
+export const LoggedOutRouter = ({themeMode}:ILoggedOutRouterTheme) => {
 
     return( 
         <Router>
@@ -13,7 +17,7 @@ export const LoggedOutRouter = () => {
                     <CreateAccount />
                 </Route>
                 <Route path="/" exact>
-                    <Login />
+                    <Login themeMode={themeMode}/>
                 </Route>
                 <Route>
                     <NotFound />

@@ -1,5 +1,5 @@
 const dark = {
-    mainBackground: "#292B2E",
+    mainBackground: "#000",
     primaryText: "#fff",
     secondaryText: "rgba(255,255,255,0.45)",
     disable: "rgba(255,255,255,0.25)",
