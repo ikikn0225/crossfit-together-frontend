@@ -1,3 +1,21 @@
+const size = {
+    mobile: "770px",
+    tabletS:"1023px",
+    tabletM:"1220px",
+    tabletL:"1280px",
+    laptop: "1460px",
+    desktop:"1700px",
+}
+
+const reactiveTheme = {
+    mobile: `(min-width:${size.mobile})`,
+    tabletS:`(min-width:${size.tabletS})`,
+    tabletM:`(min-width:${size.tabletM})`,
+    tabletL:`(min-width:${size.tabletL})`,
+    laptop:`(min-width:${size.laptop})`,
+    desktop:`(min-width:${size.desktop})`,
+}
+
 const dark = {
     mainBackground: "#000",
     primaryText: "#fff",
@@ -49,4 +67,4 @@ const fontWeights = {
     regular: 400,
 };
 
-export { dark, light, fontSizes, fontWeights };
+export { dark, light, fontSizes, fontWeights, reactiveTheme };
