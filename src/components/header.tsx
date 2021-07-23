@@ -23,13 +23,14 @@ export const Header:React.FC = () => {
     
     return (
         <>
-            {data?.me.verified 
-            ? <button onClick={logOutClick}>Logout</button>
-            :(
-                <NotVerify>
-                    <span>Please verify your email.</span>
-                </NotVerify>
-            )}
+            {data?.me.verified &&
+                (
+                    <NotVerify>
+                        <span>Please verify your email.</span>
+                    </NotVerify>
+                )
+            }
+            <button onClick={logOutClick}>Logout</button>
         </>
     )
 }

@@ -32,5 +32,13 @@ declare module "styled-components" {
             semiBold: number;
             regular: number;
         };
+        reactiveTheme?: {
+            mobile:string;
+            tabletS:string;
+            tabletM:string;
+            tabletL:string;
+            laptop:string;
+            desktop:string;
+        };
     }
 }

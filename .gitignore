@@ -16,10 +16,6 @@ node_modules/
 # production
 /build
 
-.babelrc
-.package-lock.json
-.package.json
-
 
 # misc
 .DS_Store

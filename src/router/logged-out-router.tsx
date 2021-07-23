@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import { Login } from "../pages/login";
 import { CreateAccount } from "../pages/create-account";
 import { NotFound } from "../pages/404";
+import styled from "styled-components";
 
 interface ILoggedOutRouterTheme {
     themeMode: string;

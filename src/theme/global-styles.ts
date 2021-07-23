@@ -8,15 +8,8 @@ ${reset}
     body {
         margin:0;
         padding:0;
+        min-width:300px;
     }
-
-    // button {
-    //     background: none;
-    //     cursor: pointer;
-    //     border: none;
-    //     outline: none;
-    //     transition: all 0.5s ease-in-out;
-    // }
 
     img {
         width: 100%;

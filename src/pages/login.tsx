@@ -12,35 +12,52 @@ import { FormError } from "../components/form-error";
 import { loginMutation, loginMutationVariables } from "../__generated__/loginMutation";
 import styled from "styled-components";
 
-const BigContainer = styled.div`
+export const BigContainer = styled.div`
     height: 100vh;
     position:relative;
-    // display: flex;
-    // align-items: center;
-    // flex-direction: column;
+    min-width:300px;
 `
 
-const SmallContainer = styled.div`
+export const SmallContainer = styled.div`
     width: 100%;
-    max-width: 640px;
+    max-width: 500px;
+    padding: 0 30px;
     position:absolute;
     top:50%;
     left:50%;
     transform:translate(-50%, -50%);
-    // display: flex;
-    // align-items: center;
-    // flex-direction: column;
 `
 const ImgStyle = styled.img`
     width: 13rem;
     margin: 2.5rem;
 `
 
-const FormStyle = styled.form`
+export const FormStyle = styled.form`
     display:grid;
     width: 100%;
-    gap: 0.75rem;
+    gap: 1rem;
 `
+
+export const InputStyle = styled.input`
+    width:100%;
+    height: 2.25rem;
+    border-width: thin;
+    border-style: solid;
+    border-color: ${(props) => props.theme.mode.border}
+    border-radius: 2px;
+`;
+
+const GuideToExtra = styled.div`
+    margin-top: 1rem;
+    display:grid;
+    width: 100%;
+    gap: 1rem;
+`;
+
+const LinkCreateAccount = styled(Link)`
+    float:right;
+    color:${({ theme }) => theme.mode.primaryText};
+`;
 
 export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
@@ -66,8 +83,6 @@ export const Login = ({themeMode}:ILoginTheme) => {
         mode:"onChange",
     });
     const onCompleted = (data: loginMutation) => {
-        console.log(data);
-        
         const { login:{ error, ok, token }, } = data;
         if(ok && token) {
             localStorage.setItem(LOCALSTORAGE_TOKEN, token);
@@ -81,8 +96,6 @@ export const Login = ({themeMode}:ILoginTheme) => {
     const onSubmit = () => {
         if(!loading){
             const { email, password } = getValues();
-            console.log(email, password);
-            
             loginMutation({
                 variables: {
                     loginInput: {
@@ -100,11 +113,11 @@ export const Login = ({themeMode}:ILoginTheme) => {
             </Helmet>
             <SmallContainer>
                 {themeMode === "light" 
-                ? <img src="../../public/images/logo_white.jpg" />
-                : <img src="../../public/images/logo_black.jpg" />
+                    ? <img src="../../public/images/logo_white_fake.jpg" />
+                    : <img src="../../public/images/logo_black_fake.jpg" />
                 }
                 <FormStyle  onSubmit={handleSubmit(onSubmit)}>
-                    <input 
+                    <InputStyle 
                         {...register("email", {
                             required: "Email is required",
                             pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -120,7 +133,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     {errors.email?.type === "pattern" && (  
                         <FormError errorMessage={"Please enter a valid email"} />
                     )}
-                    <input  
+                    <InputStyle  
                         {...register("password", {
                             required: "Password is required",
                         })}
@@ -135,9 +148,11 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     <Button canClick={formState.isValid} loading={loading} actionText={"Log in"}></Button>
                     {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
                 </FormStyle>
-                <div>
-                    New to CrossfiTogether? <Link to="/create-account" className=" text-green-600 hover:underline" >Create Account</Link>
-                </div>
+                <GuideToExtra>
+                    <div>
+                        New to CrossfiTogether? <LinkCreateAccount to="/create-account" >Create Account</LinkCreateAccount>
+                    </div>
+                </GuideToExtra>
             </SmallContainer>
         </BigContainer>
     );
