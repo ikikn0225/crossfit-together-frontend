@@ -27,7 +27,7 @@ export const SmallContainer = styled.div`
     left:50%;
     transform:translate(-50%, -50%);
 `
-const ImgStyle = styled.img`
+export const ImgStyle = styled.img`
     width: 13rem;
     margin: 2.5rem;
 `
@@ -47,14 +47,14 @@ export const InputStyle = styled.input`
     border-radius: 2px;
 `;
 
-const GuideToExtra = styled.div`
+export const GuideToExtra = styled.div`
     margin-top: 1rem;
     display:grid;
     width: 100%;
     gap: 1rem;
 `;
 
-const LinkCreateAccount = styled(Link)`
+export const LinkCreateAccount = styled(Link)`
     float:right;
     color:${({ theme }) => theme.mode.primaryText};
 `;
