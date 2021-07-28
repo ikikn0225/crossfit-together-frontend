@@ -15,7 +15,7 @@ export const LoggedOutRouter = ({themeMode}:ILoggedOutRouterTheme) => {
         <Router>
             <Switch>
                 <Route path="/create-account">
-                    <CreateAccount />
+                    <CreateAccount themeMode={themeMode} />
                 </Route>
                 <Route path="/" exact>
                     <Login themeMode={themeMode}/>
