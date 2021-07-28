@@ -72,7 +72,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     return (
         <BigContainer>
             <Helmet>
-                <title>Create Account | Nuber Eats</title>
+                <title>Create Account | CrossfiTogether</title>
             </Helmet>
             <SmallContainer>
                 {themeMode === "light" 
