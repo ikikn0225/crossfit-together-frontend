@@ -113,8 +113,8 @@ export const Login = ({themeMode}:ILoginTheme) => {
             </Helmet>
             <SmallContainer>
                 {themeMode === "light" 
-                    ? <img src="../../public/images/logo_white_fake.jpg" />
-                    : <img src="../../public/images/logo_black_fake.jpg" />
+                    ? <img src="../../public/images/logo_white.jpg" />
+                    : <img src="../../public/images/logo_black.jpg" />
                 }
                 <FormStyle  onSubmit={handleSubmit(onSubmit)}>
                     <InputStyle 

@@ -1,10 +1,30 @@
 import { Button } from "@/components/button";
+import { FormError } from "@/components/form-error";
+import { createAccountMutation, createAccountMutationVariables } from "@/__generated__/createAccountMutation";
+import { AffiliatedBoxList } from "@/__generated__/globalTypes";
 import { UserRole } from "@/__generated__/globalTypes";
+import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { BigContainer, FormStyle, InputStyle, SmallContainer } from "./login";
+
+const FileInputStyle = styled(InputStyle)`
+    height:auto;
+`;
+
+const SelectStyle = styled.select`
+    width:100%;
+    height: 2.25rem;
+    border-width: thin;
+    border-style: solid;
+    border-color: ${(props) => props.theme.mode.border}
+    border-radius: 2px;
+`;
 
 export const CREATE_ACCOUNT_MUTATION = gql`
     mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
@@ -16,71 +36,145 @@ export const CREATE_ACCOUNT_MUTATION = gql`
 `;
 
 interface ICreateAccountForm {
+    name: string;
     email: string;
     password: string;
     role: UserRole;
+    file: FileList;
+    myBox:  AffiliatedBoxList;
 }
 
-export const CreateAccount = () => {
+interface ILoginTheme {
+    themeMode: string;
+}
+
+export const CreateAccount = ({themeMode}:ILoginTheme) => {
     const { register, getValues, watch, formState: { errors }, handleSubmit, formState } = useForm<ICreateAccountForm>({
         mode:"onChange",
         defaultValues: {
-            role: UserRole.Client,
+            role: UserRole.Crossfiter,
         }
     });
+    const [imageUrl, setImageUrl] = useState("");
     const history = useHistory();
-    return (<div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
-                <Helmet>
-                    <title>Create Account | Nuber Eats</title>
-                </Helmet>
-                <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-                    <img src={nuberLogo} className="w-52 mb-10" />
-                    <h4 className="w-full font-medium text-left text-3xl mb-5">Let's get started</h4>
-                    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3 mt-5 mb-5 w-full">
-                        <input 
-                            {...register("email", {
-                                required: "Email is required",
-                                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                            })}
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            className="input"
-                        />
-                        {errors.email?.message && (  
-                            <FormError errorMessage={errors.email?.message} />
-                        )}
-                        {errors.email?.type === "pattern" && (  
-                            <FormError errorMessage={"Please enter a valid email"} />
-                        )}
-                        <input  
-                            {...register("password", {
-                                required: "Password is required",
-                            })}
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                            className="input"
-                        />
-                        {errors.password?.message && (
-                            <FormError errorMessage={errors.password?.message} />
-                        )}
-                        {errors.password?.type === "minLength" && (
-                            <FormError errorMessage="Password must be more than 10 chars" />
-                        )}
-                        <select {...register("role", {
-                                required: true,
-                            })}
-                            name="role"
-                            className="input">
-                            {Object.keys(UserRole).map((role, index) => (<option key={index}>{role}</option>))}
-                        </select>
-                        <Button canClick={formState.isValid} loading={loading} actionText={"Create Account"} />
-                        {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
-                    </form>
-                    <div>
-                        Alreay have an account? <Link to="/" className=" text-green-600 hover:underline" > Log in now</Link>
-                    </div>
+    const onCompleted = (data: createAccountMutation) => {
+        // const { createAccountMutation: {  } } = data;
+    }
+    const [createAccountMutation, { loading, data:createAccountMutationResult }] = useMutation<createAccountMutation, createAccountMutationVariables>(CREATE_ACCOUNT_MUTATION, {
+        onCompleted,   
+    });
+    const onSubmit = async() => {
+        if(!loading) {
+            try {
+                const { name, email, password, role, file, myBox } = getValues();
+                const actualFile = file[0];
+                const formBody = new FormData();
+                formBody.append("file", actualFile);
+                const { url: profileImg } = await (
+                    await fetch("http://localhost:4000/uploads/", {
+                        method:"POST",
+                        body:formBody,
+                    })
+                ).json();
+                setImageUrl(profileImg);
+                createAccountMutation({
+                    variables: {
+                        createAccountInput: {
+                            name,
+                            profileImg,
+                            email,
+                            password,
+                            role,
+                            myBox
+                        }
+                    }
+                })
+            } catch (e) {
+                console.log(e.response.data);
+            }
+        }
+    }
+    return (
+        <BigContainer>
+            <Helmet>
+                <title>Create Account | CrossfiTogether</title>
+            </Helmet>
+            <SmallContainer>
+                {themeMode === "light" 
+                    ? <img src="../../public/images/logo_white.jpg" />
+                    : <img src="../../public/images/logo_black.jpg" />
+                }
+                <FormStyle  onSubmit={handleSubmit(onSubmit)}>
+                    <InputStyle 
+                        {...register("name", {
+                            required: "Name is required",
+                        })}
+                        name="name"
+                        placeholder="Name"
+                        className="input"
+                    />
+                    {errors.name?.message && (  
+                        <FormError errorMessage={errors.name?.message} />
+                    )}
+                    <InputStyle
+                        {...register("email", {
+                            required: "Email is required",
+                            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        })}
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        className="input"
+                    />
+                    {errors.email?.message && (  
+                        <FormError errorMessage={errors.email?.message} />
+                    )}
+                    {errors.email?.type === "pattern" && (  
+                        <FormError errorMessage={"Please enter a valid email"} />
+                    )}
+                    <InputStyle  
+                        {...register("password", {
+                            required: "Password is required",
+                        })}
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        className="input"
+                    />
+                    {errors.password?.message && (
+                        <FormError errorMessage={errors.password?.message} />
+                    )}
+                    {errors.password?.type === "minLength" && (
+                        <FormError errorMessage="Password must be more than 10 chars" />
+                    )}
+                    <SelectStyle {...register("role", {
+                            required: true,
+                        })}
+                        name="role"
+                        className="input">
+                        {Object.keys(UserRole).map((role, index) => (<option key={index}>{role}</option>))}
+                    </SelectStyle>
+                    <SelectStyle {...register("myBox", {
+                            required: true,
+                        })}
+                        name="myBox"
+                        className="input">
+                        {Object.keys(AffiliatedBoxList).map((box, index) => (<option key={index}>{box}</option>))}
+                    </SelectStyle>
+                    <FileInputStyle 
+                        {...register("file", {
+                            required: "file is required",
+                        })}
+                        type="file"
+                        accept="image/*"
+                    />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"Create Account"} />
+                    {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
+                </FormStyle>
+                <div>
+                    Alreay have an account? <Link to="/" className=" text-green-600 hover:underline" > Log in now</Link>
                 </div>
-            </div>)
+            </SmallContainer>
+        </BigContainer>
+    )
 };

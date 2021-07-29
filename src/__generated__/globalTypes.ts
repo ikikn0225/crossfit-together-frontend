@@ -22,6 +22,7 @@ export enum UserRole {
 
 export interface CreateAccountInput {
   name: string;
+  profileImg?: string | null;
   email: string;
   password: string;
   role: UserRole;
