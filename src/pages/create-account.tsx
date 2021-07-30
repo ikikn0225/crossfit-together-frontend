@@ -56,42 +56,52 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
         }
     });
     const [imageUrl, setImageUrl] = useState("");
+    const [uploading, setUploading] = useState(false);
     const history = useHistory();
     const onCompleted = (data: createAccountMutation) => {
-        // const { createAccountMutation: {  } } = data;
+        const { createAccount: { ok, error } } = data;
+        console.log(data);
+        if(ok) {
+            setUploading(false);
+            alert("Account Created! Please Log in now!");
+            history.push("/");
+        }
     }
     const [createAccountMutation, { loading, data:createAccountMutationResult }] = useMutation<createAccountMutation, createAccountMutationVariables>(CREATE_ACCOUNT_MUTATION, {
         onCompleted,   
     });
     const onSubmit = async() => {
-        if(!loading) {
-            try {
-                const { name, email, password, role, file, myBox } = getValues();
-                const actualFile = file[0];
-                const formBody = new FormData();
-                formBody.append("file", actualFile);
-                const { url: profileImg } = await (
-                    await fetch("http://localhost:4000/uploads/", {
-                        method:"POST",
-                        body:formBody,
-                    })
-                ).json();
-                setImageUrl(profileImg);
-                createAccountMutation({
-                    variables: {
-                        createAccountInput: {
-                            name,
-                            profileImg,
-                            email,
-                            password,
-                            role,
-                            myBox
-                        }
-                    }
+        // setUploading(true);
+        try {
+            const { name, email, password, role, file, myBox } = getValues();
+            
+            const actualFile = file[0];
+            const formBody = new FormData();
+            formBody.append("file", actualFile);
+            console.log(actualFile);
+            const { url: profileImg } = await (
+                await fetch("http://localhost:4000/uploads/", {
+                    method:"POST",
+                    body:formBody,
                 })
-            } catch (e) {
-                console.log(e.response.data);
-            }
+            ).json();
+            
+            setImageUrl(profileImg);
+            
+            createAccountMutation({
+                variables: {
+                    createAccountInput: {
+                        name,
+                        profileImg,
+                        email,
+                        password,
+                        role,
+                        myBox
+                    }
+                }
+            })
+        } catch (e) {
+            console.log(e.response.data);
         }
     }
     return (
@@ -101,8 +111,8 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
             </Helmet>
             <SmallContainer>
                 {themeMode === "light" 
-                    ? <img src="../../public/images/logo_white.jpg" />
-                    : <img src="../../public/images/logo_black.jpg" />
+                    ? <img src="../../public/images/logo_white_fake.jpg" />
+                    : <img src="../../public/images/logo_black_fake.jpg" />
                 }
                 <FormStyle  onSubmit={handleSubmit(onSubmit)}>
                     <InputStyle 
@@ -168,7 +178,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         type="file"
                         accept="image/*"
                     />
-                    <Button canClick={formState.isValid} loading={loading} actionText={"Create Account"} />
+                    <Button canClick={formState.isValid} loading={uploading} actionText={"Create Account"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </FormStyle>
                 <div>
