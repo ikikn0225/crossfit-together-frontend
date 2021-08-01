@@ -9,6 +9,7 @@ ${reset}
         margin:0;
         padding:0;
         min-width:300px;
+        height:100%;
     }
 
     img {

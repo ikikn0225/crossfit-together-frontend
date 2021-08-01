@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { BigContainer, FormStyle, InputStyle, SmallContainer } from "./login";
+import { BigContainer, FormStyle, GuideToExtra, InputStyle, SmallContainer } from "./login";
 
 const FileInputStyle = styled(InputStyle)`
     height:auto;
@@ -60,7 +60,6 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     const history = useHistory();
     const onCompleted = (data: createAccountMutation) => {
         const { createAccount: { ok, error } } = data;
-        console.log(data);
         if(ok) {
             setUploading(false);
             alert("Account Created! Please Log in now!");
@@ -71,7 +70,6 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
         onCompleted,   
     });
     const onSubmit = async() => {
-        // setUploading(true);
         try {
             const { name, email, password, role, file, myBox } = getValues();
             
@@ -111,8 +109,8 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
             </Helmet>
             <SmallContainer>
                 {themeMode === "light" 
-                    ? <img src="../../public/images/logo_white_fake.jpg" />
-                    : <img src="../../public/images/logo_black_fake.jpg" />
+                    ? <img src="../../public/images/logo_white.jpg" />
+                    : <img src="../../public/images/logo_black.jpg" />
                 }
                 <FormStyle  onSubmit={handleSubmit(onSubmit)}>
                     <InputStyle 
@@ -181,9 +179,11 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     <Button canClick={formState.isValid} loading={uploading} actionText={"Create Account"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </FormStyle>
-                <div>
-                    Alreay have an account? <Link to="/" className=" text-green-600 hover:underline" > Log in now</Link>
-                </div>
+                <GuideToExtra>
+                    <div>
+                        Alreay have an account? <Link to="/" className=" text-green-600 hover:underline" > Log in now</Link>
+                    </div>
+                </GuideToExtra>
             </SmallContainer>
         </BigContainer>
     )

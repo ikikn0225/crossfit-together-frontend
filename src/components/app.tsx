@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { LoggedOutRouter } from '../router/logged-out-router';
 import { isLoggedInVar } from '../apollo';
 import { useReactiveVar } from '@apollo/client';
-import Footer from './footer';
 import { LoggedInRouter } from '@/router/logged-in-router';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { dark, light, fontSizes, fontWeights } from "@/theme/theme";
 import styled, { ThemeProvider } from 'styled-components';
 import Toggle from './dark-mode-toggle';
 import GlobalStyle from '@/theme/global-styles';
+import Footer from './footer';
 
 
 // const fade = keyframes`
@@ -42,8 +42,8 @@ export const App = () => {
         <GlobalStyle />
         <Toggle themeMode={themeMode} toggleTheme={toggleTheme} />
         <CommonStyle>
-          {isLoggedIn ? <LoggedInRouter /> : <LoggedOutRouter themeMode={themeMode} /> }
-          <Footer/>
+          {isLoggedIn ? <LoggedInRouter themeMode={themeMode} /> : <LoggedOutRouter themeMode={themeMode} /> }
+          {/* <Footer/> */}
         </CommonStyle>
       </ThemeProvider>
     </>
