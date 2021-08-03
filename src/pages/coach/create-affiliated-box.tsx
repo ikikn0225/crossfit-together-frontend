@@ -1,4 +1,4 @@
 
 export const CreateAffiliatedBox = () => {
-    return <span>CreatedAffilatedBox</span>
+    return <span>Create Affiliated Box</span>
 }

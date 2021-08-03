@@ -9,6 +9,7 @@ query meQuery {
         email
         role
         verified
+        affiliatedBoxId
     }
 }
 `;
