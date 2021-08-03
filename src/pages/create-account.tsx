@@ -13,11 +13,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { BigContainer, FormStyle, GuideToExtra, InputStyle, SmallContainer } from "./login";
 
-const FileInputStyle = styled(InputStyle)`
+export const FileInputStyle = styled(InputStyle)`
     height:auto;
 `;
 
-const SelectStyle = styled.select`
+export const SelectStyle = styled.select`
     width:100%;
     height: 2.25rem;
     border-width: thin;
@@ -76,7 +76,6 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
             const actualFile = file[0];
             const formBody = new FormData();
             formBody.append("file", actualFile);
-            console.log(actualFile);
             const { url: profileImg } = await (
                 await fetch("http://localhost:4000/uploads/", {
                     method:"POST",

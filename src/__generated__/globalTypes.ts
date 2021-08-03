@@ -29,6 +29,12 @@ export interface CreateAccountInput {
   myBox?: AffiliatedBoxList | null;
 }
 
+export interface CreateAffiliatedBoxInput {
+  name: AffiliatedBoxList;
+  coverImg?: string | null;
+  address: string;
+}
+
 export interface LoginInput {
   email: string;
   password: string;
