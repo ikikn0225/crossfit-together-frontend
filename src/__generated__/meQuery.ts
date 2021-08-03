@@ -15,6 +15,7 @@ export interface meQuery_me {
   email: string;
   role: UserRole;
   verified: boolean;
+  affiliatedBoxId: number | null;
 }
 
 export interface meQuery {

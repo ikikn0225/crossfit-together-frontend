@@ -44,7 +44,7 @@ export const Header:React.FC = () => {
     
     return (
         <>
-            {data?.me.verified &&
+            {!data?.me.verified &&
                 (
                     <NotVerify>
                         <span>Please verify your email.</span>
