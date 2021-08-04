@@ -1,9 +1,9 @@
 import { Button } from "@/components/button";
 import { FormError } from "@/components/form-error";
 import { createAccountMutation, createAccountMutationVariables } from "@/__generated__/createAccountMutation";
-import { AffiliatedBoxList } from "@/__generated__/globalTypes";
+import { allAffiliatedBoxesQuery } from "@/__generated__/allAffiliatedBoxesQuery"; 
 import { UserRole } from "@/__generated__/globalTypes";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
@@ -26,6 +26,18 @@ export const SelectStyle = styled.select`
     border-radius: 2px;
 `;
 
+export const ALL_AFFILIATED_BOXES = gql`
+    query allAffiliatedBoxesQuery {
+        allAffiliatedBoxes {
+            ok
+            error
+            allAffiliatedBoxes {
+                name
+            }
+        }
+    }
+`;
+
 export const CREATE_ACCOUNT_MUTATION = gql`
     mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
         createAccount(input:$createAccountInput) {
@@ -41,7 +53,7 @@ interface ICreateAccountForm {
     password: string;
     role: UserRole;
     file: FileList;
-    myBox:  AffiliatedBoxList;
+    myBox?: string;
 }
 
 interface ILoginTheme {
@@ -57,18 +69,21 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     });
     const [imageUrl, setImageUrl] = useState("");
     const [uploading, setUploading] = useState(false);
+    const [roleStatus, setRoleStatus] = useState("");
     const history = useHistory();
     const onCompleted = (data: createAccountMutation) => {
         const { createAccount: { ok, error } } = data;
         if(ok) {
             setUploading(false);
-            alert("Account Created! Please Log in now!");
+            alert("Welcome to CrossfiTogether! Please Log in now!");
             history.push("/");
         }
     }
     const [createAccountMutation, { loading, data:createAccountMutationResult }] = useMutation<createAccountMutation, createAccountMutationVariables>(CREATE_ACCOUNT_MUTATION, {
         onCompleted,   
     });
+    const { data:boxes } = useQuery<allAffiliatedBoxesQuery>(ALL_AFFILIATED_BOXES);
+
     const onSubmit = async() => {
         try {
             const { name, email, password, role, file, myBox } = getValues();
@@ -101,6 +116,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
             console.log(e.response.data);
         }
     }
+
     return (
         <BigContainer>
             <Helmet>
@@ -154,23 +170,41 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     {errors.password?.type === "minLength" && (
                         <FormError errorMessage="Password must be more than 10 chars" />
                     )}
-                    <SelectStyle {...register("role", {
+                    <SelectStyle 
+                        {...register("role", {
                             required: true,
                         })}
                         name="role"
-                        className="input">
-                        {Object.keys(UserRole).map((role, index) => (<option key={index}>{role}</option>))}
+                        className="input"
+                        onChange={e => setRoleStatus(e.target.value)}
+                        value={roleStatus}
+                        >
+                        {Object.keys(UserRole).map((role, index) => (<option key={index} value={role}>{role}</option>))}
                     </SelectStyle>
-                    <SelectStyle {...register("myBox", {
-                            required: true,
-                        })}
-                        name="myBox"
-                        className="input">
-                        {Object.keys(AffiliatedBoxList).map((box, index) => (<option key={index}>{box}</option>))}
-                    </SelectStyle>
+                    {roleStatus === UserRole.Crossfiter 
+                    && (
+                        <SelectStyle 
+                            {...register("myBox", {
+                                required: true,
+                            })}
+                            name="myBox"
+                            className="input"
+                            >
+                            {boxes?.allAffiliatedBoxes.allAffiliatedBoxes?.length !== 0 
+                            ? (
+                                boxes?.allAffiliatedBoxes.allAffiliatedBoxes?.map((box, index) => (<option key={index} value={box.name}>{box.name}</option>))
+                            )
+                            : (
+                                <option value="" selected disabled>No Box here</option>  
+                            )}
+                        </SelectStyle>
+                    )}
+                    {errors.myBox?.message && (
+                        <FormError errorMessage={errors.myBox?.message} />
+                    )}
                     <FileInputStyle 
                         {...register("file", {
-                            required: "file is required",
+                            required: "Profile Image is required",
                         })}
                         type="file"
                         accept="image/*"

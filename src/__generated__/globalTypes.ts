@@ -7,14 +7,6 @@
 // START Enums and Input Objects
 //==============================================================
 
-export enum AffiliatedBoxList {
-  CrossFit_4TP = "CrossFit_4TP",
-  CrossFit_ABLE_2AH = "CrossFit_ABLE_2AH",
-  CrossFit_Ironheart = "CrossFit_Ironheart",
-  CrossFit_KTG = "CrossFit_KTG",
-  Woori_CrossFit = "Woori_CrossFit",
-}
-
 export enum UserRole {
   Coach = "Coach",
   Crossfiter = "Crossfiter",
@@ -26,11 +18,11 @@ export interface CreateAccountInput {
   email: string;
   password: string;
   role: UserRole;
-  myBox?: AffiliatedBoxList | null;
+  myBox?: string | null;
 }
 
 export interface CreateAffiliatedBoxInput {
-  name: AffiliatedBoxList;
+  name: string;
   coverImg?: string | null;
   address: string;
 }

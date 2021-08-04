@@ -1,5 +1,6 @@
 import { LOCALSTORAGE_TOKEN } from "@/constants";
 import { useMe } from "@/hooks/useMe"
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Button, ButtonCommonStyle } from "./button";
 
@@ -34,12 +35,13 @@ const ButtonStyle = styled(ButtonCommonStyle) `
 
 export const Header:React.FC = () => {
     const { client, data } = useMe();
+    const history = useHistory();
     const logOutClick = () => {
-
         client.cache.reset().then(() => {
             localStorage.setItem(LOCALSTORAGE_TOKEN, '');
             location.reload();
         })
+        history.push("/");
     }
     
     return (

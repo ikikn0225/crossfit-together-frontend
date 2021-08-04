@@ -10,6 +10,7 @@ import { BigContainer, SmallContainer } from "@/pages/login";
 import { UserRole } from "@/__generated__/globalTypes";
 import { NoBox } from "@/pages/no-box";
 import { CreateAffiliatedBox } from "@/pages/coach/create-affiliated-box";
+import { Main } from "@/pages/main";
 
 export const LoadingStyle = styled.div`
     height: 100vh;
@@ -38,11 +39,17 @@ const noAffiliatedBoxRoutes = [
         path:"/create-affiliated-box",
         component:<CreateAffiliatedBox/>
     }
+];
+
+const affiliatedBoxRoutes = [
+    {
+        path:"/",
+        component:<Main />
+    }
 ]
 
 export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
     const { data, loading, error } = useMe();
-    console.log(data);
     
     if (!data || loading || error) {
         return (
@@ -57,6 +64,11 @@ export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
                 <Header />
                 <Switch>
                     {!data.me.affiliatedBoxId && noAffiliatedBoxRoutes.map((route) => (
+                        <Route exact key={route.path} path={route.path}>
+                            {route.component}
+                        </Route>
+                    ))}
+                    {data.me.affiliatedBoxId && affiliatedBoxRoutes.map((route) => (
                         <Route exact key={route.path} path={route.path}>
                             {route.component}
                         </Route>
