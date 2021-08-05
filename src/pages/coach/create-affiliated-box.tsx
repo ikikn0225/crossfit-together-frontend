@@ -3,15 +3,13 @@ import { UserRole } from "@/__generated__/globalTypes";
 import gql from "graphql-tag"
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { BigContainer, FormStyle, InputStyle, SmallContainer } from "../login";
-import { SelectStyle, FileInputStyle } from "../create-account";
 import { Button } from "@/components/button";
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CreateAffiliatedBoxMutation, CreateAffiliatedBoxMutationVariables } from "@/__generated__/CreateAffiliatedBoxMutation";
-
-
+import { _Container, _SubContainer } from "../../theme/components/_Layout"
+import { _CreateAffiliatedBoxForm ,_CreateAffiliatedBoxInput ,_CreateAffiliatedBoxFileInput } from "../../theme/components/_CreateAffiliatedBox";
 
 export const CREATE_AFFILIATED_BOX_MUTATION = gql`
     mutation CreateAffiliatedBoxMutation($createAffiliatedBoxInput:CreateAffiliatedBoxInput!) {
@@ -81,13 +79,13 @@ export const CreateAffiliatedBox = () => {
         }
     }
     return (
-        <BigContainer>
+        <_Container>
             <Helmet>
                 <title>Create Affiliated Box | CrossfiTogether</title>
             </Helmet>
-            <SmallContainer>
-                <FormStyle onSubmit={handleSubmit(onSubmit)}>
-                    <InputStyle
+            <_SubContainer>
+                <_CreateAffiliatedBoxForm onSubmit={handleSubmit(onSubmit)}>
+                    <_CreateAffiliatedBoxInput
                         {...register("name", {
                             required: "Name is required",
                         })}
@@ -99,7 +97,7 @@ export const CreateAffiliatedBox = () => {
                     {errors.name?.message && (  
                         <FormError errorMessage={errors.name?.message} />
                     )}
-                    <InputStyle  
+                    <_CreateAffiliatedBoxInput  
                         {...register("address", {
                             required: "Address is required",
                         })}
@@ -111,7 +109,7 @@ export const CreateAffiliatedBox = () => {
                     {errors.address?.message && (
                         <FormError errorMessage={errors.address?.message} />
                     )}
-                    <FileInputStyle 
+                    <_CreateAffiliatedBoxFileInput 
                         {...register("file", {
                             required: "Cover Image is required",
                         })}
@@ -120,8 +118,8 @@ export const CreateAffiliatedBox = () => {
                     />
                     <Button canClick={formState.isValid} loading={uploading} actionText={"Create My Box"} />
                     {createAffiliatedBoxMutationResult?.createAffiliatedBox.error && <FormError errorMessage={createAffiliatedBoxMutationResult.createAffiliatedBox.error}/>}
-                </FormStyle>
-            </SmallContainer>
-        </BigContainer>
+                </_CreateAffiliatedBoxForm>
+            </_SubContainer>
+        </_Container>
     )
 }

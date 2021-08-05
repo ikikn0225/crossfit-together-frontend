@@ -11,53 +11,8 @@ import { FormError } from "../components/form-error";
 // import {logo_white} from "../../public/images/logo_white.jpg";
 import { loginMutation, loginMutationVariables } from "../__generated__/loginMutation";
 import styled from "styled-components";
-
-export const BigContainer = styled.div`
-    height: 100vh;
-    position:relative;
-    min-width:300px;
-`
-
-export const SmallContainer = styled.div`
-    width: 100%;
-    max-width: 500px;
-    padding: 0 30px;
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-`
-export const ImgStyle = styled.img`
-    width: 13rem;
-    margin: 2.5rem;
-`
-
-export const FormStyle = styled.form`
-    display:grid;
-    width: 100%;
-    gap: 1rem;
-`
-
-export const InputStyle = styled.input`
-    width:100%;
-    height: 2.25rem;
-    border-width: thin;
-    border-style: solid;
-    border-color: ${(props) => props.theme.mode.border}
-    border-radius: 2px;
-`;
-
-export const GuideToExtra = styled.div`
-    margin-top: 1rem;
-    display:grid;
-    width: 100%;
-    gap: 1rem;
-`;
-
-export const LinkCreateAccount = styled(Link)`
-    float:right;
-    color:${({ theme }) => theme.mode.primaryText};
-`;
+import { _Container, _SubContainer } from "../theme/components/_Layout"
+import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginLinkCreateAccount } from "../theme/components/_Login"
 
 export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
@@ -107,17 +62,17 @@ export const Login = ({themeMode}:ILoginTheme) => {
         )}
     }; 
     return (
-        <BigContainer>
+        <_Container>
             <Helmet>
                 <title>Login | CrossfiTogether</title>
             </Helmet>
-            <SmallContainer>
+            <_SubContainer>
                 {themeMode === "light" 
                     ? <img src="../../public/images/logo_white_fake.jpg" />
                     : <img src="../../public/images/logo_black_fake.jpg" />
                 }
-                <FormStyle  onSubmit={handleSubmit(onSubmit)}>
-                    <InputStyle 
+                <_LoginForm  onSubmit={handleSubmit(onSubmit)}>
+                    <_LoginInput 
                         {...register("email", {
                             required: "Email is required",
                             pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -133,7 +88,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     {errors.email?.type === "pattern" && (  
                         <FormError errorMessage={"Please enter a valid email"} />
                     )}
-                    <InputStyle  
+                    <_LoginInput  
                         {...register("password", {
                             required: "Password is required",
                         })}
@@ -147,13 +102,13 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     )}
                     <Button canClick={formState.isValid} loading={loading} actionText={"Log in"}></Button>
                     {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
-                </FormStyle>
-                <GuideToExtra>
+                </_LoginForm>
+                <_LoginExtra>
                     <div>
-                        New to CrossfiTogether? <LinkCreateAccount to="/create-account" >Create Account</LinkCreateAccount>
+                        New to CrossfiTogether? <_LoginLinkCreateAccount to="/create-account" >Create Account</_LoginLinkCreateAccount>
                     </div>
-                </GuideToExtra>
-            </SmallContainer>
-        </BigContainer>
+                </_LoginExtra>
+            </_SubContainer>
+        </_Container>
     );
 };

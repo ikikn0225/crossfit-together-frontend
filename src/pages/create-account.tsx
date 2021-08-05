@@ -10,21 +10,8 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { BigContainer, FormStyle, GuideToExtra, InputStyle, SmallContainer } from "./login";
-
-export const FileInputStyle = styled(InputStyle)`
-    height:auto;
-`;
-
-export const SelectStyle = styled.select`
-    width:100%;
-    height: 2.25rem;
-    border-width: thin;
-    border-style: solid;
-    border-color: ${(props) => props.theme.mode.border}
-    border-radius: 2px;
-`;
+import { _Container, _SubContainer } from "../theme/components/_Layout";
+import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect } from "../theme/components/_CreateAccount";
 
 export const ALL_AFFILIATED_BOXES = gql`
     query allAffiliatedBoxesQuery {
@@ -118,17 +105,17 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     }
 
     return (
-        <BigContainer>
+        <_Container>
             <Helmet>
                 <title>Create Account | CrossfiTogether</title>
             </Helmet>
-            <SmallContainer>
+            <_SubContainer>
                 {themeMode === "light" 
                     ? <img src="../../public/images/logo_white_fake.jpg" />
                     : <img src="../../public/images/logo_black_fake.jpg" />
                 }
-                <FormStyle  onSubmit={handleSubmit(onSubmit)}>
-                    <InputStyle 
+                <_CreateAccountForm  onSubmit={handleSubmit(onSubmit)}>
+                    <_CreateAccountInput 
                         {...register("name", {
                             required: "Name is required",
                         })}
@@ -139,7 +126,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     {errors.name?.message && (  
                         <FormError errorMessage={errors.name?.message} />
                     )}
-                    <InputStyle
+                    <_CreateAccountInput
                         {...register("email", {
                             required: "Email is required",
                             pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -155,7 +142,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     {errors.email?.type === "pattern" && (  
                         <FormError errorMessage={"Please enter a valid email"} />
                     )}
-                    <InputStyle  
+                    <_CreateAccountInput  
                         {...register("password", {
                             required: "Password is required",
                         })}
@@ -170,7 +157,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     {errors.password?.type === "minLength" && (
                         <FormError errorMessage="Password must be more than 10 chars" />
                     )}
-                    <SelectStyle 
+                    <_CreateAccountSelect 
                         {...register("role", {
                             required: true,
                         })}
@@ -180,10 +167,10 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         value={roleStatus}
                         >
                         {Object.keys(UserRole).map((role, index) => (<option key={index} value={role}>{role}</option>))}
-                    </SelectStyle>
+                    </_CreateAccountSelect>
                     {roleStatus === UserRole.Crossfiter 
                     && (
-                        <SelectStyle 
+                        <_CreateAccountSelect 
                             {...register("myBox", {
                                 required: true,
                             })}
@@ -197,12 +184,12 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                             : (
                                 <option value="" selected disabled>No Box here</option>  
                             )}
-                        </SelectStyle>
+                        </_CreateAccountSelect>
                     )}
                     {errors.myBox?.message && (
                         <FormError errorMessage={errors.myBox?.message} />
                     )}
-                    <FileInputStyle 
+                    <_CreateAccountFileInput 
                         {...register("file", {
                             required: "Profile Image is required",
                         })}
@@ -211,13 +198,13 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     />
                     <Button canClick={formState.isValid} loading={uploading} actionText={"Create Account"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
-                </FormStyle>
-                <GuideToExtra>
+                </_CreateAccountForm>
+                <_CreateAccountExtra>
                     <div>
                         Alreay have an account? <Link to="/" className=" text-green-600 hover:underline" > Log in now</Link>
                     </div>
-                </GuideToExtra>
-            </SmallContainer>
-        </BigContainer>
+                </_CreateAccountExtra>
+            </_SubContainer>
+        </_Container>
     )
 };
