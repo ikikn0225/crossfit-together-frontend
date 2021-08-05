@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { _SubContainer } from "../components/_Layout"
-import { ButtonCommonStyle } from "@/components/button";
+import { _ButtonCommon } from "../../theme/components/_Button";
 
 export const _NoBoxContainer = styled.div`
     height: 100vh;
@@ -17,7 +17,7 @@ export const _NoBoxSpan = styled.div`
     text-align:center;
 `;
 
-export const _NoBoxCreateAffiliatedBoxButton = styled(ButtonCommonStyle)`
+export const _NoBoxCreateAffiliatedBoxButton = styled(_ButtonCommon)`
     color:#000;
     margin:2rem;
     height:4rem;

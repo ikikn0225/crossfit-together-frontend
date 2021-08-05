@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { _Container, _SubContainer } from "../theme/components/_Layout";
-import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect } from "../theme/components/_CreateAccount";
+import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect, _CreateAccountLoginLink } from "../theme/components/_CreateAccount";
 
 export const ALL_AFFILIATED_BOXES = gql`
     query allAffiliatedBoxesQuery {
@@ -201,7 +201,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                 </_CreateAccountForm>
                 <_CreateAccountExtra>
                     <div>
-                        Alreay have an account? <Link to="/" className=" text-green-600 hover:underline" > Log in now</Link>
+                        Alreay have an account? <_CreateAccountLoginLink to="/" > Log in now</_CreateAccountLoginLink>
                     </div>
                 </_CreateAccountExtra>
             </_SubContainer>

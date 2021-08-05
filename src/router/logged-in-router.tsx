@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useApolloClient } from "@apollo/client";
 import { LOCALSTORAGE_TOKEN } from "@/constants";
 import { NotFound } from "@/pages/404";
-import { BigContainer, SmallContainer } from "@/pages/login";
+import { _Container, _SubContainer } from "../theme/components/_Layout"
 import { UserRole } from "@/__generated__/globalTypes";
 import { NoBox } from "@/pages/no-box";
 import { CreateAffiliatedBox } from "@/pages/coach/create-affiliated-box";
@@ -59,7 +59,7 @@ export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
         );
     }
     return (
-        <BigContainer>
+        <_Container>
             <Router>
                 <Header />
                 <Switch>
@@ -78,6 +78,6 @@ export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
                     </Route>
                 </Switch>
             </Router>
-        </BigContainer>
+        </_Container>
     );
 }

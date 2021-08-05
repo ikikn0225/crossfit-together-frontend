@@ -10,9 +10,8 @@ import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 // import {logo_white} from "../../public/images/logo_white.jpg";
 import { loginMutation, loginMutationVariables } from "../__generated__/loginMutation";
-import styled from "styled-components";
 import { _Container, _SubContainer } from "../theme/components/_Layout"
-import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginLinkCreateAccount } from "../theme/components/_Login"
+import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginCreateAccountLink } from "../theme/components/_Login"
 
 export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
@@ -105,7 +104,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                 </_LoginForm>
                 <_LoginExtra>
                     <div>
-                        New to CrossfiTogether? <_LoginLinkCreateAccount to="/create-account" >Create Account</_LoginLinkCreateAccount>
+                        New to CrossfiTogether? <_LoginCreateAccountLink to="/create-account" >Create Account</_LoginCreateAccountLink>
                     </div>
                 </_LoginExtra>
             </_SubContainer>

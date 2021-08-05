@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 export const _CreateAccountForm = styled.form`
@@ -32,5 +33,10 @@ export const _CreateAccountSelect = styled.select`
     border-width: thin;
     border-style: solid;
     border-color: ${(props) => props.theme.mode.border}
-    border-radius: 2px;
+    border-radius: 3px;
+`;
+
+export const _CreateAccountLoginLink = styled(Link)`
+    float:right;
+    color:${({ theme }) => theme.mode.primaryText};
 `;

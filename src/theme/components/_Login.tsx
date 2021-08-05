@@ -17,8 +17,8 @@ export const _LoginInput = styled.input`
     height: 2.25rem;
     border-width: thin;
     border-style: solid;
-    border-color: ${(props) => props.theme.mode.border}
-    border-radius: 2px;
+    border-color: ${(props) => props.theme.mode.border};
+    border-radius: 3px;
 `;
 
 export const _LoginExtra = styled.div`
@@ -28,7 +28,7 @@ export const _LoginExtra = styled.div`
     gap: 1rem;
 `;
 
-export const _LoginLinkCreateAccount = styled(Link)`
+export const _LoginCreateAccountLink = styled(Link)`
     float:right;
     color:${({ theme }) => theme.mode.primaryText};
 `;
