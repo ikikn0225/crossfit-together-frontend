@@ -2,15 +2,14 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 export const _LoginLogoImage = styled.img`
-    width: 13rem;
-    margin: 2.5rem;
-`
+    object-fit: contain;
+`;
 
 export const _LoginForm = styled.form`
     display:grid;
     width: 100%;
     gap: 1rem;
-`
+`;
 
 export const _LoginInput = styled.input`
     width:100%;

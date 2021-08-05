@@ -67,8 +67,8 @@ export const Login = ({themeMode}:ILoginTheme) => {
             </Helmet>
             <_SubContainer>
                 {themeMode === "light" 
-                    ? <img src="../../public/images/logo_white_fake.jpg" />
-                    : <img src="../../public/images/logo_black_fake.jpg" />
+                    ? <_LoginLogoImage src="../../public/images/logo_white_fake.jpg" />
+                    : <_LoginLogoImage src="../../public/images/logo_black_fake.jpg" />
                 }
                 <_LoginForm  onSubmit={handleSubmit(onSubmit)}>
                     <_LoginInput 

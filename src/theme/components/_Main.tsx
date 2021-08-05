@@ -5,10 +5,10 @@ interface IMainImgProps {
 }
 
 export const _MainContainer = styled.div`
-    background-size: cover;
+    height:100vh;
 `;
 
 export const _MainImg = styled.div<IMainImgProps>`
-    height:auto;
-    background: url(${(props)=>props.backgroundImage}); 
+    background-size: cover;
+    background-image: url(${(props)=>props.backgroundImage}); 
 `;
