@@ -6,14 +6,10 @@ import { _MainContainer, _MainImg } from "../theme/components/_Main"
 export const Main = () => {
     const {data, loading, error} = useMe();
     const {data:myAffiliatedBox} = useMyBox();
-
-    useEffect(() => {
-        
-    }, []);
     
     return (
         <_MainContainer>
-            <_MainImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/1628059710351default_Bar.png"}></_MainImg>
+            <_MainImg backgroundImage={myAffiliatedBox?.myAffiliatedBox.affiliatedBox.coverImg+""}></_MainImg>
             <span>{data?.me.affiliatedBoxId}</span>
         </_MainContainer>
     )

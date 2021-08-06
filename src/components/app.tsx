@@ -4,7 +4,7 @@ import { isLoggedInVar } from '../apollo';
 import { useReactiveVar } from '@apollo/client';
 import { LoggedInRouter } from '@/router/logged-in-router';
 import { useDarkMode } from '@/hooks/useDarkMode';
-import { dark, light, fontSizes, fontWeights } from "@/theme/theme";
+import { dark, light, fontSizes, fontWeights, reactiveTheme } from "@/theme/theme";
 import styled, { ThemeProvider } from 'styled-components';
 import Toggle from './dark-mode-toggle';
 import GlobalStyle from '@/theme/global-styles';
@@ -33,8 +33,8 @@ export const App = () => {
   const [themeMode, toggleTheme] = useDarkMode();
   const theme =
     themeMode === "light"
-      ? { mode: light, fontSizes, fontWeights }
-      : { mode: dark, fontSizes, fontWeights };
+      ? { mode: light, fontSizes, fontWeights, reactiveTheme }
+      : { mode: dark, fontSizes, fontWeights, reactiveTheme };
 
   return (
     <>
