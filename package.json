@@ -52,7 +52,6 @@
     "dev": "npm run apollo:codegen & webpack serve --mode development --open --hot",
     "start": "npm run apollo:codegen & webpack",
     "apollo:codegen": "rimraf src/__generated__ && npx apollo client:codegen src/__generated__ --target=typescript --outputFlat",
-    "build": "CI=false webpack",
-    "prestart": "npm build"
+    "build": "CI=false webpack --config webpack.config.js"
   }
 }
