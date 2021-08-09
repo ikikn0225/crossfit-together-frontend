@@ -50,9 +50,9 @@
   },
   "scripts": {
     "dev": "npm run apollo:codegen & webpack serve --mode development --open --hot",
+    "start": "npm run apollo:codegen & webpack --mode start",
     "apollo:codegen": "rimraf src/__generated__ && npx apollo client:codegen src/__generated__ --target=typescript --outputFlat",
-    "build": "webpack --mode production",
-    "prestart": "npm build",
-    "start": "webpack --mode development"
+    "build": "CI=false webpack --mode build",
+    "prestart": "npm build"
   }
 }
