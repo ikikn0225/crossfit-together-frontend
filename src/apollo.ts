@@ -1,8 +1,11 @@
 import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { LOCALSTORAGE_TOKEN } from "./constants";
+import { getCookie } from "./cookie";
 
-const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
+// const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
+const token = getCookie(LOCALSTORAGE_TOKEN);
+console.log(token);
 
 // localStorage.clear();
 

@@ -9,9 +9,12 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 // import {logo_white} from "../../public/images/logo_white.jpg";
-import { loginMutation, loginMutationVariables } from "../__generated__/loginMutation";
+import { loginMutation, loginMutationVariables } from "@/__generated__/loginMutation";
 import { _Container, _SubContainer } from "../theme/components/_Layout"
 import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginCreateAccountLink } from "../theme/components/_Login"
+import { setCookie } from "@/cookie";
+import { encryptValue } from "@/util/crypto";
+import { useCallback } from "react";
 
 export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
@@ -39,7 +42,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
     const onCompleted = (data: loginMutation) => {
         const { login:{ error, ok, token }, } = data;
         if(ok && token) {
-            localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+            // localStorage.setItem(LOCALSTORAGE_TOKEN, token);
             authTokenVar(token);
             isLoggedInVar(true);
         }
@@ -47,19 +50,20 @@ export const Login = ({themeMode}:ILoginTheme) => {
     const [loginMutation, { data:loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
         onCompleted,
     });
-    const onSubmit = () => {
+    const onSubmit = useCallback((values: any) => {
         if(!loading){
-            const { email, password } = getValues();
+            // const { email, password } = getValues();
+            const cryptoPassword = encryptValue(values.password);
             loginMutation({
                 variables: {
                     loginInput: {
-                        email,
-                        password,
+                        email:values.email,
+                        password:cryptoPassword,
                     }
                 },
             },
         )}
-    }; 
+    }, []); 
     return (
         <_Container>
             <Helmet>
