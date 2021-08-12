@@ -15,6 +15,17 @@ import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginCreateAcco
 import { setCookie } from "@/cookie";
 import { encryptValue } from "@/util/crypto";
 import { useCallback } from "react";
+import { SignIn, SignInVariables } from "@/__generated__/SignIn";
+
+export const SIGNIN_REQUEST = gql`
+    mutation SignIn($input: LoginInput!) {
+        signin(input: $input) {
+        ok
+        error
+        token
+        }
+    }
+`;
 
 export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
@@ -39,25 +50,29 @@ export const Login = ({themeMode}:ILoginTheme) => {
     const { register, getValues, formState: { errors }, handleSubmit, formState } = useForm<ILoginForm>({
         mode:"onChange",
     });
-    const onCompleted = (data: loginMutation) => {
-        const { login:{ error, ok, token }, } = data;
+    const onCompleted = (data: SignIn) => {
+        const { signin:{ error, ok, token }, } = data;
         if(ok && token) {
             // localStorage.setItem(LOCALSTORAGE_TOKEN, token);
             authTokenVar(token);
             isLoggedInVar(true);
         }
     }
-    const [loginMutation, { data:loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
+    // const [loginMutation, { data:loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
+    //     onCompleted,
+    // });
+    const [signInMutation, { data:loginMutationResult, loading }] = useMutation<SignIn, SignInVariables>(SIGNIN_REQUEST, {
         onCompleted,
     });
     const onSubmit = useCallback((values: any) => {
         if(!loading){
             // const { email, password } = getValues();
+            const cryptoEmail = encryptValue(values.email);
             const cryptoPassword = encryptValue(values.password);
-            loginMutation({
+            signInMutation({
                 variables: {
-                    loginInput: {
-                        email:values.email,
+                    input: {
+                        email:cryptoEmail,
                         password:cryptoPassword,
                     }
                 },
@@ -104,7 +119,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                         <FormError errorMessage={errors.password?.message} />
                     )}
                     <Button canClick={formState.isValid} loading={loading} actionText={"Log in"}></Button>
-                    {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
+                    {loginMutationResult?.signin.error &&<FormError errorMessage={loginMutationResult.signin.error} />}
                 </_LoginForm>
                 <_LoginExtra>
                     <div>
