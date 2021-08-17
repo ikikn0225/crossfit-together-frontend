@@ -54,6 +54,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
         const { signin:{ error, ok, token }, } = data;
         if(ok && token) {
             // localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+            setCookie('ct-token', token);
             authTokenVar(token);
             isLoggedInVar(true);
         }
@@ -72,8 +73,8 @@ export const Login = ({themeMode}:ILoginTheme) => {
             signInMutation({
                 variables: {
                     input: {
-                        email:cryptoEmail,
-                        password:cryptoPassword,
+                        email:values.email,
+                        password:values.password,
                     }
                 },
             },
