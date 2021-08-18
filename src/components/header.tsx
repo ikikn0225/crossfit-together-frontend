@@ -1,4 +1,5 @@
 import { LOCALSTORAGE_TOKEN } from "@/constants";
+import { clearCookie } from "@/cookie";
 import { useMe } from "@/hooks/useMe"
 import { useHistory } from "react-router-dom";
 import { _HeaderNotVerifyContainer ,_HeaderContainer ,_HeaderImgContainer ,_HeaderButton } from "../theme/components/_Header";
@@ -8,7 +9,7 @@ export const Header:React.FC = () => {
     const history = useHistory();
     const logOutClick = () => {
         client.cache.reset().then(() => {
-            localStorage.setItem(LOCALSTORAGE_TOKEN, '');
+            clearCookie('authorization');
             location.reload();
         })
         history.push("/");

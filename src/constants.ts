@@ -1,1 +1,1 @@
-export const LOCALSTORAGE_TOKEN = "ct-token";
+export const LOCALSTORAGE_TOKEN = "authorization";
