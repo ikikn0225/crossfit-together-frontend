@@ -15,17 +15,6 @@ import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginCreateAcco
 import { setCookie } from "@/cookie";
 import { encryptValue } from "@/util/crypto";
 import { useCallback } from "react";
-import { SignIn, SignInVariables } from "@/__generated__/SignIn";
-
-export const SIGNIN_REQUEST = gql`
-    mutation SignIn($input: LoginInput!) {
-        signin(input: $input) {
-        ok
-        error
-        token
-        }
-    }
-`;
 
 export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
@@ -62,13 +51,8 @@ export const Login = ({themeMode}:ILoginTheme) => {
     const [loginMutation, { data:loginMutationResult, loading }] = useMutation<loginMutation, loginMutationVariables>(LOGIN_MUTATION, {
         onCompleted,
     });
-    // const [signInMutation, { data:loginMutationResult, loading }] = useMutation<SignIn, SignInVariables>(SIGNIN_REQUEST, {
-    //     onCompleted,
-    // });
     const onSubmit = useCallback((values: any) => {
         if(!loading){
-            // const { email, password } = getValues();
-            // const cryptoEmail = encryptValue(values.email);
             const cryptoPassword = encryptValue(values.password);
             loginMutation({
                 variables: {
