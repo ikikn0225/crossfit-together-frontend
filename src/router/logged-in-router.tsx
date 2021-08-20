@@ -1,6 +1,6 @@
 import { Header } from "@/components/header";
 import React from "react";
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { useMe } from "../hooks/useMe";
 import styled from 'styled-components';
 import { useApolloClient } from "@apollo/client";
@@ -11,6 +11,7 @@ import { UserRole } from "@/__generated__/globalTypes";
 import { NoBox } from "@/pages/no-box";
 import { CreateAffiliatedBox } from "@/pages/coach/create-affiliated-box";
 import { Main } from "@/pages/main";
+import { clearCookie } from "@/cookie";
 
 export const LoadingStyle = styled.div`
     height: 100vh;
@@ -49,9 +50,18 @@ const affiliatedBoxRoutes = [
 ]
 
 export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
-    const { data, loading, error } = useMe();
+    const { data, loading, error, client } = useMe();
+    const history = useHistory();
     
-    if (!data || loading || error) {
+    if(!data && error) {
+        client.cache.reset().then(() => {
+            clearCookie('authorization');
+            location.reload();
+        })
+        history.push("/");
+    }
+
+    if (!data || loading) {
         return (
             <LoadingStyle>
                 <LoadingSpanStyle>Loading...</LoadingSpanStyle>
