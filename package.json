@@ -31,6 +31,7 @@
     "styled-icons": "10.35.0",
     "styled-reset": "^4.3.4",
     "subscriptions-transport-ws": "^0.9.19",
+    "universal-cookie": "^4.0.4",
     "webpack-bundle-analyzer": "^4.4.2"
   },
   "devDependencies": {
