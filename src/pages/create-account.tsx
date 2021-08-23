@@ -51,7 +51,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     const { register, getValues, watch, formState: { errors }, handleSubmit, formState } = useForm<ICreateAccountForm>({
         mode:"onChange",
         defaultValues: {
-            role: UserRole.Crossfiter,
+            role: UserRole.Coach,
         }
     });
     const [imageUrl, setImageUrl] = useState("");
@@ -62,7 +62,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
         const { createAccount: { ok, error } } = data;
         if(ok) {
             setUploading(false);
-            alert("Welcome to CrossfiTogether! Please Log in now!");
+            alert("Welcome to CrossfiTogether!");
             history.push("/");
         }
     }
@@ -179,7 +179,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                             >
                             {boxes?.allAffiliatedBoxes.allAffiliatedBoxes?.length !== 0 
                             ? (
-                                boxes?.allAffiliatedBoxes.allAffiliatedBoxes?.map((box, index) => (<option key={index} value={box.name}>{box.name}</option>))
+                                boxes?.allAffiliatedBoxes.allAffiliatedBoxes?.map((box:any, index:any) => (<option key={index} value={box.name}>{box.name}</option>))
                             )
                             : (
                                 <option value="" selected disabled>No Box here</option>  

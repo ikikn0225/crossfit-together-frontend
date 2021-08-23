@@ -42,7 +42,7 @@ export const CreateAffiliatedBox = () => {
         if(ok) {
             setUploading(false);
             alert("Welcome to CrossfiTogether!");
-            history.push("/main");
+            history.push("/");
         }
     }
     const [createAffiliatedBoxMutation, { loading, data:createAffiliatedBoxMutationResult }] = useMutation<CreateAffiliatedBoxMutation, CreateAffiliatedBoxMutationVariables>(CREATE_AFFILIATED_BOX_MUTATION, {

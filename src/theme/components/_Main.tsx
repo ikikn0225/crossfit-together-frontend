@@ -24,11 +24,15 @@ export const _MainNavUl = styled.ul`
 export const _MainNavLi = styled.li`
     display:block;
     width:100%;
-    line-height:80px;
+    line-height:50px;
     padding:5px 10px;
     text-align:center;
 
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        line-height:70px;
+    }
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
         display:inline-block;
         width:20%;
     }
@@ -42,6 +46,6 @@ export const _MainNavA = styled.a`
     font-size:${(props)=>props.theme.fontSizes.lg};
 
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
-        font-size:${(props)=>props.theme.fontSizes.xxl};
+        font-size:${(props)=>props.theme.fontSizes.xl};
     }
 `;

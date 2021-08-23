@@ -2,7 +2,7 @@ import { LOCALSTORAGE_TOKEN } from "@/constants";
 import { clearCookie } from "@/cookie";
 import { useMe } from "@/hooks/useMe"
 import { useHistory } from "react-router-dom";
-import { _HeaderNotVerifyContainer ,_HeaderContainer ,_HeaderImgContainer ,_HeaderButton } from "../theme/components/_Header";
+import { _HeaderNotVerifyContainer ,_HeaderContainer ,_HeaderLogo ,_HeaderLogOutButton, _HeaderUl, _HeaderLl, _HeaderMenuAcordion } from "../theme/components/_Header";
 
 export const Header:React.FC = () => {
     const { client, data } = useMe();
@@ -25,13 +25,20 @@ export const Header:React.FC = () => {
                 )
             }
             <_HeaderContainer>
-                <_HeaderImgContainer>
-                    <img src="../../public/images/logo_black.jpg" />
-                </_HeaderImgContainer>
+                <_HeaderLogo>
+                    <img src="../../public/images/logo_black_fake.jpg" />
+                </_HeaderLogo>
                 {/* 아래는 nav로 만들기(마이페이지, 로그아웃) */}
-                <_HeaderButton onClick={logOutClick}>
+                <_HeaderUl>
+                    <_HeaderLl>NOTICE</_HeaderLl>
+                    <_HeaderLl>TIME TABLE</_HeaderLl>
+                    <_HeaderLl>MY PAGE</_HeaderLl>
+                </_HeaderUl>
+            
+                <_HeaderLogOutButton onClick={logOutClick}>
                     LogOut
-                </_HeaderButton>
+                </_HeaderLogOutButton>
+                <_HeaderMenuAcordion>&#9776;</_HeaderMenuAcordion>
             </_HeaderContainer>
         </>
     )
