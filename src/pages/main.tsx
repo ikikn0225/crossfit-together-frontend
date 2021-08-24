@@ -12,11 +12,11 @@ export const Main = () => {
         <>
             <_MainImg backgroundImage={myAffiliatedBox?.myAffiliatedBox.affiliatedBox.coverImg+""}></_MainImg>
             <_MainNavUl>
-                <_MainNavLi><_MainNavA className="active" href="#">Wod</_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">Leader Board          </_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">Board of Record       </_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">Free Trial            </_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">Hold                  </_MainNavA></_MainNavLi>
+                <_MainNavLi><_MainNavA className="active" href="#">WOD</_MainNavA></_MainNavLi>
+                <_MainNavLi><_MainNavA href="#">LEADER BOARD          </_MainNavA></_MainNavLi>
+                <_MainNavLi><_MainNavA href="#">BOARD OF RECORD       </_MainNavA></_MainNavLi>
+                <_MainNavLi><_MainNavA href="#">FREE TRIAL            </_MainNavA></_MainNavLi>
+                <_MainNavLi><_MainNavA href="#">HOLD                  </_MainNavA></_MainNavLi>
             </_MainNavUl>
         </>
     )
