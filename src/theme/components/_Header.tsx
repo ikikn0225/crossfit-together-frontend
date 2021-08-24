@@ -22,18 +22,35 @@ export const _HeaderLogo = styled.div`
     width: 9rem;
 `;
 
-export const _HeaderUl = styled.ul`
-    display:none;
-    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {        
-        margin-right: 1rem;
-        display: flex;
-        justify-content: flex-end;
-        flex: 1 0 30%;
+interface IOpen {
+    open:boolean;
+}
+
+export const _HeaderUl = styled.ul<IOpen>`
+    list-style: none;
+    display: flex;
+    flex-flow: row nowrap;
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
+        justify-content: center;
+        align-items: center;
     }
-`;
+
+    @media (max-width: 1220px) {
+        flex-flow: column nowrap;
+        background-color: rgba(51, 51, 51, 0.9);
+        position: fixed;
+        transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 300px;
+        padding-top: 3.5rem;
+        transition: transform 0.3s ease-in-out;
+}`;
 
 export const _HeaderLl = styled.li`
-    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {     
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
         position: relative;
         display: flex;
         flex-flow: row nowrap;
@@ -49,21 +66,26 @@ export const _HeaderLl = styled.li`
     }
 `;
 
-export const _HeaderLogOutButton = styled(_ButtonCommon) `
-    display:none;
-    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {    
-        display:block; 
-        font-size: 1rem;
-        height: 1.25rem;
-        color:black;
-        border-radius:1px;
-    }
+export const _HeaderLink = styled(Link)`
+    padding: 18px 10px;
+    color: #fff;
+    text-decoration: none;
 `;
 
-export const _HeaderMenuAcordion = styled.a`
-    float: right;
-    display: block;
-    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
-        display:none;
-    }
+export const _HeaderLogOutButton = styled.li`
+    padding: 18px 10px;
+    color: #fff;
+    text-decoration: none;
+    cursor:pointer;
 `;
+
+// export const _HeaderLogOutButton = styled(_ButtonCommon) `
+//     display:none;
+//     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+//         display:block; 
+//         font-size: 1rem;
+//         height: 1.25rem;
+//         color:black;
+//         border-radius:1px;
+//     }
+// `;
