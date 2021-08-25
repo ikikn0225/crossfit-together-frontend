@@ -4,7 +4,7 @@ import { _HeaderLink, _HeaderLl, _HeaderLogOutButton, _HeaderUl } from '@/theme/
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-const RightNav = ({ open }:any) => {
+const HeaderRightNav = ({ open }:any) => {
     const history = useHistory();
     const logOutClick = () => {
         client.cache.reset().then(() => {
@@ -23,4 +23,4 @@ const RightNav = ({ open }:any) => {
     )
 }
 
-export default RightNav
+export default HeaderRightNav

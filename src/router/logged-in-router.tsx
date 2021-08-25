@@ -7,11 +7,12 @@ import { useApolloClient } from "@apollo/client";
 import { LOCALSTORAGE_TOKEN } from "@/constants";
 import { NotFound } from "@/pages/404";
 import { _Container, _SubContainer } from "../theme/components/_Layout"
-import { UserRole } from "@/__generated__/globalTypes";
 import { NoBox } from "@/pages/no-box";
 import { CreateAffiliatedBox } from "@/pages/coach/create-affiliated-box";
 import { Main } from "@/pages/main";
 import { clearCookie } from "@/cookie";
+import { ConfirmEmail } from "@/pages/confirm-email";
+import { Wod } from "@/pages/wod";
 
 export const LoadingStyle = styled.div`
     height: 100vh;
@@ -46,8 +47,23 @@ const affiliatedBoxRoutes = [
     {
         path:"/",
         component:<Main />
+    },
+    {
+        path:"/wod",
+        component:<Wod/>
+    },
+    {
+        path:"/confirm",
+        component: <ConfirmEmail />
     }
-]
+];
+
+const commonRoutes = [
+    {
+        path:"/confirm",
+        component: <ConfirmEmail />
+    }
+];
 
 export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
     const { data, loading, error, client } = useMe();
@@ -80,6 +96,11 @@ export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
                     ))}
                     {data.me.affiliatedBoxId && affiliatedBoxRoutes.map((route) => (
                         <Route exact key={route.path} path={route.path}>
+                            {route.component}
+                        </Route>
+                    ))}
+                    {commonRoutes.map((route) => (
+                        <Route key={route.path} path={route.path}>
                             {route.component}
                         </Route>
                     ))}

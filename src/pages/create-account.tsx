@@ -196,7 +196,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         type="file"
                         accept="image/*"
                     />
-                    <Button canClick={formState.isValid} loading={uploading} actionText={"Create Account"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"Create Account"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </_CreateAccountForm>
                 <_CreateAccountExtra>

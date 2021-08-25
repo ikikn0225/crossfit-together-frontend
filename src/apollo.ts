@@ -5,7 +5,7 @@ import { getCookie } from "./cookie";
 
 // const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
 const token = getCookie(LOCALSTORAGE_TOKEN);
-console.log(token);
+// console.log(token);
 
 // localStorage.clear();
 

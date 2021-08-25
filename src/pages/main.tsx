@@ -2,6 +2,7 @@ import { useMe } from "@/hooks/useMe";
 import { useMyBox } from "@/hooks/useMyBox";
 import { _Container, _SubContainer } from "@/theme/components/_Layout";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { _MainImg, _MainNavLi, _MainNavA, _MainNavUl } from "../theme/components/_Main"
 
 export const Main = () => {
@@ -10,6 +11,9 @@ export const Main = () => {
     
     return (
         <>
+            <Helmet>
+                <title>Main | CrossfiTogether</title>
+            </Helmet>
             <_MainImg backgroundImage={myAffiliatedBox?.myAffiliatedBox.affiliatedBox.coverImg+""}></_MainImg>
             <_MainNavUl>
                 <_MainNavLi><_MainNavA className="active" href="#">WOD</_MainNavA></_MainNavLi>
