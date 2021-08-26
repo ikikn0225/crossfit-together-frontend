@@ -1,5 +1,4 @@
 import { FormError } from "@/components/form-error";
-import { UserRole } from "@/__generated__/globalTypes";
 import gql from "graphql-tag"
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
@@ -10,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import { CreateAffiliatedBoxMutation, CreateAffiliatedBoxMutationVariables } from "@/__generated__/CreateAffiliatedBoxMutation";
 import { _Container, _SubContainer } from "../../theme/components/_Layout"
 import { _CreateAffiliatedBoxForm ,_CreateAffiliatedBoxInput ,_CreateAffiliatedBoxFileInput } from "../../theme/components/_CreateAffiliatedBox";
+import ModalBase from "../modal-base";
 
 export const CREATE_AFFILIATED_BOX_MUTATION = gql`
     mutation CreateAffiliatedBoxMutation($createAffiliatedBoxInput:CreateAffiliatedBoxInput!) {
@@ -36,13 +36,24 @@ export const CreateAffiliatedBox = () => {
     });
     const [imageUrl, setImageUrl] = useState("");
     const [uploading, setUploading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const history = useHistory();
+    
+    const handleModalOpen = () => {
+        setIsOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsOpen(false);
+        history.push("/");
+        location.reload();
+    };
+
     const onCompleted = (data: CreateAffiliatedBoxMutation) => {
         const { createAffiliatedBox: { ok, error } } = data;
         if(ok) {
             setUploading(false);
-            alert("Welcome to CrossfiTogether!");
-            history.push("/");
+            handleModalOpen();
         }
     }
     const [createAffiliatedBoxMutation, { loading, data:createAffiliatedBoxMutationResult }] = useMutation<CreateAffiliatedBoxMutation, CreateAffiliatedBoxMutationVariables>(CREATE_AFFILIATED_BOX_MUTATION, {
@@ -116,9 +127,10 @@ export const CreateAffiliatedBox = () => {
                         type="file"
                         accept="image/*"
                     />
-                    <Button canClick={formState.isValid} loading={uploading} actionText={"Create My Box"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"Create My Box"} />
                     {createAffiliatedBoxMutationResult?.createAffiliatedBox.error && <FormError errorMessage={createAffiliatedBoxMutationResult.createAffiliatedBox.error}/>}
                 </_CreateAffiliatedBoxForm>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"Congrats To make Affiliated Box!"} modalButtonText={"ENTER MY BOX"}> </ModalBase>
             </_SubContainer>
         </_Container>
     )

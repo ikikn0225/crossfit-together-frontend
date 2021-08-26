@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 interface IMainImgProps {
@@ -6,7 +7,9 @@ interface IMainImgProps {
 
 export const _MainImg = styled.div<IMainImgProps>`
     height:30vh;
-    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
     background-image: url(${(props)=>props.backgroundImage}); 
 
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
@@ -35,6 +38,18 @@ export const _MainNavLi = styled.li`
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
         display:inline-block;
         width:20%;
+    }
+`;
+
+export const _MainNavLink = styled(Link)`
+    color:${(props)=>props.theme.mode.primaryText};
+    text-decoration:none;
+    list-style:none;
+    box-sizing:border-box;
+    font-size:${(props)=>props.theme.fontSizes.lg};
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
+        font-size:${(props)=>props.theme.fontSizes.xl};
     }
 `;
 

@@ -51,7 +51,8 @@ export const _HeaderUl = styled.ul<IOpen>`
 
     @media (max-width: 1220px) {
         flex-flow: column nowrap;
-        background-color: rgba(51, 51, 51, 0.9);
+        background-color: rgba(51, 51, 51);
+        opacity:0.9;
         position: fixed;
         transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
         top: 0;
@@ -60,6 +61,7 @@ export const _HeaderUl = styled.ul<IOpen>`
         width: 300px;
         padding-top: 3.5rem;
         transition: transform 0.3s ease-in-out;
+        z-index:1;
 }`;
 
 export const _HeaderLl = styled.li`

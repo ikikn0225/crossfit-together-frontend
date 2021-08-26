@@ -19,6 +19,6 @@ export const _NoBoxSpan = styled.div`
 
 export const _NoBoxCreateAffiliatedBoxButton = styled(_ButtonCommon)`
     color:#000;
-    margin:2rem;
+    margin:2rem 1rem;
     height:4rem;
 `;

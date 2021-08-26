@@ -7,12 +7,16 @@ import { useApolloClient } from "@apollo/client";
 import { LOCALSTORAGE_TOKEN } from "@/constants";
 import { NotFound } from "@/pages/404";
 import { _Container, _SubContainer } from "../theme/components/_Layout"
-import { NoBox } from "@/pages/no-box";
+import { NoBox } from "@/pages/user/no-box";
 import { CreateAffiliatedBox } from "@/pages/coach/create-affiliated-box";
-import { Main } from "@/pages/main";
+import { Main } from "@/pages/user/main";
 import { clearCookie } from "@/cookie";
 import { ConfirmEmail } from "@/pages/confirm-email";
-import { Wod } from "@/pages/wod";
+import { Wod } from "@/pages/user/wod";
+import { FreeTrial } from "@/pages/user/free-trial";
+import { Hold } from "@/pages/user/hold";
+import { BoardOfRecord } from "@/pages/user/board-of-record";
+import { LeaderBoard } from "@/pages/user/leader-board";
 
 export const LoadingStyle = styled.div`
     height: 100vh;
@@ -51,6 +55,22 @@ const affiliatedBoxRoutes = [
     {
         path:"/wod",
         component:<Wod/>
+    },
+    {
+        path:"/leader-board",
+        component:<LeaderBoard/>
+    },
+    {
+        path:"/board-of-record",
+        component:<BoardOfRecord/>
+    },
+    {
+        path:"/hold",
+        component:<Hold/>
+    },
+    {
+        path:"/free-trial",
+        component:<FreeTrial/>
     },
     {
         path:"/confirm",

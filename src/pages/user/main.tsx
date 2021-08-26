@@ -1,9 +1,9 @@
 import { useMe } from "@/hooks/useMe";
 import { useMyBox } from "@/hooks/useMyBox";
 import { _Container, _SubContainer } from "@/theme/components/_Layout";
+import { _MainImg, _MainNavLi, _MainNavLink, _MainNavUl } from "@/theme/components/_Main";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { _MainImg, _MainNavLi, _MainNavA, _MainNavUl } from "../theme/components/_Main"
 
 export const Main = () => {
     const {data, loading, error} = useMe();
@@ -16,11 +16,11 @@ export const Main = () => {
             </Helmet>
             <_MainImg backgroundImage={myAffiliatedBox?.myAffiliatedBox.affiliatedBox.coverImg+""}></_MainImg>
             <_MainNavUl>
-                <_MainNavLi><_MainNavA className="active" href="#">WOD</_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">LEADER BOARD          </_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">BOARD OF RECORD       </_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">FREE TRIAL            </_MainNavA></_MainNavLi>
-                <_MainNavLi><_MainNavA href="#">HOLD                  </_MainNavA></_MainNavLi>
+                <_MainNavLi><_MainNavLink className="active" to="/wod">WOD</_MainNavLink></_MainNavLi>
+                <_MainNavLi><_MainNavLink to="/leader-board">LEADER BOARD          </_MainNavLink></_MainNavLi>
+                <_MainNavLi><_MainNavLink to="/board-of-record">BOARD OF RECORD       </_MainNavLink></_MainNavLi>
+                <_MainNavLi><_MainNavLink to="/free-trial">FREE TRIAL            </_MainNavLink></_MainNavLi>
+                <_MainNavLi><_MainNavLink to="/hold">HOLD                  </_MainNavLink></_MainNavLi>
             </_MainNavUl>
         </>
     )

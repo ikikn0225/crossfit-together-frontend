@@ -12,6 +12,7 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { _Container, _SubContainer } from "../theme/components/_Layout";
 import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect, _CreateAccountLoginLink } from "../theme/components/_CreateAccount";
+import ModalBase from "./modal-base";
 
 export const ALL_AFFILIATED_BOXES = gql`
     query allAffiliatedBoxesQuery {
@@ -57,13 +58,23 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     const [imageUrl, setImageUrl] = useState("");
     const [uploading, setUploading] = useState(false);
     const [roleStatus, setRoleStatus] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
     const history = useHistory();
+
+    const handleModalOpen = () => {
+        setIsOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsOpen(false);
+        history.push("/");
+    };
+
     const onCompleted = (data: createAccountMutation) => {
         const { createAccount: { ok, error } } = data;
         if(ok) {
             setUploading(false);
-            alert("Welcome to CrossfiTogether!");
-            history.push("/");
+            handleModalOpen();
         }
     }
     const [createAccountMutation, { loading, data:createAccountMutationResult }] = useMutation<createAccountMutation, createAccountMutationVariables>(CREATE_ACCOUNT_MUTATION, {
@@ -196,14 +207,15 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         type="file"
                         accept="image/*"
                     />
-                    <Button canClick={formState.isValid} loading={loading} actionText={"Create Account"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"CREATE ACCOUNT"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </_CreateAccountForm>
                 <_CreateAccountExtra>
                     <div>
-                        Alreay have an account? <_CreateAccountLoginLink to="/" > Log in now</_CreateAccountLoginLink>
+                        Alreay have an account? <_CreateAccountLoginLink to="/" > SIGN IN NOW</_CreateAccountLoginLink>
                     </div>
                 </_CreateAccountExtra>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"Welcome To CrossfiTogether"} modalButtonText={"SIGN IN NOW"}> </ModalBase>
             </_SubContainer>
         </_Container>
     )

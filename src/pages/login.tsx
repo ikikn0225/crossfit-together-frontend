@@ -1,6 +1,6 @@
 import { ApolloError, useMutation } from "@apollo/client";
 import gql from "graphql-tag";
-import React from "react";
+import React, { useState } from "react";
 import {Helmet} from "react-helmet-async";
 import { authTokenVar, isLoggedInVar } from "../apollo";
 import { LOCALSTORAGE_TOKEN } from "../constants";
@@ -63,7 +63,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                 },
             },
         )}
-    }, []); 
+    }, []);
     return (
         <_Container>
             <Helmet>
@@ -103,12 +103,12 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     {errors.password?.message && (
                         <FormError errorMessage={errors.password?.message} />
                     )}
-                    <Button canClick={formState.isValid} loading={loading} actionText={"Log in"}></Button>
+                    <Button canClick={formState.isValid} loading={loading} actionText={"SIGN IN"}></Button>
                     {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
                 </_LoginForm>
                 <_LoginExtra>
                     <div>
-                        New to CrossfiTogether? <_LoginCreateAccountLink to="/create-account" >Create Account</_LoginCreateAccountLink>
+                        New to CrossfiTogether? <_LoginCreateAccountLink to="/create-account" >CREATE ACCOUNT</_LoginCreateAccountLink>
                     </div>
                 </_LoginExtra>
             </_SubContainer>

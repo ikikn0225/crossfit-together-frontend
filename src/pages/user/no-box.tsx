@@ -3,7 +3,7 @@ import { LoadingSpanStyle, LoadingStyle } from "@/router/logged-in-router";
 import { UserRole } from "@/__generated__/globalTypes";
 import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router-dom";
-import { _NoBoxContainer ,__NoBoxSubContainer ,_NoBoxSpan ,_NoBoxCreateAffiliatedBoxButton } from "../theme/components/_NoBox"
+import { _NoBoxContainer ,__NoBoxSubContainer ,_NoBoxSpan ,_NoBoxCreateAffiliatedBoxButton } from "../../theme/components/_NoBox"
 
 export const NoBox = () => {
     const { data, loading, error } = useMe();

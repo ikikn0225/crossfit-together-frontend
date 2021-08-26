@@ -7,12 +7,12 @@ const HeaderBurger = () => {
     
     return (
         <>
-        <_HeaderBurger open={open} onClick={() => setOpen(!open)}>
-            <div />
-            <div />
-            <div />
-        </_HeaderBurger>
-        <HeaderRightNav open={open}/>
+            <_HeaderBurger open={open} onClick={() => setOpen(!open)}>
+                <div />
+                <div />
+                <div />
+            </_HeaderBurger>
+            <HeaderRightNav open={open}/>
         </>
     )
 }
