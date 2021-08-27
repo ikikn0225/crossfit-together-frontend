@@ -1,5 +1,5 @@
 import { useMe } from "@/hooks/useMe";
-import { LoadingSpanStyle, LoadingStyle } from "@/router/logged-in-router";
+import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { UserRole } from "@/__generated__/globalTypes";
 import { Helmet } from "react-helmet-async";
 import { useHistory } from "react-router-dom";
@@ -15,9 +15,9 @@ export const NoBox = () => {
 
     if (!data || loading || error) {
         return (
-            <LoadingStyle>
-                <LoadingSpanStyle>Loading...</LoadingSpanStyle>
-            </LoadingStyle>
+            <_Loading>
+                <_LoadingSpan>Loading...</_LoadingSpan>
+            </_Loading>
         );
     }
     return(

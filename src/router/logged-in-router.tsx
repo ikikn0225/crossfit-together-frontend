@@ -17,20 +17,8 @@ import { FreeTrial } from "@/pages/user/free-trial";
 import { Hold } from "@/pages/user/hold";
 import { BoardOfRecord } from "@/pages/user/board-of-record";
 import { LeaderBoard } from "@/pages/user/leader-board";
-
-export const LoadingStyle = styled.div`
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-export const LoadingSpanStyle = styled.span`
-    font-weight: 500;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    letter-spacing: 0.025em;
-`;
+import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
+import { CreateWod } from "@/pages/user/create-wod";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
@@ -55,6 +43,10 @@ const affiliatedBoxRoutes = [
     {
         path:"/wod",
         component:<Wod/>
+    },
+    {
+        path:"/create-wod",
+        component:<CreateWod/>
     },
     {
         path:"/leader-board",
@@ -99,9 +91,9 @@ export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
 
     if (!data || loading) {
         return (
-            <LoadingStyle>
-                <LoadingSpanStyle>Loading...</LoadingSpanStyle>
-            </LoadingStyle>
+            <_Loading>
+                <_LoadingSpan>Loading...</_LoadingSpan>
+            </_Loading>
         );
     }
     return (

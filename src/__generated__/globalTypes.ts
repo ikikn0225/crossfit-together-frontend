@@ -27,6 +27,11 @@ export interface CreateAffiliatedBoxInput {
   address: string;
 }
 
+export interface CreateWodInput {
+  title: string;
+  content: string;
+}
+
 export interface LoginInput {
   email: string;
   password: string;

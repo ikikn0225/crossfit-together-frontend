@@ -58,7 +58,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                 variables: {
                     loginInput: {
                         email:values.email,
-                        password:cryptoPassword,
+                        password:values.password,
                     }
                 },
             },

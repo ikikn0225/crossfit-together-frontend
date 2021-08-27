@@ -7,6 +7,7 @@ import GlobalStyle from './theme/global-styles';
 import { App } from './components/app';
 
 
+
 ReactDOM.render(
     <React.StrictMode>
         <ApolloProvider client={client}>
