@@ -9,8 +9,10 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import ModalBase from "../modal-base";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
+import DatePicker, { DayValue, DayRange, Day } from 'react-modern-calendar-datepicker'
+// import "react-datepicker/dist/react-datepicker.css";
+import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 
 export const CREATE_WOD_MUTATION = gql`
     mutation createWodMutation($createWodInput: CreateWodInput!) {
@@ -30,7 +32,8 @@ export const CreateWod = () => {
     const ref = useRef<HTMLTextAreaElement>(null);
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
-    const [startDate, setStartDate] = useState(new Date());
+    // const [startDate, setStartDate] = useState(new Date());
+    const [day, setDay] = useState<DayValue>(null);
     // const [createAccountMutation, { loading, data:createAccountMutationResult }] = useMutation<createAccountMutation, createAccountMutationVariables>(CREATE_ACCOUNT_MUTATION, {
     //     onCompleted,   
     // });
@@ -86,13 +89,11 @@ export const CreateWod = () => {
                 <_WodImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_WodImg> 
                 <_WodImgTitle>Create WOD</_WodImgTitle>
             </_WodImgContainer>
+            {/* <DatePicker selected={startDate} onChange={(date:Date) => setStartDate(date)} /> */}
+            <DatePicker value={day} onChange={setDay} />
             <_SubContainer>
                 <_CreateWodForm  onSubmit={handleSubmit(onSubmit)}>
                     <_CreateWodSpan>WOD Title</_CreateWodSpan>
-                    <DatePicker
-                        selected={startDate} 
-                        onChange={(date:Date) => setStartDate(date)}
-                    />
                     <_CreateWodInput 
                         {...register("title", {
                             required: "Title is required",

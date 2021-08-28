@@ -32,6 +32,10 @@ module.exports = {
                 publicPath:'./dist/',
                 name: '[name].[ext]?[hash]',
             }
+        },
+        {
+            test: /\.css$/,
+            use: ['style-loader','css-loader']
         }
         ],
     },

@@ -18,8 +18,8 @@ export const _HeaderContainer = styled.div`
     align-items: center;
 `;
 
-export const _HeaderLogo = styled.div`
-    width: 9rem;
+export const _HeaderLogo = styled(Link)`
+    // width: 9rem;
 `;
 
 export const _HeaderNav = styled.nav`
