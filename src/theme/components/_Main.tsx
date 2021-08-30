@@ -5,8 +5,39 @@ interface IMainImgProps {
     backgroundImage:string;
 }
 
-export const _MainImg = styled.div<IMainImgProps>`
+export const _MainImgBox = styled.div`
+    position:relative;
     height:30vh;
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        height:40vh;
+    }
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
+        height:50vh;
+    }
+`;
+
+export const _MainBackgroundImg = styled.div<IMainImgProps>`
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    background-image: url(${(props)=>props.backgroundImage});
+    -webkit-filter: grayscale(100%);
+    filter:gray;
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        height:40vh;
+    }
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
+        height:50vh;
+    }
+`;
+
+export const _MainImg = styled.div<IMainImgProps>`
+    position: absolute;
+    top: 0;
+    left: 0;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -21,6 +52,11 @@ export const _MainImg = styled.div<IMainImgProps>`
 `;
 
 export const _MainNavUl = styled.ul`
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        width:50%;
+        margin: auto;
+        padding-top:3rem;
+    }
     border-color:gray;
 `;
 
@@ -38,6 +74,16 @@ export const _MainNavLi = styled.li`
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
         display:inline-block;
         width:20%;
+    }
+`;
+
+export const _MainNavLiImg = styled.div<IMainImgProps>`
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        height:30vh;
+        background-size: cover;
+        background-image: url(${(props)=>props.backgroundImage});
+        -webkit-filter: grayscale(100%);
+        filter:gray;
     }
 `;
 
