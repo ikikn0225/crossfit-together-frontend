@@ -69,6 +69,7 @@ export const _WodCreateWodButton = styled(_ButtonCommon)`
 
 export const _WodListContainer = styled.div`
     position:relative;
+    background:#000;
 `;
 
 export const _WodListSubContainer = styled.div`
@@ -79,6 +80,7 @@ export const _WodListSubContainer = styled.div`
 export const _WodListLayout = styled.div`
     margin-top:2rem;
     margin-bottom:4rem;
+    padding-bottom:6rem;
 `;
 
 export const _WodNoContent = styled.div`

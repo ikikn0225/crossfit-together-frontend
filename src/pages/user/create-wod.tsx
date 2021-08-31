@@ -16,7 +16,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { createWodMutation, createWodMutationVariables } from "@/__generated__/createWodMutation";
 
 const ExampleCustomInput = ({ value, onClick, ...rest }: {value: string; onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void}) => {
-    console.log({value}.value.length);
     
     if({value}.value.length !== 0) {
         return <button className="example-custom-input" onClick={onClick}>
@@ -56,6 +55,7 @@ export const CreateWod = () => {
         } = data;
         if(ok) {
             history.push("/wod");
+            location.reload();
         }
 
     }

@@ -37,7 +37,6 @@ export const ALL_WODS = gql`
 `;
 
 interface IWodList {
-    id:number;
     title:string;
     content:string;
 }
@@ -79,9 +78,9 @@ export const Wod = () => {
                     {wods?.allWods.wods?.length !== 0 
                     ? (
                         wods?.allWods.wods?.map((wod:IWodList) => (
-                            <_WodListLayout key={wod.id}>
-                                <_WodListTitle key={wod.id+wod.title}>{wod.title}</_WodListTitle>
-                                <_WodListContent key={wod.id+wod.title+1}>{wod.content}</_WodListContent>
+                            <_WodListLayout key={wod.title+1}>
+                                <_WodListTitle key={wod.title+2}>{wod.title}</_WodListTitle>
+                                <_WodListContent key={wod.title+3}>{wod.content}</_WodListContent>
                             </_WodListLayout>
                         ))
                     )
