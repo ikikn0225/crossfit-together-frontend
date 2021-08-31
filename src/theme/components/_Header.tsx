@@ -61,7 +61,7 @@ export const _HeaderUl = styled.ul<IOpen>`
         width: 300px;
         padding-top: 3.5rem;
         transition: transform 0.3s ease-in-out;
-        z-index:1;
+        z-index:2;
 }`;
 
 export const _HeaderLl = styled.li`

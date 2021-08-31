@@ -18,7 +18,7 @@ export const Header:React.FC = () => {
             }
             <_HeaderNav>
                 <_HeaderLogo className="logo" to="/">
-                    <img src="../../public/images/logo_black.jpg" />
+                    <img src="../../public/images/logo_black_fake.jpg" />
                 </_HeaderLogo>
                 <HeaderBurger />
             </_HeaderNav>

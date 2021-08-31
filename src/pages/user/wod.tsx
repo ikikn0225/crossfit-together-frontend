@@ -25,6 +25,7 @@ export const ALL_WODS = gql`
             ok
             error
             wods {
+                id
                 title
                 content
                 likes {
@@ -34,6 +35,12 @@ export const ALL_WODS = gql`
         }
     }
 `;
+
+interface IWodList {
+    id:number;
+    title:string;
+    content:string;
+}
 
 export const Wod = () => {
     const { data, loading, error } = useMe();
@@ -71,10 +78,10 @@ export const Wod = () => {
                 <_WodListSubContainer>
                     {wods?.allWods.wods?.length !== 0 
                     ? (
-                        wods?.allWods.wods?.map((wod:any, index:any) => (
-                            <_WodListLayout>
-                                <_WodListTitle>{wod.title}</_WodListTitle>
-                                <_WodListContent>{wod.content}</_WodListContent>
+                        wods?.allWods.wods?.map((wod:IWodList) => (
+                            <_WodListLayout key={wod.id}>
+                                <_WodListTitle key={wod.id+wod.title}>{wod.title}</_WodListTitle>
+                                <_WodListContent key={wod.id+wod.title+1}>{wod.content}</_WodListContent>
                             </_WodListLayout>
                         ))
                     )

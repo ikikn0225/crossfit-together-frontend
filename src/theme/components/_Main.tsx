@@ -21,9 +21,11 @@ export const _MainBackgroundImg = styled.div<IMainImgProps>`
     position: absolute;
     top: 0;
     left: 0;
+    width:100%;
+    height:100%;
     background-size: cover;
     background-image: url(${(props)=>props.backgroundImage});
-    -webkit-filter: grayscale(100%);
+    -webkit-filter: grayscale(100%) blur(2px);
     filter:gray;
 
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
@@ -38,6 +40,9 @@ export const _MainImg = styled.div<IMainImgProps>`
     position: absolute;
     top: 0;
     left: 0;
+    width:100%;
+    height:100%;
+    z-index:1;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;

@@ -10,6 +10,7 @@
     "@apollo/client": "^3.3.21",
     "@emotion/is-prop-valid": "1.1.0",
     "@graphql-codegen/typescript": "1.23.0",
+    "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@types/react-calendar": "^3.4.3",
     "@types/react-datepicker": "4.1.4",

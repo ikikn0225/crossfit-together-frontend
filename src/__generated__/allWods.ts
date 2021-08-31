@@ -14,6 +14,7 @@ export interface allWods_allWods_wods_likes {
 
 export interface allWods_allWods_wods {
   __typename: "Wod";
+  id: number;
   title: string;
   content: string;
   likes: allWods_allWods_wods_likes[];

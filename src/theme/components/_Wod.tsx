@@ -67,12 +67,12 @@ export const _WodCreateWodButton = styled(_ButtonCommon)`
     }
 `;
 
-export const _WodListContainer = styled(_Container)`
+export const _WodListContainer = styled.div`
+    position:relative;
 `;
 
-export const _WodListSubContainer = styled(_SubContainer)`
+export const _WodListSubContainer = styled.div`
     width:auto;
-    height:inherit;
     text-align:center;
 `;
 
