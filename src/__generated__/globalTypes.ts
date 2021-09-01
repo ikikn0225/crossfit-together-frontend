@@ -29,6 +29,7 @@ export interface CreateAffiliatedBoxInput {
 
 export interface CreateWodInput {
   title: string;
+  titleDate?: any | null;
   content: string;
 }
 

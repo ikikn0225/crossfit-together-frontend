@@ -19,55 +19,27 @@ import { BoardOfRecord } from "@/pages/user/board-of-record";
 import { LeaderBoard } from "@/pages/user/leader-board";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { CreateWod } from "@/pages/user/create-wod";
+import { UpdateWod } from "@/pages/user/update-wod";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
 }
 
 const noAffiliatedBoxRoutes = [
-    {
-        path:"/",
-        component:<NoBox/>
-    },
-    {
-        path:"/create-affiliated-box",
-        component:<CreateAffiliatedBox/>
-    }
+    { path:"/", component:<NoBox/> },
+    { path:"/create-affiliated-box", component:<CreateAffiliatedBox/> }
 ];
 
 const affiliatedBoxRoutes = [
-    {
-        path:"/",
-        component:<Main />
-    },
-    {
-        path:"/wod",
-        component:<Wod/>
-    },
-    {
-        path:"/create-wod",
-        component:<CreateWod/>
-    },
-    {
-        path:"/leader-board",
-        component:<LeaderBoard/>
-    },
-    {
-        path:"/board-of-record",
-        component:<BoardOfRecord/>
-    },
-    {
-        path:"/hold",
-        component:<Hold/>
-    },
-    {
-        path:"/free-trial",
-        component:<FreeTrial/>
-    },
-    {
-        path:"/confirm",
-        component: <ConfirmEmail />
-    }
+    { path:"/", component:<Main /> },
+    { path:"/wod", component:<Wod/> },
+    { path:"/create-wod", component:<CreateWod/> },
+    { path:"/update-wod/:id", component:<UpdateWod/> },
+    { path:"/leader-board", component:<LeaderBoard/> },
+    { path:"/board-of-record", component:<BoardOfRecord/> },
+    { path:"/hold", component:<Hold/> },
+    { path:"/free-trial", component:<FreeTrial/> },
+    { path:"/confirm", component: <ConfirmEmail /> }
 ];
 
 const commonRoutes = [

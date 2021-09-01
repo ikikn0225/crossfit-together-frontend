@@ -11,13 +11,15 @@ import {
     _WodImgTitle, 
     _WodNoContent, 
     _WodListContent, 
-    _WodListLayout
+    _WodListLayout,
+    _WodUpdateWodLink,
+    _WodUpdateWodLinkContainer
 } from "@/theme/components/_Wod"
 import { allWods } from "@/__generated__/allWods";
 import { UserRole } from "@/__generated__/globalTypes";
 import { gql, useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async"
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const ALL_WODS = gql`
     query allWods {
@@ -28,6 +30,7 @@ export const ALL_WODS = gql`
                 id
                 title
                 content
+                titleDate
                 likes {
                     id
                 }
@@ -37,6 +40,7 @@ export const ALL_WODS = gql`
 `;
 
 interface IWodList {
+    id:number;
     title:string;
     content:string;
 }
@@ -79,13 +83,16 @@ export const Wod = () => {
                     ? (
                         wods?.allWods.wods?.map((wod:IWodList) => (
                             <_WodListLayout key={wod.title+1}>
+                                <_WodUpdateWodLinkContainer>
+                                    <_WodUpdateWodLink to={`/update-wod/${wod.id}`}>Update Wod</_WodUpdateWodLink>
+                                </_WodUpdateWodLinkContainer>
                                 <_WodListTitle key={wod.title+2}>{wod.title}</_WodListTitle>
                                 <_WodListContent key={wod.title+3}>{wod.content}</_WodListContent>
                             </_WodListLayout>
                         ))
                     )
                     : (
-                        <_WodNoContent>No Rep!</_WodNoContent>
+                        <_WodNoContent>Sorry, No Rep!</_WodNoContent>
                     )}
                 </_WodListSubContainer>
             </_WodListContainer>

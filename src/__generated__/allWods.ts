@@ -17,6 +17,7 @@ export interface allWods_allWods_wods {
   id: number;
   title: string;
   content: string;
+  titleDate: any | null;
   likes: allWods_allWods_wods_likes[];
 }
 

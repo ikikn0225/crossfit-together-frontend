@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { _WodImg, _WodImgContainer, _WodImgTitle } from './_Wod';
 
 export const _CreateWodSubContainer = styled.div`
     width: 100%;
@@ -11,6 +12,12 @@ export const _CreateWodSubContainer = styled.div`
         padding-top:3rem;
     }
 `;
+
+export const _CreateWodImgContainer = styled(_WodImgContainer)``;
+
+export const _CreateWodImg = styled(_WodImg)``;
+
+export const _CreateWodImgTitle = styled(_WodImgTitle)``;
 
 export const _CreateWodForm = styled.form`
     display:grid;
@@ -43,6 +50,8 @@ export const _CreateWodInput = styled.input`
 export const _CreateWodTextArea = styled.textarea`
     width:100%;
     height: 100px;
+    max-height:230px;
+    white-space: pre-line;
     border-width: thin;
     border-style: solid;
     border-color: ${(props) => props.theme.mode.border}
