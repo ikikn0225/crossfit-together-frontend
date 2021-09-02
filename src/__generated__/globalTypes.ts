@@ -38,6 +38,10 @@ export interface LoginInput {
   password: string;
 }
 
+export interface OneWodInput {
+  wodId: number;
+}
+
 export interface VerifyEmailInput {
   code: string;
 }

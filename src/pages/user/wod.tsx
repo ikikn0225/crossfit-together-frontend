@@ -84,7 +84,7 @@ export const Wod = () => {
                         wods?.allWods.wods?.map((wod:IWodList) => (
                             <_WodListLayout key={wod.title+1}>
                                 <_WodUpdateWodLinkContainer>
-                                    <_WodUpdateWodLink to={`/update-wod/${wod.id}`}>Update Wod</_WodUpdateWodLink>
+                                    <_WodUpdateWodLink to={`/update-wod/${wod.id}`}>Edit Wod</_WodUpdateWodLink>
                                 </_WodUpdateWodLinkContainer>
                                 <_WodListTitle key={wod.title+2}>{wod.title}</_WodListTitle>
                                 <_WodListContent key={wod.title+3}>{wod.content}</_WodListContent>

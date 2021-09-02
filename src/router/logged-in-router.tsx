@@ -18,7 +18,7 @@ import { Hold } from "@/pages/user/hold";
 import { BoardOfRecord } from "@/pages/user/board-of-record";
 import { LeaderBoard } from "@/pages/user/leader-board";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
-import { CreateWod } from "@/pages/user/create-wod";
+import { CreateWod } from "@/pages/coach/create-wod";
 import { UpdateWod } from "@/pages/user/update-wod";
 
 interface ILoggedInRouterTheme {

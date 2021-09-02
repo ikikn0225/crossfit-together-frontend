@@ -8,7 +8,7 @@ import { createWodMutation, createWodMutationVariables } from "@/__generated__/c
 import { allWods } from "@/__generated__/allWods";
 import React, { useCallback, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { ALL_WODS } from "./wod";
+import { ALL_WODS } from "../user/wod";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import ModalBase from "../modal-base";
@@ -129,7 +129,7 @@ export const CreateWod = () => {
     //즉시 실행함수로 excludeDates 함수 생성
     let excludeDates:Date[]|undefined = new Array();
     (function isWeekday() {
-        const wodsList = wods?.allWods.wods?.map((wod) => { return new Date(wod.titleDate); });
+        const wodsList = wods?.allWods.wods?.map((wod:any) => { return new Date(wod.titleDate); });
         excludeDates = wodsList;
     })();
     
