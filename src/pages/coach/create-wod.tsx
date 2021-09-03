@@ -24,6 +24,27 @@ export const CREATE_WOD_MUTATION = gql`
     }
 `;
 
+export const changeDateToTitle = (date:Date) => {
+    let titleYear = date.getFullYear().toString().substring(2, 4);
+    let titleMonth = date.getMonth()+1;
+    let titleDate = date.getDate();
+    let titleDateSum = "";
+    
+    if(titleMonth >= 10 && titleDate >= 10) {
+        return titleDateSum = `${titleYear}${titleMonth}${titleDate}`
+    }
+    if(titleMonth >= 10 && titleDate < 10) {
+        return titleDateSum = `${titleYear}${titleMonth}0${titleDate}`;
+    }
+    if(titleMonth < 10 && titleDate >= 10) {
+        return titleDateSum = `${titleYear}0${titleMonth}${titleDate}`;
+    }
+    if(titleMonth < 10 && titleDate < 10) {
+        return titleDateSum = `${titleYear}0${titleMonth}0${titleDate}`;
+    }
+    return "";
+}
+
 interface ICreateWodForm {
     date: Date;
     title: string;
@@ -105,30 +126,9 @@ export const CreateWod = () => {
         ref.current.style.height = ref.current.scrollHeight + 'px';
     }, []);
 
-    const changeDateToTitle = (date:Date) => {
-        let titleYear = date.getFullYear().toString().substring(2, 4);
-        let titleMonth = date.getMonth()+1;
-        let titleDate = date.getDate();
-        let titleDateSum = "";
-        
-        if(titleMonth >= 10 && titleDate >= 10) {
-            return titleDateSum = `${titleYear}${titleMonth}${titleDate}`
-        }
-        if(titleMonth >= 10 && titleDate < 10) {
-            return titleDateSum = `${titleYear}${titleMonth}0${titleDate}`;
-        }
-        if(titleMonth < 10 && titleDate >= 10) {
-            return titleDateSum = `${titleYear}0${titleMonth}${titleDate}`;
-        }
-        if(titleMonth < 10 && titleDate < 10) {
-            return titleDateSum = `${titleYear}0${titleMonth}0${titleDate}`;
-        }
-        return "";
-    }
-
     //즉시 실행함수로 excludeDates 함수 생성
     let excludeDates:Date[]|undefined = new Array();
-    (function isWeekday() {
+    module.exports = (function isWeekday() {
         const wodsList = wods?.allWods.wods?.map((wod:any) => { return new Date(wod.titleDate); });
         excludeDates = wodsList;
     })();

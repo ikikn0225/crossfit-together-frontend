@@ -19,7 +19,7 @@ import { BoardOfRecord } from "@/pages/user/board-of-record";
 import { LeaderBoard } from "@/pages/user/leader-board";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { CreateWod } from "@/pages/coach/create-wod";
-import { UpdateWod } from "@/pages/user/update-wod";
+import { EditWod } from "@/pages/user/edit-wod";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
@@ -34,7 +34,7 @@ const affiliatedBoxRoutes = [
     { path:"/", component:<Main /> },
     { path:"/wod", component:<Wod/> },
     { path:"/create-wod", component:<CreateWod/> },
-    { path:"/update-wod/:id", component:<UpdateWod/> },
+    { path:"/edit-wod/:id", component:<EditWod/> },
     { path:"/leader-board", component:<LeaderBoard/> },
     { path:"/board-of-record", component:<BoardOfRecord/> },
     { path:"/hold", component:<Hold/> },

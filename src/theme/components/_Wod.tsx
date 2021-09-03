@@ -71,6 +71,7 @@ export const _WodCreateWodButton = styled(_ButtonCommon)`
 export const _WodUpdateWodLinkContainer = styled.div`
     text-align:right;
     margin-right:20px;
+    padding:5px;
 `;
 
 export const _WodUpdateWodLink = styled(Link)`

@@ -33,6 +33,13 @@ export interface CreateWodInput {
   content: string;
 }
 
+export interface EditWodInput {
+  title?: string | null;
+  titleDate?: any | null;
+  content?: string | null;
+  wodId: number;
+}
+
 export interface LoginInput {
   email: string;
   password: string;
