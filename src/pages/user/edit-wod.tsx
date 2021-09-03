@@ -149,7 +149,6 @@ export const EditWod = () => {
                 <_EditWodImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_EditWodImg> 
                 <_EditWodImgTitle>Edit WOD</_EditWodImgTitle>
             </_EditWodImgContainer>
-            <div>{wod?.wod.wod?.content}</div>
             <_EditWodSubContainer>
                 <_EditWodForm  onSubmit={handleSubmit(onSubmit)}>
                     <_EditWodSpan>WOD Title</_EditWodSpan>
@@ -174,10 +173,11 @@ export const EditWod = () => {
                             required: "Content is required",
                         })}
                         name="content"
+                        placeholder="Content"
                         className="textarea"
                         ref={ref}
                         onInput={handleResizeHeight}
-                    >{wod?.wod.wod?.content}</_EditWodTextArea>
+                    ></_EditWodTextArea>
                     {errors.content?.message && (  
                         <FormError errorMessage={errors.content?.message} />
                     )}
