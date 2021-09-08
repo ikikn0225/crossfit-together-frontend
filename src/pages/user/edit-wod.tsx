@@ -58,7 +58,7 @@ export const EditWod = () => {
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
     const { data:wods } = useQuery<allWods>(ALL_WODS);
-    const {data:wod} = useQuery<wod, wodVariables>(
+    const { data:wod } = useQuery<wod, wodVariables>(
         WOD_QUERY,
         {
             variables: {
@@ -68,6 +68,7 @@ export const EditWod = () => {
             },
         }
     );
+    const [startDate, setStartDate] = useState(new Date());
     
     const onCompleted = (data:editWodMutation) => {
         const { editWod:{ok} } = data;
@@ -86,20 +87,20 @@ export const EditWod = () => {
 
     const onSubmit = async() => {
         try {
-            const { title, date, content} = getValues();
-            let titleDateSum = changeDateToTitle(date);
+            const { content } = getValues();
+            let titleDateSum = changeDateToTitle(startDate);
             
             editWodMutation({
                 variables:{
                     editWodInput:{
                         title:titleDateSum,
                         content,
-                        titleDate:date,
+                        titleDate:startDate,
                         wodId:+id
                     }
                 }
             })
-        } catch (e) {
+        } catch (e:any) {
             console.log(e.response.data);
         }
     }
@@ -125,6 +126,10 @@ export const EditWod = () => {
         excludeDates = wodsList;
     })();
 
+    const onDateChange = (date: Date) => {
+        setStartDate(date);
+    }
+
 
     const handleModalClose = () => {
         setIsOpen(false);
@@ -139,7 +144,17 @@ export const EditWod = () => {
         ref.current.style.height = ref.current.scrollHeight + 'px';
     }, []);
 
+    useEffect(() => {
+        if(loading === false && wod) {
+            const year = new Date(wod?.wod.wod?.titleDate).getFullYear();
+            const month = new Date(wod?.wod.wod?.titleDate).getMonth();
+            const date = new Date(wod?.wod.wod?.titleDate).getDate();
+            
+            setStartDate(new Date(year, month, date));
+        }
+    }, [loading, wod]);
     
+
     return (
         <>
             <Helmet>
@@ -159,8 +174,8 @@ export const EditWod = () => {
                         <DatePicker
                             className="input"
                             dateFormat="yyMMdd"
-                            onChange={(e) => field.onChange(e)}
-                            selected={field.value}
+                            onChange={onDateChange}
+                            selected={startDate}
                             excludeDates={excludeDates}
                             customInput={React.createElement(ExampleCustomInput)}
                             isClearable={true}
@@ -177,6 +192,7 @@ export const EditWod = () => {
                         className="textarea"
                         ref={ref}
                         onInput={handleResizeHeight}
+                        defaultValue={wod?.wod.wod?.content}
                     ></_EditWodTextArea>
                     {errors.content?.message && (  
                         <FormError errorMessage={errors.content?.message} />
