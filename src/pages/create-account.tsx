@@ -110,7 +110,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     }
                 }
             })
-        } catch (e) {
+        } catch (e:any) {
             console.log(e.response.data);
         }
     }

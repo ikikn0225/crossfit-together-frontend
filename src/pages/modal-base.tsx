@@ -12,24 +12,24 @@ export type ModalBaseProps = {
     onClose: () => void;
     modalContentText:string;
     modalButtonText:string;
+    top?:string;
 };
 
-const ModalBase = ({ children, visible, onClose, modalContentText, modalButtonText }: ModalBaseProps) => {
-    const history = useHistory();
+const ModalBase = ({ children, visible, onClose, modalContentText, modalButtonText, top }: ModalBaseProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
         if (visible) {
-        setIsOpen(true);
+            setIsOpen(true);
         } else {
-        timeoutId = setTimeout(() => setIsOpen(false), 150);
+            timeoutId = setTimeout(() => setIsOpen(false), 150);
         }
 
         return () => {
-        if (timeoutId !== undefined) {
-            clearTimeout(timeoutId);
-        }
+            if (timeoutId !== undefined) {
+                clearTimeout(timeoutId);
+            }
         };
     }, [visible]);
 
@@ -40,7 +40,7 @@ const ModalBase = ({ children, visible, onClose, modalContentText, modalButtonTe
     return (
         <>
             <_ModalBackground visible={visible} onClick={onClose} />
-            <_ModalSection visible={visible}>
+            <_ModalSection visible={visible} top={top}>
                 <_ModalContent>{modalContentText}</_ModalContent>
                 <_ModalCloseButton type="button" onClick={onClose}> {modalButtonText} </_ModalCloseButton>
             </_ModalSection>

@@ -24,6 +24,12 @@ export const CREATE_WOD_MUTATION = gql`
     }
 `;
 
+interface ICreateWodForm {
+    date: Date;
+    title: string;
+    content: string;
+}
+
 export const changeDateToTitle = (date:Date) => {
     let titleYear = date.getFullYear().toString().substring(2, 4);
     let titleMonth = date.getMonth()+1;
@@ -45,12 +51,6 @@ export const changeDateToTitle = (date:Date) => {
     return "";
 }
 
-interface ICreateWodForm {
-    date: Date;
-    title: string;
-    content: string;
-}
-
 const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onClick(): void }>(
     ({ value, onClick }, ref) => {
     
@@ -69,7 +69,6 @@ export const CreateWod = () => {
     const ref = useRef<HTMLTextAreaElement>(null);
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
-    const [startDate, setStartDate] = useState<Date | null>(new Date());
     const { data:wods } = useQuery<allWods>(ALL_WODS);
 
     const onCompleted = (data:createWodMutation) => {
@@ -77,8 +76,7 @@ export const CreateWod = () => {
             createWod: { ok },
         } = data;
         if(ok) {
-            history.push("/wod");
-            location.reload();
+            handleModalOpen();
         }
 
     }
@@ -104,18 +102,19 @@ export const CreateWod = () => {
                     }
                 }
             })
-        } catch (e) {
+        } catch (e:any) {
             console.log(e.response.data);
         }
     }
-
+    
     const handleModalOpen = () => {
         setIsOpen(true);
     };
 
     const handleModalClose = () => {
         setIsOpen(false);
-        history.push("/");
+        history.push("/wod");
+        location.reload();
     };
 
     const handleResizeHeight = useCallback(() => {
@@ -177,7 +176,7 @@ export const CreateWod = () => {
                     <Button canClick={formState.isValid} loading={loading} actionText={"CREATE WOD"} />
                     {createWodMutationResult?.createWod.error && <FormError errorMessage={createWodMutationResult.createWod.error}/>}
                 </_CreateWodForm>
-                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"Welcome To CrossfiTogether"} modalButtonText={"SIGN IN NOW"}> </ModalBase>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"CREATE WOD COMPLETED!"} modalButtonText={"OK"}> </ModalBase>
             </_CreateWodSubContainer>
         </>
     );

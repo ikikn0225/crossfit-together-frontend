@@ -33,6 +33,10 @@ export interface CreateWodInput {
   content: string;
 }
 
+export interface DeleteWodInput {
+  wodId: number;
+}
+
 export interface EditWodInput {
   title?: string | null;
   titleDate?: any | null;

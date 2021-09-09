@@ -5,6 +5,7 @@ interface IButtonProps {
     canClick: boolean;
     loading: boolean;
     actionText: string;
+    onClick?:()=>void;
 }
 
 export const Button:React.FC<IButtonProps> = ({canClick, loading, actionText}) => {

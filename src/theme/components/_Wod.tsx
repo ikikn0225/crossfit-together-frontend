@@ -47,12 +47,14 @@ export const _WodImgTitle = styled.div`
 
 export const _WodCreateWodButtonContainer = styled.div`
     text-align:right;
+    border-bottom:1px solid #3d3d3d;
 `;
 
 export const _WodCreateWodButton = styled(_ButtonCommon)`
     margin:20px;
     background-color: rgb(7,93,198);
     border-color:rgb(7,93,198);
+    cursor:pointer;
 
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
         font-size: 1.3rem;
@@ -72,6 +74,10 @@ export const _WodUpdateWodLinkContainer = styled.div`
     text-align:right;
     margin-right:20px;
     padding:5px;
+
+    div {
+        margin-bottom:10px;
+    }
 `;
 
 export const _WodUpdateWodLink = styled(Link)`
@@ -100,6 +106,13 @@ export const _WodUpdateWodLink = styled(Link)`
     }
 `;
 
+export const _WodDeleteWodButton = styled(_ButtonCommon)`
+    background-color:#FF0000;
+    font-size: 1.125rem;
+    font-weight: bold;
+    cursor:pointer;
+`;
+
 export const _WodListContainer = styled.div`
     position:relative;
     background:#000;
@@ -114,6 +127,7 @@ export const _WodListLayout = styled.div`
     margin-top:2rem;
     margin-bottom:4rem;
     padding-bottom:6rem;
+    border-bottom:1px solid #3d3d3d;
 `;
 
 export const _WodNoContent = styled.div`

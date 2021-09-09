@@ -73,7 +73,8 @@ export const EditWod = () => {
     const onCompleted = (data:editWodMutation) => {
         const { editWod:{ok} } = data;
         if(ok) {
-            
+            history.push("/wod");
+            location.reload();
         }
     }
 
@@ -149,7 +150,6 @@ export const EditWod = () => {
             const year = new Date(wod?.wod.wod?.titleDate).getFullYear();
             const month = new Date(wod?.wod.wod?.titleDate).getMonth();
             const date = new Date(wod?.wod.wod?.titleDate).getDate();
-            
             setStartDate(new Date(year, month, date));
         }
     }, [loading, wod]);

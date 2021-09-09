@@ -1,5 +1,10 @@
 import styled, { css, keyframes } from 'styled-components';
 
+interface IModalSection {
+    visible: boolean;
+    top: string|undefined;
+}
+
 // animations
 const fadeIn = keyframes`
     0% {
@@ -37,11 +42,12 @@ export const _ModalBackground = styled.div<{ visible: boolean }>`
     ${(props) => modalSettings(props.visible)}
 `;
 
-export const _ModalSection = styled.div<{ visible: boolean }>`
+export const _ModalSection = styled.div<IModalSection>`
     width: 400px;
     position: absolute;
-    top: 50%;
+    top: ${(props) => props.top ? props.top : "50%"};
     left: 50%;
+    margin-top:50px;
     transform: translate(-50%, -50%);
     background-color: rgba(255, 255, 255, 1);
     padding: 16px;
