@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { _ButtonCommon } from './_Button';
 import { _WodImg, _WodImgContainer, _WodImgTitle } from './_Wod';
 
 export const _CreateWodSubContainer = styled.div`
@@ -36,6 +37,10 @@ export const _CreateWodSpan = styled.span`
         font-size:${(props) => props.theme.fontSizes.lg};
         font-weight:${(props) => props.theme.fontWeights.bold};
     }
+`;
+
+export const _CreateWodCalendarButton = styled(_ButtonCommon)`
+    color: #000;
 `;
 
 export const _CreateWodInput = styled.input`

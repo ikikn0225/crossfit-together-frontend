@@ -154,7 +154,7 @@ export const Wod = () => {
                     )}
                 </_WodListSubContainer>
             </_WodListContainer>
-            <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"DELETE COMPLETED!"} modalButtonText={"OK"} top={topHeight}> </ModalBase>
+            <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"DELETE COMPLETED!"} modalButtonText={"Close"} top={topHeight}> </ModalBase>
         </>
     )
 }

@@ -1,6 +1,6 @@
 import { Button } from "@/components/button";
 import { FormError } from "@/components/form-error";
-import { _CreateWodForm, _CreateWodInput, _CreateWodSpan, _CreateWodTextArea, _CreateWodSubContainer, _CreateWodImgContainer, _CreateWodImg, _CreateWodImgTitle} from "@/theme/components/_CreateWod";
+import { _CreateWodForm, _CreateWodInput, _CreateWodSpan, _CreateWodTextArea, _CreateWodSubContainer, _CreateWodImgContainer, _CreateWodImg, _CreateWodImgTitle, _CreateWodCalendarButton} from "@/theme/components/_CreateWod";
 import { _Container, _SubContainer } from "@/theme/components/_Layout";
 import { _WodImg, _WodImgContainer, _WodImgTitle } from "@/theme/components/_Wod";
 import { gql, useMutation, useQuery } from "@apollo/client";
@@ -14,6 +14,22 @@ import { useHistory } from "react-router-dom";
 import ModalBase from "../modal-base";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Select from 'react-select';
+import { allCategories } from "@/__generated__/allCategories";
+
+const ALL_CATEGORIES = gql`
+    query allCategories {
+        allCategories {
+            error
+            ok
+            categories {
+                id
+                name
+                slug
+            }
+        }
+    }
+`;
 
 export const CREATE_WOD_MUTATION = gql`
     mutation createWodMutation($createWodInput: CreateWodInput!) {
@@ -28,7 +44,30 @@ interface ICreateWodForm {
     date: Date;
     title: string;
     content: string;
+    category: string;
 }
+
+const colourStyles = {
+    control: (styles:any) => ({ ...styles, fontWeight:700, backgroundColor: 'white' }),
+    option: () => {
+        return {
+            color: '#000',
+            padding:'10px',
+            cursor:'pointer',
+            ':hover': {
+                color: '#fff',
+                backgroundColor: '#075DC6',
+                fontWeight:700,
+            },
+            ':active': {
+                color: '#fff',
+                backgroundColor: '#075DC6',
+                fontWeight:700,
+            }
+        }
+    },
+    input: (styles:any) => ({ ...styles }),
+};
 
 export const changeDateToTitle = (date:Date) => {
     let titleYear = date.getFullYear().toString().substring(2, 4);
@@ -55,13 +94,13 @@ const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onCl
     ({ value, onClick }, ref) => {
     
     if({value}.value.length !== 0) {
-        return <button className="example-custom-input" onClick={onClick}>
+        return <_CreateWodCalendarButton className="example-custom-input" onClick={onClick}>
             {value}
-        </button>
+        </_CreateWodCalendarButton>
     } else {
-        return <button className="example-custom-input" onClick={onClick}>
+        return <_CreateWodCalendarButton className="example-custom-input" onClick={onClick}>
             Select WOD Date
-        </button>
+        </_CreateWodCalendarButton>
     }
 });
 
@@ -70,6 +109,7 @@ export const CreateWod = () => {
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
     const { data:wods } = useQuery<allWods>(ALL_WODS);
+    const { data:categories } = useQuery<allCategories>(ALL_CATEGORIES);
 
     const onCompleted = (data:createWodMutation) => {
         const {
@@ -90,8 +130,9 @@ export const CreateWod = () => {
 
     const onSubmit = async() => {
         try {
-            const { title, content, date } = getValues();
+            const { title, content, date, category } = getValues();
             let titleDateSum = changeDateToTitle(date);
+console.log(category);
 
             createWodMutation({
                 variables: {
@@ -143,6 +184,28 @@ export const CreateWod = () => {
             </_CreateWodImgContainer>
             <_CreateWodSubContainer>
                 <_CreateWodForm  onSubmit={handleSubmit(onSubmit)}>
+                    <_CreateWodSpan>WOD Category</_CreateWodSpan>
+                    <Controller
+                        name="category"
+                        control={control}
+                        rules={{
+                            required: true
+                        }}
+                        render={({ value }) => (
+                            <Select 
+                                isClearable
+                                options={categories?.allCategories?.categories?.map((cate:any)=> {
+                                    let cateOption:any = {};
+                                    cateOption["value"] = cate.slug;
+                                    cateOption["label"] = cate.slug;
+                                    return cateOption;
+                                })}
+                                value={cateOption.find(c => c.value === value)}
+                                styles={colourStyles}
+                            />
+                        )}
+                    />
+                        
                     <_CreateWodSpan>WOD Title</_CreateWodSpan>
                     <Controller 
                         name="date" 
@@ -176,7 +239,7 @@ export const CreateWod = () => {
                     <Button canClick={formState.isValid} loading={loading} actionText={"CREATE WOD"} />
                     {createWodMutationResult?.createWod.error && <FormError errorMessage={createWodMutationResult.createWod.error}/>}
                 </_CreateWodForm>
-                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"CREATE WOD COMPLETED!"} modalButtonText={"OK"}> </ModalBase>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"CREATE WOD COMPLETED!"} modalButtonText={"Go To Wod List"}> </ModalBase>
             </_CreateWodSubContainer>
         </>
     );
