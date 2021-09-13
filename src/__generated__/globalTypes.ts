@@ -31,6 +31,7 @@ export interface CreateWodInput {
   title: string;
   titleDate?: any | null;
   content: string;
+  categoryId: number;
 }
 
 export interface DeleteWodInput {
@@ -42,6 +43,7 @@ export interface EditWodInput {
   titleDate?: any | null;
   content?: string | null;
   wodId: number;
+  categoryId: number;
 }
 
 export interface LoginInput {

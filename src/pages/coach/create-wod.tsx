@@ -1,12 +1,23 @@
 import { Button } from "@/components/button";
 import { FormError } from "@/components/form-error";
-import { _CreateWodForm, _CreateWodInput, _CreateWodSpan, _CreateWodTextArea, _CreateWodSubContainer, _CreateWodImgContainer, _CreateWodImg, _CreateWodImgTitle, _CreateWodCalendarButton} from "@/theme/components/_CreateWod";
+import { 
+    _CreateWodForm, 
+    _CreateWodInput, 
+    _CreateWodSpan, 
+    _CreateWodTextArea, 
+    _CreateWodSubContainer, 
+    _CreateWodImgContainer, 
+    _CreateWodImg, 
+    _CreateWodImgTitle, 
+    _CreateWodCalendarButton,
+    _CreateWodCategorySelect
+} from "@/theme/components/_CreateWod";
 import { _Container, _SubContainer } from "@/theme/components/_Layout";
 import { _WodImg, _WodImgContainer, _WodImgTitle } from "@/theme/components/_Wod";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { createWodMutation, createWodMutationVariables } from "@/__generated__/createWodMutation";
 import { allWods } from "@/__generated__/allWods";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { ALL_WODS } from "../user/wod";
 import { Controller, useForm } from "react-hook-form";
@@ -17,7 +28,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 import { allCategories } from "@/__generated__/allCategories";
 
-const ALL_CATEGORIES = gql`
+export const ALL_CATEGORIES = gql`
     query allCategories {
         allCategories {
             error
@@ -44,30 +55,8 @@ interface ICreateWodForm {
     date: Date;
     title: string;
     content: string;
-    category: string;
+    categoryId: number;
 }
-
-const colourStyles = {
-    control: (styles:any) => ({ ...styles, fontWeight:700, backgroundColor: 'white' }),
-    option: () => {
-        return {
-            color: '#000',
-            padding:'10px',
-            cursor:'pointer',
-            ':hover': {
-                color: '#fff',
-                backgroundColor: '#075DC6',
-                fontWeight:700,
-            },
-            ':active': {
-                color: '#fff',
-                backgroundColor: '#075DC6',
-                fontWeight:700,
-            }
-        }
-    },
-    input: (styles:any) => ({ ...styles }),
-};
 
 export const changeDateToTitle = (date:Date) => {
     let titleYear = date.getFullYear().toString().substring(2, 4);
@@ -108,6 +97,8 @@ export const CreateWod = () => {
     const ref = useRef<HTMLTextAreaElement>(null);
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
+    const [stateOptions, setStateOptions] = useState("");
+    
     const { data:wods } = useQuery<allWods>(ALL_WODS);
     const { data:categories } = useQuery<allCategories>(ALL_CATEGORIES);
 
@@ -128,18 +119,18 @@ export const CreateWod = () => {
         mode:"onChange",
     });
 
-    const onSubmit = async() => {
+    const onSubmit = () => {
         try {
-            const { title, content, date, category } = getValues();
+            const { title, content, date, categoryId } = getValues();
             let titleDateSum = changeDateToTitle(date);
-console.log(category);
 
             createWodMutation({
                 variables: {
                     createWodInput: {
                         title:titleDateSum,
                         content,
-                        titleDate:date
+                        titleDate:date,
+                        categoryId:+categoryId
                     }
                 }
             })
@@ -185,27 +176,24 @@ console.log(category);
             <_CreateWodSubContainer>
                 <_CreateWodForm  onSubmit={handleSubmit(onSubmit)}>
                     <_CreateWodSpan>WOD Category</_CreateWodSpan>
-                    <Controller
-                        name="category"
-                        control={control}
-                        rules={{
-                            required: true
-                        }}
-                        render={({ value }) => (
-                            <Select 
-                                isClearable
-                                options={categories?.allCategories?.categories?.map((cate:any)=> {
-                                    let cateOption:any = {};
-                                    cateOption["value"] = cate.slug;
-                                    cateOption["label"] = cate.slug;
-                                    return cateOption;
-                                })}
-                                value={cateOption.find(c => c.value === value)}
-                                styles={colourStyles}
-                            />
-                        )}
-                    />
-                        
+                    <_CreateWodCategorySelect 
+                        {...register("categoryId", {
+                            required: "Category is required",
+                        })}
+                        name="categoryId"
+                        className="input"
+                        onChange={e => setStateOptions(e.target.value)}
+                        value={stateOptions}
+                        >
+                            {categories?.allCategories?.categories?.length !== 0 
+                            ? (
+                                categories?.allCategories.categories?.map((cate:{id:number; name:string}, index:number) => (<option key={index} value={cate.id}>{cate.name}</option>))
+                            )
+                            : (
+                                <option value="" selected disabled>No Category here</option>  
+                            )}
+                            
+                    </_CreateWodCategorySelect>
                     <_CreateWodSpan>WOD Title</_CreateWodSpan>
                     <Controller 
                         name="date" 
@@ -233,9 +221,6 @@ console.log(category);
                         ref={ref}
                         onInput={handleResizeHeight}
                     />
-                    {errors.content?.message && (  
-                        <FormError errorMessage={errors.content?.message} />
-                    )}
                     <Button canClick={formState.isValid} loading={loading} actionText={"CREATE WOD"} />
                     {createWodMutationResult?.createWod.error && <FormError errorMessage={createWodMutationResult.createWod.error}/>}
                 </_CreateWodForm>

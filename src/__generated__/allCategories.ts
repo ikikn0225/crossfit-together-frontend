@@ -18,7 +18,7 @@ export interface allCategories_allCategories {
   __typename: "AllCategoriesOutput";
   error: string | null;
   ok: boolean;
-  categories: allCategories_allCategories_categories[] | null;
+  categories: allCategories_allCategories_categories[];
 }
 
 export interface allCategories {

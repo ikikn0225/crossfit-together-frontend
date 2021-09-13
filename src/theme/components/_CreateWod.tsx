@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { _ButtonCommon } from './_Button';
+import { _CreateAccountSelect } from './_CreateAccount';
 import { _WodImg, _WodImgContainer, _WodImgTitle } from './_Wod';
 
 export const _CreateWodSubContainer = styled.div`
@@ -41,6 +42,9 @@ export const _CreateWodSpan = styled.span`
 
 export const _CreateWodCalendarButton = styled(_ButtonCommon)`
     color: #000;
+    font-weight: 500;
+    width: 100%;
+    font-size:1em;
 `;
 
 export const _CreateWodInput = styled.input`
@@ -51,6 +55,8 @@ export const _CreateWodInput = styled.input`
     border-color: ${(props) => props.theme.mode.border}
     border-radius: 2px;
 `;
+
+export const _CreateWodCategorySelect = styled(_CreateAccountSelect)``;
 
 export const _CreateWodTextArea = styled.textarea`
     width:100%;

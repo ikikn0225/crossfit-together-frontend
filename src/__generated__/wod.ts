@@ -9,6 +9,13 @@ import { OneWodInput } from "./globalTypes";
 // GraphQL query operation: wod
 // ====================================================
 
+export interface wod_wod_wod_category {
+  __typename: "Category";
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export interface wod_wod_wod_likes {
   __typename: "Like";
   id: number;
@@ -20,6 +27,7 @@ export interface wod_wod_wod {
   title: string;
   content: string;
   titleDate: any | null;
+  category: wod_wod_wod_category;
   likes: wod_wod_wod_likes[];
 }
 
