@@ -19,7 +19,7 @@ import { createWodMutation, createWodMutationVariables } from "@/__generated__/c
 import { allWods } from "@/__generated__/allWods";
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { ALL_WODS } from "../user/wod";
+import { ALL_WODS } from "../user/wods";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import ModalBase from "../modal-base";

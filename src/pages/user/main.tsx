@@ -20,7 +20,7 @@ export const Main = () => {
             </_MainImgBox>
             <_MainNavUl>
                 <_MainNavLi>
-                    <_MainNavLink className="active" to="/wod">WOD</_MainNavLink>
+                    <_MainNavLink className="active" to="/wods">WOD</_MainNavLink>
                     <_MainNavLiImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit_main_wod.jpeg"}></_MainNavLiImg>
                 </_MainNavLi>
                 <_MainNavLi>

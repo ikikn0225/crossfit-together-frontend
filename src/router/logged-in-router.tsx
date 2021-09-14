@@ -12,7 +12,7 @@ import { CreateAffiliatedBox } from "@/pages/coach/create-affiliated-box";
 import { Main } from "@/pages/user/main";
 import { clearCookie } from "@/cookie";
 import { ConfirmEmail } from "@/pages/confirm-email";
-import { Wod } from "@/pages/user/wod";
+import { Wods } from "@/pages/user/wods";
 import { FreeTrial } from "@/pages/user/free-trial";
 import { Hold } from "@/pages/user/hold";
 import { BoardOfRecord } from "@/pages/user/board-of-record";
@@ -32,14 +32,15 @@ const noAffiliatedBoxRoutes = [
 
 const affiliatedBoxRoutes = [
     { path:"/", component:<Main /> },
-    { path:"/wod", component:<Wod/> },
+    { path:"/wods", component:<Wods/> },
     { path:"/create-wod", component:<CreateWod/> },
     { path:"/edit-wod/:id", component:<EditWod/> },
     { path:"/leader-board", component:<LeaderBoard/> },
     { path:"/board-of-record", component:<BoardOfRecord/> },
     { path:"/hold", component:<Hold/> },
     { path:"/free-trial", component:<FreeTrial/> },
-    { path:"/confirm", component: <ConfirmEmail /> }
+    { path:"/confirm", component: <ConfirmEmail /> },
+    { path:"/wods/:slug", component: <Wods/> }
 ];
 
 const commonRoutes = [

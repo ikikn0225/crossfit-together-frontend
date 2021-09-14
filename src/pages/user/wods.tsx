@@ -1,3 +1,4 @@
+import { Wod } from "@/components/wod";
 import { useMe } from "@/hooks/useMe";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { 
@@ -14,20 +15,28 @@ import {
     _WodListLayout,
     _WodUpdateWodLink,
     _WodUpdateWodLinkContainer,
-    _WodDeleteWodButton
+    _WodDeleteWodButton,
+    _WodListDay,
+    _WodCategoryContainer,
+    _WodCategoryLink
 } from "@/theme/components/_Wod"
+import { allCategories } from "@/__generated__/allCategories";
 import { allWods } from "@/__generated__/allWods";
 import { deleteWod, deleteWodVariables } from "@/__generated__/deleteWod";
+import { findCategoryBySlug, findCategoryBySlugVariables } from "@/__generated__/findCategoryBySlug";
 import { UserRole } from "@/__generated__/globalTypes";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useCallback, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async"
 import { Link, useHistory } from "react-router-dom";
+import { ALL_CATEGORIES } from "../coach/create-wod";
 import ModalBase from "../modal-base";
+import { useParams } from "react-router"
+import { Category } from "@/components/category";
 
 export const ALL_WODS = gql`
-    query allWods {
-        allWods {
+    query allWods($input:AllWodsInput!) {
+        allWods(input:$input) {
             ok
             error
             wods {
@@ -56,14 +65,21 @@ interface IWodList {
     id:number;
     title:string;
     content:string;
+    titleDate:Date;
 }
 
-export const Wod = () => {
+interface ICategoryParams {
+    slug: string;
+}
+
+export const Wods = () => {
     const { data, loading, error } = useMe();
     const history = useHistory();
+    const params = useParams<ICategoryParams>();
     const ref = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [topHeight, setTopHeight] = useState<string>("");
+    const { data:categories } = useQuery<allCategories>(ALL_CATEGORIES);
 
     const onCompleted = (data:deleteWod) => {
         const { deleteWod:{ok, error} } = data;
@@ -73,7 +89,13 @@ export const Wod = () => {
         }
     }
 
-    const { data:wods } = useQuery<allWods>(ALL_WODS);
+    const { data:wods } = useQuery<allWods>(ALL_WODS, {
+        variables: {
+            input: {
+                slug: params.slug,
+            }
+        }
+    });
     const [ deleteWod, { loading:deleteLoading } ] = useMutation<deleteWod, deleteWodVariables>(DELETE_WOD, {
         onCompleted,
     })
@@ -83,7 +105,7 @@ export const Wod = () => {
     }
 
     const onClickDelete = async(id:number) => {
-        try {
+        if(deleteLoading === false) {
             deleteWod({
                 variables:{
                     deleteWodInput:{
@@ -91,11 +113,9 @@ export const Wod = () => {
                     }
                 }
             })
-        } catch (e:any) {
-            console.log(e.response.data);
         }
     }
-
+    
     const handleModalOpen = () => {
         setIsOpen(true);
         setTopHeight(document.documentElement.scrollTop+200+"px");
@@ -130,23 +150,27 @@ export const Wod = () => {
             )}
             <_WodListContainer>
                 <_WodListSubContainer>
+                    <_WodCategoryContainer>
+                    {categories?.allCategories.categories.map((cate:{id:number, name:string}) => (
+                        <Category
+                            key={cate.id}
+                            id={cate.id}
+                            name={cate.name}
+                        />
+                    ))}
+                    </_WodCategoryContainer>
                     {wods?.allWods.wods?.length !== 0 
                     ? (
                         wods?.allWods.wods?.map((wod:IWodList) => (
-                            <_WodListLayout key={wod.title+1}>
-                                {data.me.role == UserRole.Coach && (
-                                    <_WodUpdateWodLinkContainer>
-                                        <div>
-                                            <_WodUpdateWodLink to={`/edit-wod/${wod.id}`}>Edit Wod</_WodUpdateWodLink>
-                                        </div>
-                                        <div>
-                                            <_WodDeleteWodButton onClick={() => onClickDelete(wod.id)}>Delete Wod</_WodDeleteWodButton>
-                                        </div>
-                                    </_WodUpdateWodLinkContainer>
-                                )}
-                                <_WodListTitle key={wod.title+2}>{wod.title}</_WodListTitle>
-                                <_WodListContent key={wod.title+3}>{wod.content}</_WodListContent>
-                            </_WodListLayout>
+                            <Wod 
+                                key={wod.title}
+                                role={data.me.role}
+                                id={wod.id}
+                                title={wod.title}
+                                titleDate={wod.titleDate}
+                                content={wod.content}
+                                onClickDelete={onClickDelete}
+                            />
                         ))
                     )
                     : (

@@ -52,7 +52,8 @@ export const _WodCreateWodButtonContainer = styled.div`
 
 export const _WodCreateWodButton = styled(_ButtonCommon)`
     margin:20px;
-    background-color: rgb(7,93,198);
+    // background-color: rgb(7,93,198);
+    background-color: black;
     border-color:rgb(7,93,198);
     cursor:pointer;
 
@@ -82,7 +83,8 @@ export const _WodUpdateWodLinkContainer = styled.div`
 
 export const _WodUpdateWodLink = styled(Link)`
     padding:5px;
-    background-color: rgb(7,93,198);
+    // background-color: rgb(7,93,198);
+    background-color: black;
     border-color:rgb(7,93,198);
     color:${({ theme }) => theme.mode.primaryText};
     font-size: 1.125rem;
@@ -107,7 +109,8 @@ export const _WodUpdateWodLink = styled(Link)`
 `;
 
 export const _WodDeleteWodButton = styled(_ButtonCommon)`
-    background-color:#FF0000;
+    // background-color:#FF0000;
+    background-color: black;
     font-size: 1.125rem;
     font-weight: bold;
     cursor:pointer;
@@ -121,6 +124,31 @@ export const _WodListContainer = styled.div`
 export const _WodListSubContainer = styled.div`
     width:auto;
     text-align:center;
+`;
+
+export const _WodCategoryContainer = styled.div`
+    margin-top:1rem;
+    margin-bottom:1rem;
+    // overflow: hidden;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    overflow-x:scroll;
+    padding:10px;
+`;
+
+export const _WodCategoryLink = styled(Link)`
+    padding:5px;
+    background-color: gray;
+    border-radius: 20px;
+    margin-left: 1rem;
+    text-decoration: none;
+    color:#fff;
+    &:hover {
+        transition: all 0.3s ease-in-out;
+        background-color: rgb(7,93,198);
+        color: #fff;
+    }
 `;
 
 export const _WodListLayout = styled.div`
@@ -145,13 +173,20 @@ export const _WodNoContent = styled.div`
     }
 `;
 
+export const _WodListDay = styled.div`
+    color:#808080;
+    padding-bottom:0.5rem;
+    font-size:${(props) => props.theme.fontSizes.md};
+    font-weight:${(props) => props.theme.fontWeights.bold};
+`;
+
 export const _WodListTitle = styled.div`
     padding-bottom:1rem;
-    font-size:${(props) => props.theme.fontSizes.xl};
+    font-size:${(props) => props.theme.fontSizes.xxl};
     font-weight:${(props) => props.theme.fontWeights.bold};
 
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
-        font-size:${(props) => props.theme.fontSizes.xl};
+        font-size:${(props) => props.theme.fontSizes.xxl};
         font-weight:${(props) => props.theme.fontWeights.bold};
     }
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {

@@ -12,6 +12,10 @@ export enum UserRole {
   Crossfiter = "Crossfiter",
 }
 
+export interface CategoryInput {
+  slug: string;
+}
+
 export interface CreateAccountInput {
   name: string;
   profileImg?: string | null;

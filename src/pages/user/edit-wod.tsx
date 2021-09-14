@@ -5,7 +5,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async"
 import { Controller, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom"
-import { ALL_WODS } from "./wod";
+import { ALL_WODS } from "./wods";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FormError } from "@/components/form-error";
@@ -67,6 +67,7 @@ export const EditWod = () => {
     const { data:wods } = useQuery<allWods>(ALL_WODS);
     const [stateOptions, setStateOptions] = useState("");
     const [stateContent, setStateContent] = useState("");
+    const [startDate, setStartDate] = useState(new Date());
     const { data:categories } = useQuery<allCategories>(ALL_CATEGORIES);
     const { data:wod } = useQuery<wod, wodVariables>(
         WOD_QUERY,
@@ -78,7 +79,6 @@ export const EditWod = () => {
             },
         }
     );
-    const [startDate, setStartDate] = useState(new Date());
     
     const onCompleted = (data:editWodMutation) => {
         const { editWod:{ok} } = data;
@@ -99,9 +99,7 @@ export const EditWod = () => {
         try {
             const { content, categoryId } = getValues();
             let titleDateSum = changeDateToTitle(startDate);
-            console.log(content);
-            
-            
+
             editWodMutation({
                 variables:{
                     editWodInput:{
@@ -168,9 +166,7 @@ export const EditWod = () => {
             const date = new Date(wod?.wod.wod?.titleDate).getDate();
             setStartDate(new Date(year, month, date));
             setStateContent(wod?.wod.wod?.content+"");
-            if(wod?.wod.wod?.category.id !== undefined) {
-                setStateOptions(wod?.wod.wod?.category.id+"");
-            } 
+            setStateOptions(wod?.wod.wod?.category.id+"");
         }
     }, [loading, wod]);
 
