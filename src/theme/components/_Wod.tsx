@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { _ButtonCommon } from './_Button';
@@ -124,17 +125,35 @@ export const _WodListContainer = styled.div`
 export const _WodListSubContainer = styled.div`
     width:auto;
     text-align:center;
+    overflow: hidden;
+    & > div:nth-child(1) > div:nth-child(1) {
+        position:absolute;
+        left:0;
+        top:25px;
+        background-color: rgba(192, 192, 192, 0.5);
+        border-radius: 20px;
+        padding:10px;
+        &:hover {
+            background-color: rgba(192, 192, 192, 1);
+        }
+    }
+    & > div:nth-child(1) > div:nth-child(3) {
+        position:absolute;
+        right:0;
+        top:25px;
+        background-color: rgba(192, 192, 192, 0.5);
+        border-radius: 20px;
+        hover {
+            background-color: rgba(192, 192, 192, 1);
+        }
+    }
 `;
 
 export const _WodCategoryContainer = styled.div`
     margin-top:1rem;
     margin-bottom:1rem;
-    // overflow: hidden;
-    &::-webkit-scrollbar {
-        display: none;
-    }
-    overflow-x:scroll;
     padding:10px;
+    padding-left:35px;
 `;
 
 export const _WodCategoryLink = styled(Link)`
@@ -198,4 +217,7 @@ export const _WodListTitle = styled.div`
 export const _WodListContent = styled.div`
     white-space: pre-wrap;
     line-height:30px;
+`;
+
+export const _WodFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;

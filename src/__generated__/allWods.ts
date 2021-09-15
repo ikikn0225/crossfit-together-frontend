@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { AllWodsInput } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: allWods
 // ====================================================
@@ -30,4 +32,8 @@ export interface allWods_allWods {
 
 export interface allWods {
   allWods: allWods_allWods;
+}
+
+export interface allWodsVariables {
+  input: AllWodsInput;
 }

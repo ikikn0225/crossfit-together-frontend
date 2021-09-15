@@ -12,8 +12,8 @@ export enum UserRole {
   Crossfiter = "Crossfiter",
 }
 
-export interface CategoryInput {
-  slug: string;
+export interface AllWodsInput {
+  slug?: string | null;
 }
 
 export interface CreateAccountInput {

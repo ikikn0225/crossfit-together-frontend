@@ -18,21 +18,23 @@ import {
     _WodDeleteWodButton,
     _WodListDay,
     _WodCategoryContainer,
-    _WodCategoryLink
+    _WodCategoryLink,
+    _WodFontAwesomeIcon
 } from "@/theme/components/_Wod"
 import { allCategories } from "@/__generated__/allCategories";
 import { allWods } from "@/__generated__/allWods";
 import { deleteWod, deleteWodVariables } from "@/__generated__/deleteWod";
-import { findCategoryBySlug, findCategoryBySlugVariables } from "@/__generated__/findCategoryBySlug";
 import { UserRole } from "@/__generated__/globalTypes";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async"
 import { Link, useHistory } from "react-router-dom";
 import { ALL_CATEGORIES } from "../coach/create-wod";
 import ModalBase from "../modal-base";
 import { useParams } from "react-router"
 import { Category } from "@/components/category";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 export const ALL_WODS = gql`
     query allWods($input:AllWodsInput!) {
@@ -71,7 +73,7 @@ interface IWodList {
 interface ICategoryParams {
     slug: string;
 }
-
+let TOTAL_SLIDES = 2;
 export const Wods = () => {
     const { data, loading, error } = useMe();
     const history = useHistory();
@@ -80,6 +82,33 @@ export const Wods = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [topHeight, setTopHeight] = useState<string>("");
     const { data:categories } = useQuery<allCategories>(ALL_CATEGORIES);
+
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const slideRef = useRef<HTMLDivElement>(null);
+    const nextSlide = () => {
+        if (currentSlide >= TOTAL_SLIDES) { // 더 이상 넘어갈 슬라이드가 없으면 슬라이드를 초기화합니다.
+            setCurrentSlide(0);
+        } else {
+            setCurrentSlide(currentSlide + 1);
+        }
+    };
+    const prevSlide = () => {
+        if (currentSlide === 0) {
+            setCurrentSlide(TOTAL_SLIDES);
+        } else {
+            setCurrentSlide(currentSlide - 1);
+        }
+    };
+    useEffect(() => {
+        if (slideRef === null || slideRef.current === null) {
+            return;
+        }
+        if(slideRef.current.offsetWidth > 750) {
+            TOTAL_SLIDES = 1;
+        }
+        slideRef.current.style.transition = "all 0.5s ease-in-out";
+        slideRef.current.style.transform = `translateX(-${currentSlide}05%)`; // 백틱을 사용하여 슬라이드로 이동하는 애니메이션을 만듭니다.
+    }, [currentSlide]);
 
     const onCompleted = (data:deleteWod) => {
         const { deleteWod:{ok, error} } = data;
@@ -150,15 +179,23 @@ export const Wods = () => {
             )}
             <_WodListContainer>
                 <_WodListSubContainer>
-                    <_WodCategoryContainer>
-                    {categories?.allCategories.categories.map((cate:{id:number, name:string}) => (
-                        <Category
-                            key={cate.id}
-                            id={cate.id}
-                            name={cate.name}
-                        />
-                    ))}
-                    </_WodCategoryContainer>
+                    <div>
+                        <div>
+                        <_WodFontAwesomeIcon onClick={prevSlide} icon={faAngleLeft}  />
+                        </div>
+                        <_WodCategoryContainer ref={slideRef}>
+                        {categories?.allCategories.categories.map((cate:{id:number, name:string}) => (
+                            <Category
+                                key={cate.id}
+                                id={cate.id}
+                                name={cate.name}
+                            />
+                        ))}
+                        </_WodCategoryContainer>
+                        <div>
+                        <_WodFontAwesomeIcon onClick={nextSlide} icon={faAngleRight}  />
+                        </div>
+                    </div>
                     {wods?.allWods.wods?.length !== 0 
                     ? (
                         wods?.allWods.wods?.map((wod:IWodList) => (
