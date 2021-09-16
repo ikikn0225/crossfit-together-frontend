@@ -12,6 +12,10 @@ export enum UserRole {
   Crossfiter = "Crossfiter",
 }
 
+export interface AllLikesInWodInput {
+  wodId: number;
+}
+
 export interface AllWodsInput {
   slug?: string | null;
 }
