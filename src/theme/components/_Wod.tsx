@@ -126,26 +126,42 @@ export const _WodListSubContainer = styled.div`
     width:auto;
     text-align:center;
     overflow: hidden;
+    & > div:nth-child(1) {
+        position:relative;
+    }
     & > div:nth-child(1) > div:nth-child(1) {
         position:absolute;
         left:0;
-        top:25px;
-        background-color: rgba(192, 192, 192, 0.5);
-        border-radius: 20px;
+        top:0px;
         padding:10px;
-        &:hover {
-            background-color: rgba(192, 192, 192, 1);
-        }
+        background: #000;
+        z-index:2000;
     }
-    & > div:nth-child(1) > div:nth-child(3) {
+    & > div:nth-child(1) > div:nth-child(2) {
+        position:absolute;
+        height:36px;
+        left:28px;
+        top:0px;
+        padding:10px;
+        background: linear-gradient(to right, rgba(0, 0, 0, 1) 20%, rgba(33, 33, 33, 0) 80%);
+        z-index:2000;
+    }
+    & > div:nth-child(1) > div:nth-child(4) {
+        position:absolute;
+        height:36px;
+        right:28px;
+        top:0px;
+        padding:10px;
+        background: linear-gradient(to left, rgba(0, 0, 0, 1) 20%, rgba(33, 33, 33, 0) 80%);
+        z-index:2000;
+    }
+    & > div:nth-child(1) > div:nth-child(5) {
         position:absolute;
         right:0;
-        top:25px;
-        background-color: rgba(192, 192, 192, 0.5);
-        border-radius: 20px;
-        hover {
-            background-color: rgba(192, 192, 192, 1);
-        }
+        top:0px;
+        padding:10px;
+        background: #000;
+        z-index:2000;
     }
 `;
 
@@ -153,7 +169,7 @@ export const _WodCategoryContainer = styled.div`
     margin-top:1rem;
     margin-bottom:1rem;
     padding:10px;
-    padding-left:35px;
+    padding-left:22px;
 `;
 
 export const _WodCategoryLink = styled(Link)`
@@ -175,6 +191,9 @@ export const _WodListLayout = styled.div`
     margin-bottom:4rem;
     padding-bottom:6rem;
     border-bottom:1px solid #3d3d3d;
+    & > div:last-child {
+        text-align:end;
+    }
 `;
 
 export const _WodNoContent = styled.div`
@@ -220,4 +239,8 @@ export const _WodListContent = styled.div`
 `;
 
 export const _WodFontAwesomeIcon = styled(FontAwesomeIcon)`
+    
+`;
+
+export const _WodCategoryFontAwesomeIcon = styled(FontAwesomeIcon)`
 `;
