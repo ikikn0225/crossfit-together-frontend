@@ -31,6 +31,8 @@ import { Link, useHistory } from "react-router-dom";
 import ModalBase from "../modal-base";
 import { useParams } from "react-router"
 import { CategoryList } from "./category-list";
+import { wodList } from "@/__generated__/wodList";
+import { Button } from "@/components/button";
 
 export const ALL_WODS = gql`
     query allWods($input:AllWodsInput!) {
@@ -44,6 +46,33 @@ export const ALL_WODS = gql`
                 titleDate
                 likes {
                     id
+                }
+            }
+        }
+    }
+`;
+
+export const WOD_LIST = gql`
+    query wodList($input: WodListInput!) {
+        wodList(input:$input) {
+            ok
+            error
+            wodListResponse {
+                pageInfo {
+                    endCursor
+                    hasNextPage
+                }
+                edges {
+                    cursor
+                    node {
+                        id
+                        title
+                        content
+                        titleDate
+                        likes {
+                            id
+                        }
+                    }
                 }
             }
         }
@@ -64,6 +93,11 @@ interface IWodList {
     title:string;
     content:string;
     titleDate:Date;
+}
+
+interface IWodEdge {
+    cursor:number;
+    node:IWodList;
 }
 
 interface ICategoryParams {
@@ -92,6 +126,22 @@ export const Wods = () => {
             }
         }
     });
+
+    const first = 5;
+    const { error:wodListError, data:wodList, fetchMore, networkStatus } = useQuery<wodList>(WOD_LIST, {
+        variables: { 
+            input: {
+                first
+            }},
+        notifyOnNetworkStatusChange: true,
+    });
+    console.log(wodList);
+    console.log(wods);
+    
+    
+    const hasNextPage = wodList?.wodList.wodListResponse?.pageInfo.hasNextPage;
+    const isRefetching = networkStatus === 3;
+
     const [ deleteWod, { loading:deleteLoading } ] = useMutation<deleteWod, deleteWodVariables>(DELETE_WOD, {
         onCompleted,
     })
@@ -147,7 +197,7 @@ export const Wods = () => {
             <_WodListContainer>
                 <_WodListSubContainer>
                     <CategoryList />
-                    {wods?.allWods.wods?.length !== 0 
+                    {/* {wods?.allWods.wods?.length !== 0 
                     ? (
                         wods?.allWods.wods?.map((wod:IWodList) => (
                             <Wod 
@@ -163,7 +213,43 @@ export const Wods = () => {
                     )
                     : (
                         <_WodNoContent>Sorry, No Rep!</_WodNoContent>
+                    )} */}
+                    {wodList?.wodList.wodListResponse?.edges.length !== 0 
+                    ? (
+                        wodList?.wodList.wodListResponse?.edges.map((wod:IWodEdge) => (
+                            <Wod 
+                                key={wod.node.title}
+                                role={data.me.role}
+                                id={wod.node.id}
+                                title={wod.node.title}
+                                titleDate={wod.node.titleDate}
+                                content={wod.node.content}
+                                onClickDelete={onClickDelete}
+                            />
+                        ))
+                    )
+                    : (
+                        <_WodNoContent>Sorry, No Rep!</_WodNoContent>
                     )}
+                    {wodList?.wodList.wodListResponse?.pageInfo !== undefined
+                    && (
+                            hasNextPage && (
+                                <Button
+                                    canClick={isRefetching}
+                                    loading={isRefetching}
+                                    actionText="Load More"
+                                    onClick={() =>
+                                    fetchMore({
+                                        variables: {
+                                        first,
+                                        after: wodList.wodList.wodListResponse?.pageInfo.endCursor,
+                                        },
+                                    })
+                                    }
+                                />
+                            )
+                        )
+                    }
                 </_WodListSubContainer>
             </_WodListContainer>
             <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"DELETE COMPLETED!"} modalButtonText={"Close"} top={topHeight}> </ModalBase>

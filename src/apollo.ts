@@ -2,6 +2,7 @@ import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/cl
 import { setContext } from "@apollo/client/link/context";
 import { LOCALSTORAGE_TOKEN } from "./constants";
 import { getCookie } from "./cookie";
+import { relayStylePagination } from "@apollo/client/utilities";
 
 // const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
 const token = getCookie(LOCALSTORAGE_TOKEN);
@@ -41,7 +42,8 @@ export const client = new ApolloClient({
                 read() {
                     return authTokenVar();
                 }
-            }
+            },
+            wodList: relayStylePagination(),
         },
         },
     },
