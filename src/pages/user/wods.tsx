@@ -127,7 +127,7 @@ export const Wods = () => {
         }
     });
 
-    const first = 5;
+    const first = null;
     const { error:wodListError, data:wodList, fetchMore, networkStatus } = useQuery<wodList>(WOD_LIST, {
         variables: { 
             input: {
@@ -135,11 +135,12 @@ export const Wods = () => {
             }},
         notifyOnNetworkStatusChange: true,
     });
+
     console.log(wodList);
     console.log(wods);
     
     
-    const hasNextPage = wodList?.wodList.wodListResponse?.pageInfo.hasNextPage;
+    // const hasNextPage:boolean = wodList?.wodList.wodListResponse?.pageInfo.hasNextPage;
     const isRefetching = networkStatus === 3;
 
     const [ deleteWod, { loading:deleteLoading } ] = useMutation<deleteWod, deleteWodVariables>(DELETE_WOD, {
@@ -171,7 +172,7 @@ export const Wods = () => {
         setIsOpen(false);
         location.reload();
     };
-
+    
     if (!data || loading || error) {
         return (
             <_Loading>
@@ -197,23 +198,6 @@ export const Wods = () => {
             <_WodListContainer>
                 <_WodListSubContainer>
                     <CategoryList />
-                    {/* {wods?.allWods.wods?.length !== 0 
-                    ? (
-                        wods?.allWods.wods?.map((wod:IWodList) => (
-                            <Wod 
-                                key={wod.title}
-                                role={data.me.role}
-                                id={wod.id}
-                                title={wod.title}
-                                titleDate={wod.titleDate}
-                                content={wod.content}
-                                onClickDelete={onClickDelete}
-                            />
-                        ))
-                    )
-                    : (
-                        <_WodNoContent>Sorry, No Rep!</_WodNoContent>
-                    )} */}
                     {wodList?.wodList.wodListResponse?.edges.length !== 0 
                     ? (
                         wodList?.wodList.wodListResponse?.edges.map((wod:IWodEdge) => (
@@ -231,25 +215,17 @@ export const Wods = () => {
                     : (
                         <_WodNoContent>Sorry, No Rep!</_WodNoContent>
                     )}
-                    {wodList?.wodList.wodListResponse?.pageInfo !== undefined
-                    && (
-                            hasNextPage && (
-                                <Button
-                                    canClick={isRefetching}
-                                    loading={isRefetching}
-                                    actionText="Load More"
-                                    onClick={() =>
-                                    fetchMore({
-                                        variables: {
+                    {wodList?.wodList.wodListResponse?.pageInfo.hasNextPage && (
+                        <button onClick={() =>
+                            fetchMore({
+                                variables: {
+                                    input:{
                                         first,
-                                        after: wodList.wodList.wodListResponse?.pageInfo.endCursor,
-                                        },
-                                    })
+                                        after: wodList?.wodList.wodListResponse?.pageInfo.endCursor,
                                     }
-                                />
-                            )
-                        )
-                    }
+                                }
+                            })}> Load More </button>
+                    )}
                 </_WodListSubContainer>
             </_WodListContainer>
             <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"DELETE COMPLETED!"} modalButtonText={"Close"} top={topHeight}> </ModalBase>

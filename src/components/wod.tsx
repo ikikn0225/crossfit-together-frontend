@@ -18,7 +18,6 @@ const ALL_LIKES_IN_WOD = gql`
     }
 `;
 
-
 interface IWodProps {
     id:number;
     role:string;
@@ -33,9 +32,14 @@ const dayOfWeekAsString = (dayIndex:number) => {
 };
 
 export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, onClickDelete}) => {
-    const { data:likes } = useQuery<allLikesInWod>(ALL_LIKES_IN_WOD);
-    console.log(likes);
-    
+    const { data:likes } = useQuery<allLikesInWod>(ALL_LIKES_IN_WOD, {
+        variables: {
+            input: {
+                wodId:id,
+            }
+        }
+    });
+
     return (
         <_WodListLayout key={title+1}>
             {role == UserRole.Coach && (

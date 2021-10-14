@@ -32,19 +32,19 @@ export const client = new ApolloClient({
     cache: new InMemoryCache({
     typePolicies: {
         Query: {
-        fields: {
-            isLoggedIn: {
-                read() {
-                    return isLoggedInVar();
+            fields: {
+                isLoggedIn: {
+                    read() {
+                        return isLoggedInVar();
+                    },
                 },
+                token: {
+                    read() {
+                        return authTokenVar();
+                    }
+                },
+                wodList: relayStylePagination(),
             },
-            token: {
-                read() {
-                    return authTokenVar();
-                }
-            },
-            wodList: relayStylePagination(),
-        },
         },
     },
     }),
