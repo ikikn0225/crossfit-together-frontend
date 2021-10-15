@@ -119,25 +119,28 @@ export const Wods = () => {
         }
     }
 
-    const { data:wods } = useQuery<allWods>(ALL_WODS, {
-        variables: {
-            input: {
-                slug: params.slug,
-            }
-        }
-    });
+    // const { data:wods } = useQuery<allWods>(ALL_WODS, {
+    //     variables: {
+    //         input: {
+    //             slug: params.slug,
+    //         }
+    //     }
+    // });
 
     const first = null;
+    const delay = true;
     const { error:wodListError, data:wodList, fetchMore, networkStatus } = useQuery<wodList>(WOD_LIST, {
         variables: { 
             input: {
-                first
+                first,
+                slug: params.slug,
+                delay,
             }},
         notifyOnNetworkStatusChange: true,
     });
 
     console.log(wodList);
-    console.log(wods);
+    // console.log(wods);
     
     
     // const hasNextPage:boolean = wodList?.wodList.wodListResponse?.pageInfo.hasNextPage;
@@ -222,8 +225,10 @@ export const Wods = () => {
                                     input:{
                                         first,
                                         after: wodList?.wodList.wodListResponse?.pageInfo.endCursor,
+                                        slug: params.slug,
+                                        delay,
                                     }
-                                }
+                                },
                             })}> Load More </button>
                     )}
                 </_WodListSubContainer>

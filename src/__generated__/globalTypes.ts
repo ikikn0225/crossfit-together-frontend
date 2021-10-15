@@ -70,6 +70,8 @@ export interface VerifyEmailInput {
 export interface WodListInput {
   first?: number | null;
   after?: number | null;
+  delay?: boolean | null;
+  slug?: string | null;
 }
 
 //==============================================================

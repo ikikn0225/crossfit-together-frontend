@@ -1,8 +1,8 @@
-import { ApolloClient, createHttpLink, InMemoryCache, makeVar } from "@apollo/client";
+import { ApolloClient, createHttpLink, InMemoryCache, makeVar, Reference } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { LOCALSTORAGE_TOKEN } from "./constants";
 import { getCookie } from "./cookie";
-import { relayStylePagination } from "@apollo/client/utilities";
+import { concatPagination, relayStylePagination } from "@apollo/client/utilities";
 
 // const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
 const token = getCookie(LOCALSTORAGE_TOKEN);
@@ -43,7 +43,21 @@ export const client = new ApolloClient({
                         return authTokenVar();
                     }
                 },
-                wodList: relayStylePagination(),
+                // wodList: relayStylePagination(),
+                wodList: {
+                    keyArgs:false,
+                    merge(existing, incoming) {
+                        if (!incoming) return existing
+                        if (!existing) return incoming
+
+                        const { items, ...rest } = incoming;
+                        // let result = rest;
+                        // result.items = [...existing.items, ...items]; // Merge existing items with the items from incoming
+                        
+                        return [...existing, ...incoming];
+                        
+                    }
+                }
             },
         },
     },
