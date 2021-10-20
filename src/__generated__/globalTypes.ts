@@ -67,6 +67,13 @@ export interface VerifyEmailInput {
   code: string;
 }
 
+export interface WodListInput {
+  first?: number | null;
+  after?: number | null;
+  delay?: boolean | null;
+  slug?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

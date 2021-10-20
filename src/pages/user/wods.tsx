@@ -31,6 +31,8 @@ import { Link, useHistory } from "react-router-dom";
 import ModalBase from "../modal-base";
 import { useParams } from "react-router"
 import { CategoryList } from "./category-list";
+import { wodList } from "@/__generated__/wodList";
+import { Button } from "@/components/button";
 
 export const ALL_WODS = gql`
     query allWods($input:AllWodsInput!) {
@@ -44,6 +46,33 @@ export const ALL_WODS = gql`
                 titleDate
                 likes {
                     id
+                }
+            }
+        }
+    }
+`;
+
+export const WOD_LIST = gql`
+    query wodList($input: WodListInput!) {
+        wodList(input:$input) {
+            ok
+            error
+            wodListResponse {
+                pageInfo {
+                    endCursor
+                    hasNextPage
+                }
+                edges {
+                    cursor
+                    node {
+                        id
+                        title
+                        content
+                        titleDate
+                        likes {
+                            id
+                        }
+                    }
                 }
             }
         }
@@ -66,6 +95,11 @@ interface IWodList {
     titleDate:Date;
 }
 
+interface IWodEdge {
+    cursor:number;
+    node:IWodList;
+}
+
 interface ICategoryParams {
     slug: string;
 }
@@ -85,13 +119,33 @@ export const Wods = () => {
         }
     }
 
-    const { data:wods } = useQuery<allWods>(ALL_WODS, {
-        variables: {
+    // const { data:wods } = useQuery<allWods>(ALL_WODS, {
+    //     variables: {
+    //         input: {
+    //             slug: params.slug,
+    //         }
+    //     }
+    // });
+
+    const first = null;
+    const delay = true;
+    const { error:wodListError, data:wodList, fetchMore, networkStatus } = useQuery<wodList>(WOD_LIST, {
+        variables: { 
             input: {
+                first,
                 slug: params.slug,
-            }
-        }
+                delay,
+            }},
+        notifyOnNetworkStatusChange: true,
     });
+
+    console.log(wodList);
+    // console.log(wods);
+    
+    
+    // const hasNextPage:boolean = wodList?.wodList.wodListResponse?.pageInfo.hasNextPage;
+    const isRefetching = networkStatus === 3;
+
     const [ deleteWod, { loading:deleteLoading } ] = useMutation<deleteWod, deleteWodVariables>(DELETE_WOD, {
         onCompleted,
     })
@@ -121,7 +175,7 @@ export const Wods = () => {
         setIsOpen(false);
         location.reload();
     };
-
+    
     if (!data || loading || error) {
         return (
             <_Loading>
@@ -147,22 +201,35 @@ export const Wods = () => {
             <_WodListContainer>
                 <_WodListSubContainer>
                     <CategoryList />
-                    {wods?.allWods.wods?.length !== 0 
+                    {wodList?.wodList.wodListResponse?.edges.length !== 0 
                     ? (
-                        wods?.allWods.wods?.map((wod:IWodList) => (
+                        wodList?.wodList.wodListResponse?.edges.map((wod:IWodEdge) => (
                             <Wod 
-                                key={wod.title}
+                                key={wod.node.title}
                                 role={data.me.role}
-                                id={wod.id}
-                                title={wod.title}
-                                titleDate={wod.titleDate}
-                                content={wod.content}
+                                id={wod.node.id}
+                                title={wod.node.title}
+                                titleDate={wod.node.titleDate}
+                                content={wod.node.content}
                                 onClickDelete={onClickDelete}
                             />
                         ))
                     )
                     : (
                         <_WodNoContent>Sorry, No Rep!</_WodNoContent>
+                    )}
+                    {wodList?.wodList.wodListResponse?.pageInfo.hasNextPage && (
+                        <button onClick={() =>
+                            fetchMore({
+                                variables: {
+                                    input:{
+                                        first,
+                                        after: wodList?.wodList.wodListResponse?.pageInfo.endCursor,
+                                        slug: params.slug,
+                                        delay,
+                                    }
+                                },
+                            })}> Load More </button>
                     )}
                 </_WodListSubContainer>
             </_WodListContainer>
