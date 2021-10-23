@@ -59,12 +59,24 @@ interface IEditWodForm {
     categoryId:number;
 }
 
+interface ICategoryParams {
+    slug: string;
+}
+
 export const EditWod = () => {
     const {id} = useParams<IParams>();
+    const params = useParams<ICategoryParams>();
     const ref = useRef<HTMLTextAreaElement>(null);
     const history = useHistory();
     const [isOpen, setIsOpen] = useState(false);
-    const { data:wods } = useQuery<allWods>(ALL_WODS);
+    // const { data:wods } = useQuery<allWods>(ALL_WODS);
+    const { data:wods } = useQuery<allWods>(ALL_WODS, {
+        variables: {
+            input: {
+                slug: params.slug,
+            }
+        }
+    });
     const [stateOptions, setStateOptions] = useState("");
     const [stateContent, setStateContent] = useState("");
     const [startDate, setStartDate] = useState(new Date());

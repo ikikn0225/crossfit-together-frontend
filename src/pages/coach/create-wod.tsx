@@ -21,7 +21,7 @@ import React, { useCallback, useRef, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { ALL_WODS } from "../user/wods";
 import { Controller, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import ModalBase from "../modal-base";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -56,6 +56,10 @@ interface ICreateWodForm {
     title: string;
     content: string;
     categoryId: number;
+}
+
+interface ICategoryParams {
+    slug: string;
 }
 
 export const changeDateToTitle = (date:Date) => {
@@ -96,10 +100,18 @@ const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onCl
 export const CreateWod = () => {
     const ref = useRef<HTMLTextAreaElement>(null);
     const history = useHistory();
+    const params = useParams<ICategoryParams>();
     const [isOpen, setIsOpen] = useState(false);
     const [stateOptions, setStateOptions] = useState("");
     
-    const { data:wods } = useQuery<allWods>(ALL_WODS);
+    // const { data:wods } = useQuery<allWods>(ALL_WODS);
+    const { data:wods } = useQuery<allWods>(ALL_WODS, {
+        variables: {
+            input: {
+                slug: params.slug,
+            }
+        }
+    });
     const { data:categories } = useQuery<allCategories>(ALL_CATEGORIES);
 
     const onCompleted = (data:createWodMutation) => {
