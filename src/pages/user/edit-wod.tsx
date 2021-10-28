@@ -1,4 +1,4 @@
-import { _EditWodCategorySelect, _EditWodForm, _EditWodImg, _EditWodImgContainer, _EditWodImgTitle, _EditWodSpan, _EditWodSubContainer, _EditWodTextArea } from "@/theme/components/_EditWod"
+import { _EditWodCalendarButton, _EditWodCategorySelect, _EditWodForm, _EditWodImg, _EditWodImgContainer, _EditWodImgTitle, _EditWodSpan, _EditWodSubContainer, _EditWodTextArea } from "@/theme/components/_EditWod"
 import { allWods } from "@/__generated__/allWods";
 import { wod, wodVariables } from "@/__generated__/wod";
 import { gql, useMutation, useQuery } from "@apollo/client";
@@ -132,13 +132,13 @@ export const EditWod = () => {
         ({ value, onClick }, ref) => {
         
         if({value}.value.length !== 0) {
-            return <button className="example-custom-input" onClick={onClick}>
+            return <_EditWodCalendarButton type="button" className="example-custom-input" onClick={onClick}>
                 {value}
-            </button>
+            </_EditWodCalendarButton>
         } else {
-            return <button className="example-custom-input" onClick={onClick}>
+            return <_EditWodCalendarButton type="button" className="example-custom-input" onClick={onClick}>
                 {wod?.wod.wod?.title}
-            </button>
+            </_EditWodCalendarButton>
         }
     });
 
@@ -159,7 +159,7 @@ export const EditWod = () => {
 
     const handleModalClose = () => {
         setIsOpen(false);
-        history.push("/wod");
+        history.push("/wods");
         location.reload();
     };
 

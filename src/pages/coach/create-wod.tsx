@@ -87,11 +87,11 @@ const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onCl
     ({ value, onClick }, ref) => {
     
     if({value}.value.length !== 0) {
-        return <_CreateWodCalendarButton className="example-custom-input" onClick={onClick}>
+        return <_CreateWodCalendarButton type="button" className="example-custom-input" onClick={onClick}>
             {value}
         </_CreateWodCalendarButton>
     } else {
-        return <_CreateWodCalendarButton className="example-custom-input" onClick={onClick}>
+        return <_CreateWodCalendarButton type="button" className="example-custom-input" onClick={onClick}>
             Select WOD Date
         </_CreateWodCalendarButton>
     }
@@ -157,7 +157,7 @@ export const CreateWod = () => {
 
     const handleModalClose = () => {
         setIsOpen(false);
-        history.push("/wod");
+        history.push("/wods");
         location.reload();
     };
 
