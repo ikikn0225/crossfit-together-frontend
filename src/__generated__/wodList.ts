@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WodListInput } from "./globalTypes";
-
 // ====================================================
 // GraphQL query operation: wodList
 // ====================================================
@@ -43,8 +41,6 @@ export interface wodList_wodList_wodListResponse {
 
 export interface wodList_wodList {
   __typename: "WodListOutput";
-  ok: boolean;
-  error: string | null;
   wodListResponse: wodList_wodList_wodListResponse | null;
 }
 
@@ -53,5 +49,6 @@ export interface wodList {
 }
 
 export interface wodListVariables {
-  input: WodListInput;
+  first?: number | null;
+  after?: number | null;
 }

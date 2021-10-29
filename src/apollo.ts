@@ -43,21 +43,7 @@ export const client = new ApolloClient({
                         return authTokenVar();
                     }
                 },
-                // wodList: relayStylePagination(),
-                wodList: {
-                    keyArgs:false,
-                    merge(existing, incoming) {
-                        if (!incoming) return existing
-                        if (!existing) return incoming
-
-                        const { items, ...rest } = incoming;
-                        // let result = rest;
-                        // result.items = [...existing.items, ...items]; // Merge existing items with the items from incoming
-                        
-                        return [...existing, ...incoming];
-                        
-                    }
-                }
+                wodList: relayStylePagination(),
             },
         },
     },

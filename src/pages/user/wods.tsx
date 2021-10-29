@@ -53,10 +53,8 @@ export const ALL_WODS = gql`
 `;
 
 export const WOD_LIST = gql`
-    query wodList($input: WodListInput!) {
-        wodList(input:$input) {
-            ok
-            error
+    query wodList($first: Int, $after: Int) {
+        wodList(first: $first, after: $after) {
             wodListResponse {
                 pageInfo {
                     endCursor
@@ -78,6 +76,33 @@ export const WOD_LIST = gql`
         }
     }
 `;
+
+// export const WOD_LIST = gql`
+//     query wodList($input: WodListInput!) {
+//         wodList(input:$input) {
+//             ok
+//             error
+//             wodListResponse {
+//                 pageInfo {
+//                     endCursor
+//                     hasNextPage
+//                 }
+//                 edges {
+//                     cursor
+//                     node {
+//                         id
+//                         title
+//                         content
+//                         titleDate
+//                         likes {
+//                             id
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// `;
 
 export const DELETE_WOD = gql`
     mutation deleteWod($deleteWodInput:DeleteWodInput!) {
@@ -127,21 +152,10 @@ export const Wods = () => {
     //     }
     // });
 
-    const first = null;
+    // const first = 5;
     const delay = true;
-    const { error:wodListError, data:wodList, fetchMore, networkStatus } = useQuery<wodList>(WOD_LIST, {
-        variables: { 
-            input: {
-                first,
-                slug: params.slug,
-                delay,
-            }},
-        notifyOnNetworkStatusChange: true,
-    });
-
-    console.log(wodList);
-    // console.log(wods);
-    
+    const { error:wodListError, data:wodList, fetchMore, networkStatus } = useQuery<wodList>(WOD_LIST);
+    // console.log(wodList);
     
     // const hasNextPage:boolean = wodList?.wodList.wodListResponse?.pageInfo.hasNextPage;
     const isRefetching = networkStatus === 3;
@@ -222,12 +236,9 @@ export const Wods = () => {
                         <button onClick={() =>
                             fetchMore({
                                 variables: {
-                                    input:{
-                                        first,
-                                        after: wodList?.wodList.wodListResponse?.pageInfo.endCursor,
-                                        slug: params.slug,
-                                        delay,
-                                    }
+                                    after:wodList?.wodList.wodListResponse?.pageInfo.endCursor,
+                                    // slug: params.slug,
+                                    // delay,
                                 },
                             })}> Load More </button>
                     )}
