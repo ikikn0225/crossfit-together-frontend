@@ -19,7 +19,6 @@ import { createWodMutation, createWodMutationVariables } from "@/__generated__/c
 import { allWods } from "@/__generated__/allWods";
 import React, { useCallback, useRef, useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
-import { ALL_WODS } from "../user/wods";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import ModalBase from "../modal-base";
@@ -27,6 +26,24 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 import { allCategories } from "@/__generated__/allCategories";
+
+export const ALL_WODS = gql`
+    query allWods($input:AllWodsInput!) {
+        allWods(input:$input) {
+            ok
+            error
+            wods {
+                id
+                title
+                content
+                titleDate
+                likes {
+                    id
+                }
+            }
+        }
+    }
+`;
 
 export const ALL_CATEGORIES = gql`
     query allCategories {

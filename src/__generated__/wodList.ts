@@ -46,4 +46,5 @@ export interface wodList {
 export interface wodListVariables {
   first?: number | null;
   after?: number | null;
+  slug?: string | null;
 }

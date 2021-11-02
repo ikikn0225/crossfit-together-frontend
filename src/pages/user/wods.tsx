@@ -21,40 +21,21 @@ import {
     _WodCategoryLink,
     _WodFontAwesomeIcon
 } from "@/theme/components/_Wod"
-import { allWods } from "@/__generated__/allWods";
 import { deleteWod, deleteWodVariables } from "@/__generated__/deleteWod";
 import { UserRole } from "@/__generated__/globalTypes";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async"
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ModalBase from "../modal-base";
 import { useParams } from "react-router"
 import { CategoryList } from "./category-list";
 import { wodList } from "@/__generated__/wodList";
-import { Button } from "@/components/button";
-
-export const ALL_WODS = gql`
-    query allWods($input:AllWodsInput!) {
-        allWods(input:$input) {
-            ok
-            error
-            wods {
-                id
-                title
-                content
-                titleDate
-                likes {
-                    id
-                }
-            }
-        }
-    }
-`;
+import Spinner from "@/components/spinner";
 
 export const WOD_LIST = gql`
-    query wodList($first: Int, $after: Int) {
-        wodList(first: $first, after: $after) {
+    query wodList($first: Int, $after: Int, $slug: String) {
+        wodList(first: $first, after: $after, slug: $slug) {
             pageInfo {
                 endCursor
                 hasNextPage
@@ -74,33 +55,6 @@ export const WOD_LIST = gql`
         }
     }
 `;
-
-// export const WOD_LIST = gql`
-//     query wodList($input: WodListInput!) {
-//         wodList(input:$input) {
-//             ok
-//             error
-//             wodListResponse {
-//                 pageInfo {
-//                     endCursor
-//                     hasNextPage
-//                 }
-//                 edges {
-//                     cursor
-//                     node {
-//                         id
-//                         title
-//                         content
-//                         titleDate
-//                         likes {
-//                             id
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// `;
 
 export const DELETE_WOD = gql`
     mutation deleteWod($deleteWodInput:DeleteWodInput!) {
@@ -133,8 +87,9 @@ export const Wods = () => {
     const params = useParams<ICategoryParams>();
     const [isOpen, setIsOpen] = useState(false);
     const [topHeight, setTopHeight] = useState<string>("");
-    const [page, setPage] = useState(1);
     const loader = useRef<HTMLDivElement>(null);
+    const [wodListState, setWodListState] = useState<number|undefined>(0);
+    const [wodTrigger, setWodTrigger] = useState<boolean>(false);
 
     const onCompleted = (data:deleteWod) => {
         const { deleteWod:{ok, error} } = data;
@@ -145,34 +100,46 @@ export const Wods = () => {
     }
 
     const delay = true;
-    const { loading:wodLoading, error:wodListError, data:wodList, fetchMore, networkStatus } = useQuery<wodList>(WOD_LIST, {
+    const { loading:wodLoading, error:wodListError, data:wodList, fetchMore, refetch, networkStatus } = useQuery<wodList>(WOD_LIST, {
+        variables: {
+            slug:params.slug
+        },
         fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-only',
         notifyOnNetworkStatusChange: true,
     });
-    const [wodListState, setWodListState] = useState<number|undefined>(0);
-    const [wodTrigger, setWodTrigger] = useState<number>(0);
+// console.log(wodList);
+
 
     const handleObserver = useCallback((entries) => {
         const target = entries[0];
-        if (target.isIntersecting) {
-            setWodTrigger(1);
-        }
+        setWodTrigger(target.isIntersecting);
     }, []);
 
-    useEffect(() => {
-        setWodListState(wodList?.wodList.pageInfo?.endCursor);
-        setWodTrigger(0);
+    useEffect(() => {   //일반 함수에는 gql 데이터가 들어가지 않아 트리거를 사용함.
+        console.log(wodList?.wodList.pageInfo?.hasNextPage);
+        
+        if(wodList?.wodList.pageInfo?.hasNextPage) {
+            setWodListState(wodList?.wodList.pageInfo?.endCursor);
+            setWodTrigger(false);
+        }
     }, [wodTrigger])
 
-    useEffect(() => {
-        fetchMore({
-            variables: {
-                after:wodListState,
-                slug: params.slug,
-                delay,
-            },
-        })
+    useEffect(() => { 
+        let isActive = true;
+        const fetchWod = async () => {
+            await fetchMore({
+                variables: {
+                    after:wodListState,
+                    slug: params.slug,
+                    delay,
+                },
+            })
+        }
+        if (isActive)
+            fetchWod();
+        return () => {
+            isActive = false;
+        };
     }, [wodListState]);
     
     useEffect(() => {
@@ -186,8 +153,6 @@ export const Wods = () => {
             observer.observe(loader.current);
         }
     }, [handleObserver]);
-
-    const isRefetching = networkStatus === 3;
 
     const [ deleteWod, { loading:deleteLoading } ] = useMutation<deleteWod, deleteWodVariables>(DELETE_WOD, {
         onCompleted,
@@ -244,7 +209,7 @@ export const Wods = () => {
             <_WodListContainer>
                 <_WodListSubContainer>
                     <CategoryList />
-                    {wodList?.wodList.edges?.length !== 0 
+                    {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
                             <Wod 
@@ -261,18 +226,10 @@ export const Wods = () => {
                     : (
                         <_WodNoContent>Sorry, No Rep!</_WodNoContent>
                     )}
-                    {wodLoading && <p>Loading...</p>}
+                    {wodLoading && 
+                        <Spinner />
+                    }
                     <div ref={loader} />
-                    {/* {wodList?.wodList.pageInfo?.hasNextPage && (
-                        <button onClick={() =>
-                            fetchMore({
-                                variables: {
-                                    after:wodList?.wodList.pageInfo?.endCursor,
-                                    slug: params.slug,
-                                    delay,
-                                },
-                            })}> Load More </button>
-                    )} */}
                 </_WodListSubContainer>
             </_WodListContainer>
             <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"DELETE COMPLETED!"} modalButtonText={"Close"} top={topHeight}> </ModalBase>

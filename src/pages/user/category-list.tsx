@@ -34,7 +34,7 @@ export const CategoryList = () => {
         }
         let currentSlideTranslate = currentSlide * 60;
         slideRef.current.style.transition = "all 0.5s ease-in-out";
-        slideRef.current.style.transform = `translateX(-${currentSlideTranslate}%)`; // 백틱을 사용하여 슬라이드로 이동하는 애니메이션을 만듭니다.
+        slideRef.current.style.transform = `translateX(-${currentSlideTranslate}%)`; // 백틱을 사용하여 슬라이드로 이동하는 애니메이션을 만든다.
     }, [currentSlide]);
     return (
         <div>

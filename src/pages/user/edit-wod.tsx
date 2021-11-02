@@ -5,7 +5,6 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async"
 import { Controller, useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom"
-import { ALL_WODS } from "./wods";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FormError } from "@/components/form-error";
@@ -13,7 +12,7 @@ import { Button } from "@/components/button";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ModalBase from "../modal-base";
 import { editWodMutation, editWodMutationVariables } from "@/__generated__/editWodMutation";
-import { ALL_CATEGORIES, changeDateToTitle } from "../coach/create-wod";
+import { ALL_CATEGORIES, ALL_WODS, changeDateToTitle } from "../coach/create-wod";
 import { allCategories } from "@/__generated__/allCategories";
 
 export const WOD_QUERY = gql `
