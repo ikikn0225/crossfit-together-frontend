@@ -9,9 +9,14 @@ import { AllLikesInWodInput } from "./globalTypes";
 // GraphQL query operation: allLikesInWod
 // ====================================================
 
+export interface allLikesInWod_allLikesInWod_likes_owner {
+  __typename: "User";
+  id: number;
+}
+
 export interface allLikesInWod_allLikesInWod_likes {
   __typename: "Like";
-  id: number;
+  owner: allLikesInWod_allLikesInWod_likes_owner;
 }
 
 export interface allLikesInWod_allLikesInWod {

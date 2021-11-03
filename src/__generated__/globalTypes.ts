@@ -35,11 +35,20 @@ export interface CreateAffiliatedBoxInput {
   address: string;
 }
 
+export interface CreateLikeInWodInput {
+  wodId: number;
+}
+
 export interface CreateWodInput {
   title: string;
   titleDate?: any | null;
   content: string;
   categoryId: number;
+}
+
+export interface DeleteLikeInWodInput {
+  id: number;
+  wodId: number;
 }
 
 export interface DeleteWodInput {

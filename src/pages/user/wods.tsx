@@ -88,7 +88,6 @@ export const Wods = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [topHeight, setTopHeight] = useState<string>("");
     const loader = useRef<HTMLDivElement>(null);
-    const [wodListState, setWodListState] = useState<number|undefined>(0);
     const [wodTrigger, setWodTrigger] = useState<boolean>(false);
 
     const onCompleted = (data:deleteWod) => {
@@ -115,32 +114,26 @@ export const Wods = () => {
         setWodTrigger(target.isIntersecting);
     }, []);
 
+    const fetchWod = async () => {
+        setWodTrigger(false);
+        await fetchMore({
+            variables: {
+                after:wodList?.wodList.pageInfo?.endCursor,
+                slug: params.slug,
+                delay,
+            },
+        })
+    }
+
     useEffect(() => {   //일반 함수에는 gql 데이터가 들어가지 않아 트리거를 사용함.
-        console.log(wodList?.wodList.pageInfo?.hasNextPage);
+        // console.log("hasNextPage", wodList?.wodList.pageInfo?.hasNextPage);
         
         if(wodList?.wodList.pageInfo?.hasNextPage) {
-            setWodListState(wodList?.wodList.pageInfo?.endCursor);
-            setWodTrigger(false);
+            if(wodTrigger) {
+                fetchWod();
+            }
         }
-    }, [wodTrigger])
-
-    useEffect(() => { 
-        let isActive = true;
-        const fetchWod = async () => {
-            await fetchMore({
-                variables: {
-                    after:wodListState,
-                    slug: params.slug,
-                    delay,
-                },
-            })
-        }
-        if (isActive)
-            fetchWod();
-        return () => {
-            isActive = false;
-        };
-    }, [wodListState]);
+    }, [wodTrigger]);
     
     useEffect(() => {
         const option = {
@@ -215,6 +208,7 @@ export const Wods = () => {
                             <Wod 
                                 key={wod.node.title}
                                 role={data.me.role}
+                                userId={data.me.id}
                                 id={wod.node.id}
                                 title={wod.node.title}
                                 titleDate={wod.node.titleDate}
