@@ -12,6 +12,10 @@ export enum UserRole {
   Crossfiter = "Crossfiter",
 }
 
+export interface AllBoardofRecordInput {
+  id: number;
+}
+
 export interface AllLikesInWodInput {
   wodId: number;
 }
@@ -47,7 +51,6 @@ export interface CreateWodInput {
 }
 
 export interface DeleteLikeInWodInput {
-  id: number;
   wodId: number;
 }
 

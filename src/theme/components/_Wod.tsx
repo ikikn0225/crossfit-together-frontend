@@ -189,7 +189,7 @@ export const _WodCategoryLink = styled(Link)`
 export const _WodListLayout = styled.div`
     margin-top:2rem;
     margin-bottom:4rem;
-    padding-bottom:6rem;
+    padding-bottom:4rem;
     border-bottom:1px solid #3d3d3d;
     & > div:last-child {
         text-align:end;
@@ -238,8 +238,14 @@ export const _WodListContent = styled.div`
     line-height:30px;
 `;
 
+export const _WodListLikeContainer = styled.div`
+    padding-right:1rem;
+    padding-left:1rem;
+    margin-top:1rem;
+`;
+
 export const _WodFontAwesomeIcon = styled(FontAwesomeIcon)`
-    
+    margin-right:5px;
 `;
 
 export const _WodCategoryFontAwesomeIcon = styled(FontAwesomeIcon)`

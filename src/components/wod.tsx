@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { UserRole } from "@/__generated__/globalTypes"
-import { _WodDeleteWodButton, _WodFontAwesomeIcon, _WodListContent, _WodListDay, _WodListLayout, _WodListTitle, _WodUpdateWodLink, _WodUpdateWodLinkContainer } from "@/theme/components/_Wod"
+import { _WodDeleteWodButton, _WodFontAwesomeIcon, _WodListContent, _WodListDay, _WodListLayout, _WodListLikeContainer, _WodListTitle, _WodUpdateWodLink, _WodUpdateWodLinkContainer } from "@/theme/components/_Wod"
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 import gql from "graphql-tag";
@@ -48,7 +48,6 @@ interface IWodProps {
     titleDate:Date;
     content:string;
     userId:number;
-    onClickDelete:(id:number)=>void;
 }
 
 interface IOwner {
@@ -62,8 +61,7 @@ const dayOfWeekAsString = (dayIndex:number) => {
     return ["SUNDAY", "MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"][dayIndex] || '';
 };
 
-export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, userId, onClickDelete}) => {
-    const [ likeState, setLikeState ] = useState(false);
+export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, userId}) => {
     const { data:likes } = useQuery<allLikesInWod>(ALL_LIKES_IN_WOD, {
         variables: {
             input: {
@@ -71,69 +69,66 @@ export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, u
             }
         }
     });
+    const [ likeState, setLikeState ] = useState(false);
+    const [ likeCountState, setLikeCountState ] = useState<number | undefined>(0);
 
     const [createLikeMutation] = useMutation<createLikeInWod, createLikeInWodVariables>(CREATE_LIKE_MUTATION);
     const [deleteLikeMutation] = useMutation<deleteLikeInWod, deleteLikeInWodVariables>(DELETE_LIKE_MUTATION);
 
     useEffect(() => {
         const likeIndex = likes?.allLikesInWod.likes?.findIndex((e:ILike) => e.owner.id === userId);
-        if(likeIndex === 0) setLikeState(true);
+        if(likeIndex !== -1) setLikeState(true);
+        else setLikeState(false);
+        setLikeCountState(likes?.allLikesInWod.likes?.length);
     }, [likes])
 
-    const handleLike = (likeState:boolean, id:number) => {
-        if(likeState === true) {
+    const handleLike = (likeState:boolean, wodId:number, count:number | undefined) => {
+        if(likeState) {
             deleteLikeMutation({
                 variables:{
                     input:{
-                        id:userId,
-                        wodId:id
+                        wodId:wodId
                     }
                 }
             });
             setLikeState(false);
-        } else if(likeState === false) {
+            if(count)
+                setLikeCountState(count-1);
+        } else if(!likeState) {
             createLikeMutation({
                 variables:{
                     input:{
-                        wodId:id
+                        wodId:wodId
                     }
                 }
             });
             setLikeState(true);
+            if(count !== undefined)
+                setLikeCountState(count+1);
         }
     }
 
     return (
         <_WodListLayout key={title+1}>
-            {role == UserRole.Coach && (
-                <_WodUpdateWodLinkContainer>
-                    <div>
-                        <_WodUpdateWodLink to={`/edit-wod/${id}`}>Edit Wod</_WodUpdateWodLink>
-                    </div>
-                    <div>
-                        <_WodDeleteWodButton onClick={() => onClickDelete(id)}>Delete Wod</_WodDeleteWodButton>
-                    </div>
-                </_WodUpdateWodLinkContainer>
-            )}
             <_WodListDay>{dayOfWeekAsString(new Date(titleDate).getDay())}</_WodListDay>
             <_WodListTitle key={title+2}>{title}</_WodListTitle>
             <_WodListContent key={title+3}>{content}</_WodListContent>
-            <div>
+            <_WodListLikeContainer>
                 {likeState 
                 ? (
-                    <_WodFontAwesomeIcon icon={faHeartSolid} onClick={()=>handleLike(likeState, id)} />
+                    <_WodFontAwesomeIcon icon={faHeartSolid} onClick={()=>handleLike(likeState, id, likeCountState)} />
                 )
                 : (
-                    <_WodFontAwesomeIcon icon={faHeart} onClick={()=>handleLike(likeState, id)} />
+                    <_WodFontAwesomeIcon icon={faHeart} onClick={()=>handleLike(likeState, id, likeCountState)} />
                 )}
-                {likes?.allLikesInWod.likes?.length !== 0
+                {likeCountState !== 0
                 ? (
-                    <span>{likes?.allLikesInWod.likes?.length}</span>
+                    <span>{likeCountState}</span>
                 )
                 : (
                     <span>0</span>
                 )}
-            </div>
+            </_WodListLikeContainer>
         </_WodListLayout>
     )
 }

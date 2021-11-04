@@ -72,7 +72,7 @@ interface IWodList {
     titleDate:Date;
 }
 
-interface IWodEdge {
+export interface IWodEdge {
     cursor:number;
     node:IWodList;
 }
@@ -155,7 +155,7 @@ export const Wods = () => {
         history.push("/create-wod");
     }
 
-    const onClickDelete = async(id:number) => {
+    const onClickWodDelete = async(id:number) => {
         if(deleteLoading === false) {
             deleteWod({
                 variables:{
@@ -205,6 +205,15 @@ export const Wods = () => {
                     {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
+                            <div>
+                            <_WodUpdateWodLinkContainer>
+                                <div>
+                                    <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>Edit Wod</_WodUpdateWodLink>
+                                </div>
+                                <div>
+                                    <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>Delete Wod</_WodDeleteWodButton>
+                                </div>
+                            </_WodUpdateWodLinkContainer>
                             <Wod 
                                 key={wod.node.title}
                                 role={data.me.role}
@@ -213,8 +222,8 @@ export const Wods = () => {
                                 title={wod.node.title}
                                 titleDate={wod.node.titleDate}
                                 content={wod.node.content}
-                                onClickDelete={onClickDelete}
                             />
+                            </div>
                         ))
                     )
                     : (
