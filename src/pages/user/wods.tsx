@@ -126,8 +126,6 @@ export const Wods = () => {
     }
 
     useEffect(() => {   //일반 함수에는 gql 데이터가 들어가지 않아 트리거를 사용함.
-        // console.log("hasNextPage", wodList?.wodList.pageInfo?.hasNextPage);
-        
         if(wodList?.wodList.pageInfo?.hasNextPage) {
             if(wodTrigger) {
                 fetchWod();
@@ -205,7 +203,7 @@ export const Wods = () => {
                     {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
-                            <div>
+                            <div key={wod.node.title+1}>
                             <_WodUpdateWodLinkContainer>
                                 <div>
                                     <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>Edit Wod</_WodUpdateWodLink>

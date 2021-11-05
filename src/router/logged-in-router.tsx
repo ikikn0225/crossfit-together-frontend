@@ -15,7 +15,7 @@ import { ConfirmEmail } from "@/pages/confirm-email";
 import { Wods } from "@/pages/user/wods";
 import { FreeTrial } from "@/pages/user/free-trial";
 import { Hold } from "@/pages/user/hold";
-import { BoardOfRecord } from "@/pages/user/board-of-record";
+import { BoardOfRecords } from "@/pages/user/board-of-records";
 import { LeaderBoard } from "@/pages/user/leader-board";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { CreateWod } from "@/pages/coach/create-wod";
@@ -36,7 +36,7 @@ const affiliatedBoxRoutes = [
     { path:"/create-wod", component:<CreateWod/> },
     { path:"/edit-wod/:id", component:<EditWod/> },
     { path:"/leader-board", component:<LeaderBoard/> },
-    { path:"/board-of-record", component:<BoardOfRecord/> },
+    { path:"/board-of-record", component:<BoardOfRecords/> },
     { path:"/hold", component:<Hold/> },
     { path:"/free-trial", component:<FreeTrial/> },
     { path:"/confirm", component: <ConfirmEmail /> },

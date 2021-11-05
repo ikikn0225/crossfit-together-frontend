@@ -186,13 +186,18 @@ export const _WodCategoryLink = styled(Link)`
     }
 `;
 
-export const _WodListLayout = styled.div`
+interface IWodListLayout {
+    borPage?:boolean;
+}
+export const _WodListLayout = styled.div<IWodListLayout>`
     margin-top:2rem;
-    margin-bottom:4rem;
-    padding-bottom:4rem;
-    border-bottom:1px solid #3d3d3d;
     & > div:last-child {
         text-align:end;
+    }
+    
+    ${(props)=>props.borPage
+        ? "border-bottom:0px;margin-bottom:2rem;"
+        : "border-bottom:1px solid #3d3d3d;margin-bottom:4rem;padding-bottom:4rem;"
     }
 `;
 

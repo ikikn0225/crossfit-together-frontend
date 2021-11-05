@@ -48,6 +48,7 @@ interface IWodProps {
     titleDate:Date;
     content:string;
     userId:number;
+    borPage?:boolean;
 }
 
 interface IOwner {
@@ -61,7 +62,7 @@ const dayOfWeekAsString = (dayIndex:number) => {
     return ["SUNDAY", "MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"][dayIndex] || '';
 };
 
-export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, userId}) => {
+export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, userId, borPage}) => {
     const { data:likes } = useQuery<allLikesInWod>(ALL_LIKES_IN_WOD, {
         variables: {
             input: {
@@ -109,7 +110,7 @@ export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, u
     }
 
     return (
-        <_WodListLayout key={title+1}>
+        <_WodListLayout key={title+1} borPage={borPage}>
             <_WodListDay>{dayOfWeekAsString(new Date(titleDate).getDay())}</_WodListDay>
             <_WodListTitle key={title+2}>{title}</_WodListTitle>
             <_WodListContent key={title+3}>{content}</_WodListContent>

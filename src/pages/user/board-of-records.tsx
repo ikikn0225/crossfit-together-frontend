@@ -1,14 +1,15 @@
+import { BoardOfRecord } from "@/components/board-of-record";
 import Spinner from "@/components/spinner";
 import { Wod } from "@/components/wod";
 import { useMe } from "@/hooks/useMe";
-import { _BoardCreateBoardContainer, _BoardCreateWodButton, _BoardCreateWodButtonContainer, _BoardImg, _BoardImgContainer, _BoardImgTitle, _BoardListContainer, _BoardListSubContainer } from "@/theme/components/_BoardOfRecords"
+import { _BoardCreateBoardContainer, _BoardCreateWodButton, _BoardCreateWodButtonContainer, _BoardImg, _BoardImgContainer, _BoardImgTitle, _BoardListContainer, _BoardListSubContainer, _BoardNoContent } from "@/theme/components/_BoardOfRecords"
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { _WodNoContent } from "@/theme/components/_Wod";
 import { allBoardofRecords } from "@/__generated__/allBoardofRecords";
 import { wodList } from "@/__generated__/wodList";
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async"
 import { IWodEdge, WOD_LIST } from "./wods";
 
@@ -26,19 +27,50 @@ export const ALL_BOARD_OF_RECORDS = gql`
 `;
 
 
-export const BoardOfRecord = () => {
+export const BoardOfRecords = () => {
     const { data, loading, error } = useMe();
     const loader = useRef<HTMLDivElement>(null);
+    const [wodTrigger, setWodTrigger] = useState<boolean>(false);
     const delay = true;
     const { loading:wodLoading, error:wodListError, data:wodList, fetchMore, refetch, networkStatus } = useQuery<wodList>(WOD_LIST, {
         fetchPolicy: 'cache-and-network',
         notifyOnNetworkStatusChange: true,
     });
-    const { loading:boardofRecordLoading, data:boardofRecordList } = useQuery<allBoardofRecords>(ALL_BOARD_OF_RECORDS);
 
-    const CreateRecordInput = () => {
-        console.log("hello~");
+    const handleObserver = useCallback((entries) => {
+        const target = entries[0];
+        setWodTrigger(target.isIntersecting);
+    }, []);
+
+    const fetchWod = async () => {
+        setWodTrigger(false);
+        await fetchMore({
+            variables: {
+                after:wodList?.wodList.pageInfo?.endCursor,
+                delay,
+            },
+        })
     }
+
+    useEffect(() => {   //일반 함수에는 gql 데이터가 들어가지 않아 트리거를 사용함.
+        if(wodList?.wodList.pageInfo?.hasNextPage) {
+            if(wodTrigger) {
+                fetchWod();
+            }
+        }
+    }, [wodTrigger]);
+    
+    useEffect(() => {
+        const option = {
+            root: null,
+            rootMargin: "20px",
+            threshold: 0
+        };
+        const observer = new IntersectionObserver(handleObserver, option);
+        if(loader && loader.current) {
+            observer.observe(loader.current);
+        }
+    }, [handleObserver]);
 
     if (!data || loading || error) {
         return (
@@ -62,10 +94,7 @@ export const BoardOfRecord = () => {
                     {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
-                            <div>
-                                <_BoardCreateBoardContainer>
-                                    <_BoardCreateWodButton onClick={CreateRecordInput}>Create Record</_BoardCreateWodButton>
-                                </_BoardCreateBoardContainer>
+                            <div key={wod.node.title}>
                                 <Wod 
                                     key={wod.node.title}
                                     role={data.me.role}
@@ -74,12 +103,14 @@ export const BoardOfRecord = () => {
                                     title={wod.node.title}
                                     titleDate={wod.node.titleDate}
                                     content={wod.node.content}
+                                    borPage={true}
                                 />
+                                <BoardOfRecord borId={wod.node.id} />
                             </div>
                         ))
                     )
                     : (
-                        <_WodNoContent>Sorry, No Rep!</_WodNoContent>
+                        <_BoardNoContent >Sorry, No Rep!</_BoardNoContent>
                     )}
                     {wodLoading && 
                         <Spinner />
