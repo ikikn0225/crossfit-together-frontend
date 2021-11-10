@@ -105,7 +105,7 @@ export const BoardOfRecords = () => {
                                     content={wod.node.content}
                                     borPage={true}
                                 />
-                                <BoardOfRecord borId={wod.node.id} />
+                                <BoardOfRecord wodId={wod.node.id} />
                             </div>
                         ))
                     )

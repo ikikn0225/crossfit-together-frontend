@@ -62,6 +62,34 @@ export const _BoardNoContent = styled(_WodNoContent)`
 
 export const _BoardListBoxNewContent = styled.div`
     display:none;
+    padding-top:1rem;
+    padding-bottom:1rem;
 `;
+
+interface IFont {
+    checkprop:string;
+}
+export const _BoardFontAwesomeIcon = styled(FontAwesomeIcon)`
+    font-size:1.3rem;
+    border:0px;
+`;
+
+export const _BoardInputButton = styled.button<IFont>`
+    padding:0;
+    border:0;
+    float:right;
+    margin-right:5px;
+
+    ${(props)=>props.checkprop == "1"
+        ? "background-color: rgb(128,0,0); border-color:rgb(120,0,0); color:#fff;"
+        : "background-color: rgb(7,93,198); border-color:rgb(7,93,198); color:#fff;"
+    }
+`;
+
+export const _BoardListInput = styled.input`
+    padding:0.5em;
+`;
+
+export const _BoardListInputForm = styled.form``;
 
 export const _BoardCreateBoardContainer = styled(_WodUpdateWodLinkContainer)``;

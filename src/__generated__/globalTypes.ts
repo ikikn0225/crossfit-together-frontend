@@ -39,6 +39,11 @@ export interface CreateAffiliatedBoxInput {
   address: string;
 }
 
+export interface CreateBorInput {
+  content: string;
+  wodId: number;
+}
+
 export interface CreateLikeInWodInput {
   wodId: number;
 }

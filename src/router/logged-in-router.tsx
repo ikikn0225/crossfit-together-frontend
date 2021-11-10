@@ -19,7 +19,7 @@ import { BoardOfRecords } from "@/pages/user/board-of-records";
 import { LeaderBoard } from "@/pages/user/leader-board";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { CreateWod } from "@/pages/coach/create-wod";
-import { EditWod } from "@/pages/user/edit-wod";
+import { EditWod } from "@/pages/coach/edit-wod";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
