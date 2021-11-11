@@ -1,13 +1,14 @@
 import { ALL_BOARD_OF_RECORDS } from "@/pages/user/board-of-records";
-import { _BoardCreateBoardContainer, _BoardCreateWodButton, _BoardFontAwesomeIcon, _BoardInputButton, _BoardListBox, _BoardListBoxContent, _BoardListBoxNewContent, _BoardListInput, _BoardListInputForm, _BoardListLayout, _BoardNoContent } from "@/theme/components/_BoardOfRecords";
+import { _BoardCreateBoardContainer, _BoardCreateWodButton, _BoardFontAwesomeIcon, _BoardInputButton, _BoardListBox, _BoardListBoxContent, _BoardListBoxContentContainer, _BoardListBoxNewContentContainer, _BoardListInput, _BoardListInputForm, _BoardListLayout, _BoardNoContent } from "@/theme/components/_BoardOfRecords";
 import { allBoardofRecords } from "@/__generated__/allBoardofRecords";
-import { faCheckSquare as faCheckSquareSolid, faWindowClose as faWindowCloseSolid, faCheck as faCheckSolid, faTimes as faTimesSolid } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare as faCheckSquareSolid, faWindowClose as faWindowCloseSolid, faCheck as faCheckSolid, faTimes as faTimesSolid, faPencilAlt as faPencelAltSolid } from "@fortawesome/free-solid-svg-icons";
 import { faCheckSquare, faWindowClose } from "@fortawesome/free-regular-svg-icons";
 import { useQuery, gql, useMutation, useApolloClient } from "@apollo/client";
 import Spinner from "./spinner";
 import { useRef } from "react";
 import { createBor, createBorVariables } from "@/__generated__/createBor";
 import { useForm } from "react-hook-form";
+import { BoardListBoxEditContent } from "@/pages/user/board-of-record-content";
 
 export const CREATE_BOR = gql`
     mutation createBor($input:CreateBorInput!) {
@@ -22,11 +23,17 @@ export const CREATE_BOR = gql`
 
 interface IBorProps {
     wodId:number;
+    userId:number;
 }
 
 interface IBorList {
     id:number;
     content:string;
+    owner:IOwner;
+}
+
+interface IOwner {
+    id:number;
 }
 
 interface IBoardForm {
@@ -34,9 +41,10 @@ interface IBoardForm {
 }
 
 
-export const BoardOfRecord:React.FC<IBorProps> = ({wodId}) => {
+export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
     const client = useApolloClient();
     const showDivRef = useRef<HTMLDivElement>(null);
+    // const editDivRef = useRef<HTMLDivElement>(null);
     const focusRef = useRef<HTMLInputElement>(null);
     const { loading:boardofRecordLoading, data:boardofRecordList } = useQuery<allBoardofRecords>(ALL_BOARD_OF_RECORDS, {
         variables: {
@@ -70,8 +78,6 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId}) => {
                 },
             },
         });
-        console.log("existingBoards", existingBoards);
-        
         }
     }
 
@@ -94,6 +100,7 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId}) => {
                     }
                 },
             });
+            if(showDivRef.current) showDivRef.current.style.display = "none";
         } catch (e:any) {
             console.log(e.response.data);
         }
@@ -106,6 +113,10 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId}) => {
         }
     }
 
+    const handleNewInputCancel = () => {
+        if(showDivRef.current) showDivRef.current.style.display = "none";
+    }
+
     // console.log(boardofRecordList);
 
     return (
@@ -114,32 +125,39 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId}) => {
                 <_BoardCreateWodButton onClick={ShowRecordInput}>Create Record</_BoardCreateWodButton>
             </_BoardCreateBoardContainer>
             <_BoardListBox>
-                {boardofRecordList?.allBoardofRecords.bors.length !== 0
-                ? (
-                    boardofRecordList?.allBoardofRecords.bors.map((bor:IBorList) => (
-                        <_BoardListBoxContent key={bor.id}> {bor.content} </_BoardListBoxContent>
-                    ))
-                )
-                : ( 
-                    <_BoardNoContent>Sorry, No Rep!</_BoardNoContent>
-                )}
-                <_BoardListBoxNewContent ref={showDivRef}>
+                <_BoardListBoxNewContentContainer ref={showDivRef}>
                     <_BoardListInputForm onSubmit={handleSubmit(onSubmit)}>
                         <_BoardListInput 
                             {...register("content", {
                                 required: "Content is required",
                             })}
                             name="content"
+                            placeholder="Name(Record)"
                             ref={focusRef}
                         />
-                        <_BoardInputButton checkprop="1">
+                        <_BoardInputButton type="button" onClick={handleNewInputCancel}>
                             <_BoardFontAwesomeIcon icon={faTimesSolid}/>
                         </_BoardInputButton>
-                        <_BoardInputButton  checkprop="0">
+                        <_BoardInputButton>
                             <_BoardFontAwesomeIcon icon={faCheckSolid}/>
                         </_BoardInputButton>
                     </_BoardListInputForm>
-                </_BoardListBoxNewContent>
+                </_BoardListBoxNewContentContainer>
+                {boardofRecordList?.allBoardofRecords.bors.length !== 0
+                ? (
+                    boardofRecordList?.allBoardofRecords.bors.map((bor:IBorList) => (
+                        <BoardListBoxEditContent
+                            key={bor.id}
+                            borId={bor.id}
+                            userId={userId}
+                            borOwnerId={bor.owner.id}
+                            content={bor.content}
+                        />
+                    ))
+                )
+                : ( 
+                    <_BoardNoContent>Sorry, No Rep!</_BoardNoContent>
+                )}
             </_BoardListBox>
             {boardofRecordLoading && 
                 <Spinner />

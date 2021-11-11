@@ -9,10 +9,16 @@ import { AllBoardofRecordInput } from "./globalTypes";
 // GraphQL query operation: allBoardofRecords
 // ====================================================
 
+export interface allBoardofRecords_allBoardofRecords_bors_owner {
+  __typename: "User";
+  id: number;
+}
+
 export interface allBoardofRecords_allBoardofRecords_bors {
   __typename: "Bor";
   id: number;
   content: string;
+  owner: allBoardofRecords_allBoardofRecords_bors_owner;
 }
 
 export interface allBoardofRecords_allBoardofRecords {

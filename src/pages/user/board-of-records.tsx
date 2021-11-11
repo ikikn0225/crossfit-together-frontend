@@ -21,6 +21,9 @@ export const ALL_BOARD_OF_RECORDS = gql`
             bors {
                 id
                 content
+                owner {
+                    id
+                }
             }
         }
     }
@@ -105,7 +108,7 @@ export const BoardOfRecords = () => {
                                     content={wod.node.content}
                                     borPage={true}
                                 />
-                                <BoardOfRecord wodId={wod.node.id} />
+                                <BoardOfRecord wodId={wod.node.id} userId={data.me.id} />
                             </div>
                         ))
                     )

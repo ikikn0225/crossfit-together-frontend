@@ -46,7 +46,7 @@ export const _BoardListBox = styled.div`
     overflow-y: auto;
 `;
 
-export const _BoardListBoxContent = styled.div`
+export const _BoardListBoxContentContainer = styled.div`
     padding-top:1rem;
     padding-bottom:1rem;
     border-bottom:1px solid #3d3d3d;
@@ -55,19 +55,26 @@ export const _BoardListBoxContent = styled.div`
     }
 `;
 
+export const _BoardListBoxContent = styled.div`
+    // padding-bottom:1rem;
+`;
+
 export const _BoardNoContent = styled(_WodNoContent)`
     padding-top:3rem;
     padding-bottom:3rem;
 `;
 
-export const _BoardListBoxNewContent = styled.div`
+export const _BoardListBoxNewContentContainer = styled.div`
     display:none;
     padding-top:1rem;
     padding-bottom:1rem;
+    border-bottom:1px solid #3d3d3d;
 `;
 
 interface IFont {
-    checkprop:string;
+    userId?:number;
+    borOwnerId?:number;
+    editCheck?:boolean;
 }
 export const _BoardFontAwesomeIcon = styled(FontAwesomeIcon)`
     font-size:1.3rem;
@@ -79,10 +86,17 @@ export const _BoardInputButton = styled.button<IFont>`
     border:0;
     float:right;
     margin-right:5px;
+    width:1.5rem;
+    background-color:#000;
+    color:#fff;
 
-    ${(props)=>props.checkprop == "1"
-        ? "background-color: rgb(128,0,0); border-color:rgb(120,0,0); color:#fff;"
-        : "background-color: rgb(7,93,198); border-color:rgb(7,93,198); color:#fff;"
+    ${(props)=>props.userId == props.borOwnerId
+        ? "display:block;"
+        : "display:none;"
+    }
+
+    ${(props)=>props.editCheck
+        && "display:none;"
     }
 `;
 
