@@ -86,11 +86,11 @@ export const BoardOfRecords = () => {
     return(
         <>
             <Helmet>
-                <title>BoardOfRecord | CrossfiTogether</title>
+                <title>Board of Record | CrossfiTogether</title>
             </Helmet>
             <_BoardImgContainer>
                 <_BoardImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_BoardImg> 
-                <_BoardImgTitle>Board Of Record</_BoardImgTitle>
+                <_BoardImgTitle>Board of Record</_BoardImgTitle>
             </_BoardImgContainer>
             <_BoardListContainer>
                 <_BoardListSubContainer>

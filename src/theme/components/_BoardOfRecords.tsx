@@ -22,12 +22,12 @@ export const _BoardListSubContainer = styled.div`
     width:auto;
     text-align:center;
     overflow: hidden;
-    & > div:nth-child(1) {
-        margin-top:6rem;
-    }
+    // & > div:nth-child(1) {
+    //     margin-top:6rem;
+    // }
 
     & > div {
-        margin-bottom:4rem;
+        padding-top:2rem;
         border-bottom:1px solid #3d3d3d;
     }
 `;
@@ -44,6 +44,13 @@ export const _BoardListBox = styled.div`
     margin-right:3rem;
     border:1px solid #3d3d3d;
     overflow-y: auto;
+    ::-webkit-scrollbar {
+        width: 5px;
+        border-radious: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #2f3542;
+    }
 `;
 
 export const _BoardListBoxContentContainer = styled.div`
@@ -58,6 +65,12 @@ export const _BoardListBoxContentContainer = styled.div`
 export const _BoardListBoxContent = styled.div`
     // padding-bottom:1rem;
 `;
+
+export const _BoardListBoxContentInput = styled.input`
+    display:none;
+    padding:0.5em;
+`;
+
 
 export const _BoardNoContent = styled(_WodNoContent)`
     padding-top:3rem;

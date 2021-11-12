@@ -8,8 +8,9 @@ import { allLikesInWod } from "@/__generated__/allLikesInWod";
 import { useMutation, useQuery } from "@apollo/client";
 import { createLikeInWod, createLikeInWodVariables } from "@/__generated__/createLikeInWod";
 import { deleteLikeInWod, deleteLikeInWodVariables } from "@/__generated__/deleteLikeInWod";
+import { WodListLike } from "@/pages/user/wod-like";
 
-const ALL_LIKES_IN_WOD = gql`
+export const ALL_LIKES_IN_WOD = gql`
     query allLikesInWod($input:AllLikesInWodInput!) {
         allLikesInWod(input:$input) {
             ok
@@ -23,7 +24,7 @@ const ALL_LIKES_IN_WOD = gql`
     }
 `;
 
-const CREATE_LIKE_MUTATION = gql`
+export const CREATE_LIKE_MUTATION = gql`
     mutation createLikeInWod($input:CreateLikeInWodInput!) {
         createLikeInWod(input:$input) {
             error
@@ -32,7 +33,7 @@ const CREATE_LIKE_MUTATION = gql`
     }
 `;
 
-const DELETE_LIKE_MUTATION = gql`
+export const DELETE_LIKE_MUTATION = gql`
     mutation deleteLikeInWod($input:DeleteLikeInWodInput!) {
         deleteLikeInWod(input:$input) {
             error
@@ -114,7 +115,11 @@ export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, u
             <_WodListDay>{dayOfWeekAsString(new Date(titleDate).getDay())}</_WodListDay>
             <_WodListTitle key={title+2}>{title}</_WodListTitle>
             <_WodListContent key={title+3}>{content}</_WodListContent>
-            <_WodListLikeContainer>
+            <WodListLike
+                wodId={id}
+                userId={userId}
+            />
+            {/* <_WodListLikeContainer>
                 {likeState 
                 ? (
                     <_WodFontAwesomeIcon icon={faHeartSolid} onClick={()=>handleLike(likeState, id, likeCountState)} />
@@ -129,7 +134,7 @@ export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, u
                 : (
                     <span>0</span>
                 )}
-            </_WodListLikeContainer>
+            </_WodListLikeContainer> */}
         </_WodListLayout>
     )
 }

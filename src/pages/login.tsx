@@ -43,7 +43,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
         const { login:{ error, ok, token }, } = data;
         if(ok && token) {
             // localStorage.setItem(LOCALSTORAGE_TOKEN, token);
-            setCookie(LOCALSTORAGE_TOKEN, `Bearer ${token}`, {path: '/', expires: new Date(Date.now()+3600000)});
+            setCookie(LOCALSTORAGE_TOKEN, `Bearer ${token}`, {path: '/', expires: new Date(Date.now()+(3600000*8))});
             authTokenVar(`Bearer ${token}`);
             isLoggedInVar(true);
         }

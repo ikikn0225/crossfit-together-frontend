@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { createBor, createBorVariables } from "@/__generated__/createBor";
 import { useForm } from "react-hook-form";
 import { BoardListBoxEditContent } from "@/pages/user/board-of-record-content";
+import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
 
 export const CREATE_BOR = gql`
     mutation createBor($input:CreateBorInput!) {
@@ -19,7 +20,6 @@ export const CREATE_BOR = gql`
         }
     }
 `;
-
 
 interface IBorProps {
     wodId:number;
@@ -149,6 +149,7 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
                         <BoardListBoxEditContent
                             key={bor.id}
                             borId={bor.id}
+                            wodId={wodId}
                             userId={userId}
                             borOwnerId={bor.owner.id}
                             content={bor.content}
@@ -158,10 +159,10 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
                 : ( 
                     <_BoardNoContent>Sorry, No Rep!</_BoardNoContent>
                 )}
-            </_BoardListBox>
             {boardofRecordLoading && 
                 <Spinner />
             }
+            </_BoardListBox>
         </_BoardListLayout>
     )
 }

@@ -55,12 +55,21 @@ export interface CreateWodInput {
   categoryId: number;
 }
 
+export interface DeleteBorInput {
+  id: number;
+}
+
 export interface DeleteLikeInWodInput {
   wodId: number;
 }
 
 export interface DeleteWodInput {
   wodId: number;
+}
+
+export interface EditBorInput {
+  content?: string | null;
+  borId: number;
 }
 
 export interface EditWodInput {
