@@ -73,42 +73,13 @@ export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, u
     });
     const [ likeState, setLikeState ] = useState(false);
     const [ likeCountState, setLikeCountState ] = useState<number | undefined>(0);
-
-    const [createLikeMutation] = useMutation<createLikeInWod, createLikeInWodVariables>(CREATE_LIKE_MUTATION);
-    const [deleteLikeMutation] = useMutation<deleteLikeInWod, deleteLikeInWodVariables>(DELETE_LIKE_MUTATION);
-
+    
     useEffect(() => {
         const likeIndex = likes?.allLikesInWod.likes?.findIndex((e:ILike) => e.owner.id === userId);
         if(likeIndex !== -1) setLikeState(true);
         else setLikeState(false);
         setLikeCountState(likes?.allLikesInWod.likes?.length);
     }, [likes])
-
-    const handleLike = (likeState:boolean, wodId:number, count:number | undefined) => {
-        if(likeState) {
-            deleteLikeMutation({
-                variables:{
-                    input:{
-                        wodId:wodId
-                    }
-                }
-            });
-            setLikeState(false);
-            if(count)
-                setLikeCountState(count-1);
-        } else if(!likeState) {
-            createLikeMutation({
-                variables:{
-                    input:{
-                        wodId:wodId
-                    }
-                }
-            });
-            setLikeState(true);
-            if(count !== undefined)
-                setLikeCountState(count+1);
-        }
-    }
 
     return (
         <_WodListLayout key={title+1} borPage={borPage}>
@@ -119,22 +90,6 @@ export const Wod: React.FC<IWodProps> = ({id, role, title, titleDate, content, u
                 wodId={id}
                 userId={userId}
             />
-            {/* <_WodListLikeContainer>
-                {likeState 
-                ? (
-                    <_WodFontAwesomeIcon icon={faHeartSolid} onClick={()=>handleLike(likeState, id, likeCountState)} />
-                )
-                : (
-                    <_WodFontAwesomeIcon icon={faHeart} onClick={()=>handleLike(likeState, id, likeCountState)} />
-                )}
-                {likeCountState !== 0
-                ? (
-                    <span>{likeCountState}</span>
-                )
-                : (
-                    <span>0</span>
-                )}
-            </_WodListLikeContainer> */}
         </_WodListLayout>
     )
 }

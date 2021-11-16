@@ -16,7 +16,8 @@ export interface allNamedWodRecords_allNamedWodRecords_lbNamedWods_owner {
 
 export interface allNamedWodRecords_allNamedWodRecords_lbNamedWods {
   __typename: "LeaderBoardNamedWod";
-  record: string;
+  id: number;
+  record: number;
   owner: allNamedWodRecords_allNamedWodRecords_lbNamedWods_owner;
 }
 

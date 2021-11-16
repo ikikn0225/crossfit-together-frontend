@@ -16,6 +16,7 @@ export interface allOneRmRecords_allOneRmRecords_lbOneRms_owner {
 
 export interface allOneRmRecords_allOneRmRecords_lbOneRms {
   __typename: "LeaderBoardOneRm";
+  id: number;
   record: number;
   owner: allOneRmRecords_allOneRmRecords_lbOneRms_owner;
 }

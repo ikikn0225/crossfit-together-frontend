@@ -41,7 +41,7 @@ interface IBoardEditForm {
 }
 
 
-export const BoardListBoxEditContent:React.FC<IBorEditContentProps> = ({borId, wodId, userId, borOwnerId, content}) => {
+export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId, userId, borOwnerId, content}) => {
     const client = useApolloClient();
     const editFormRef = useRef<HTMLFormElement>(null);
     const checkBtnRef = useRef<HTMLButtonElement>(null);
@@ -157,23 +157,6 @@ export const BoardListBoxEditContent:React.FC<IBorEditContentProps> = ({borId, w
                     ref={editInputRef}
                 />
             </_BoardListInputForm>
-
-            {/* <_BoardListInputForm onSubmit={handleSubmit(onSubmit)}>
-                <_BoardListInput 
-                    {...register("content", {
-                        required: "Content is required",
-                    })}
-                    name="content"
-                    placeholder="Name(Record)"
-                    ref={focusRef}
-                />
-                <_BoardInputButton type="button" onClick={handleNewInputCancel}>
-                    <_BoardFontAwesomeIcon icon={faTimesSolid}/>
-                </_BoardInputButton>
-                <_BoardInputButton>
-                    <_BoardFontAwesomeIcon icon={faCheckSolid}/>
-                </_BoardInputButton>
-            </_BoardListInputForm> */}
         </_BoardListBoxContentContainer>
     )
 }

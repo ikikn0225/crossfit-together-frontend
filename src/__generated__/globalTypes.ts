@@ -17,7 +17,7 @@ export enum NamedWodsList {
   Danny = "Danny",
   Diane = "Diane",
   Elizabeth = "Elizabeth",
-  Filthy_Fifty_Crossfit_WOD = "Filthy_Fifty_Crossfit_WOD",
+  Filthy_Fifty = "Filthy_Fifty",
   Fran = "Fran",
   Frelen = "Frelen",
   Helen = "Helen",
@@ -38,41 +38,33 @@ export enum NamedWodsList {
   Nicole = "Nicole",
   Nuts = "Nuts",
   Roy = "Roy",
-  The_Chief_WOD = "The_Chief_WOD",
-  The_Glen_WOD = "The_Glen_WOD",
+  The_Chief = "The_Chief",
+  The_Glen = "The_Glen",
   The_Longest_Mile = "The_Longest_Mile",
-  The_Seven_The_CIA_Seven = "The_Seven_The_CIA_Seven",
   Tom = "Tom",
-  Zeus_WOD = "Zeus_WOD",
+  Zeus = "Zeus",
 }
 
 export enum OneRmList {
-  Back_squat = "Back_squat",
-  Bench_press = "Bench_press",
+  Back_Squat = "Back_Squat",
+  Bench_Press = "Bench_Press",
   Clean = "Clean",
-  Clean_and_jerk = "Clean_and_jerk",
+  Clean_and_Jerk = "Clean_and_Jerk",
   Deadlift = "Deadlift",
-  Front_squat = "Front_squat",
-  Hang_clean = "Hang_clean",
-  Hang_power_clean = "Hang_power_clean",
-  Hang_power_snatch = "Hang_power_snatch",
-  Hang_snatch = "Hang_snatch",
-  Muscle_snatch = "Muscle_snatch",
-  Overhead_squat = "Overhead_squat",
+  Front_Squat = "Front_Squat",
+  Hang_Clean = "Hang_Clean",
+  Hang_Power_Clean = "Hang_Power_Clean",
+  Hang_Power_Snatch = "Hang_Power_Snatch",
+  Hang_Snatch = "Hang_Snatch",
+  Overhead_Squat = "Overhead_Squat",
   Power_Clean = "Power_Clean",
   Power_Snatch = "Power_Snatch",
-  Push_jerk = "Push_jerk",
-  Push_press = "Push_press",
-  Shoulder_press = "Shoulder_press",
+  Push_Jerk = "Push_Jerk",
+  Push_Press = "Push_Press",
+  Shoulder_Press = "Shoulder_Press",
   Snatch = "Snatch",
-  Snatch_balance_3x1 = "Snatch_balance_3x1",
-  Split_jerk = "Split_jerk",
-  Sumo_deadlift = "Sumo_deadlift",
+  Split_Jerk = "Split_Jerk",
   Thruster = "Thruster",
-  Turkish_get_up = "Turkish_get_up",
-  Weighted_dip = "Weighted_dip",
-  Weighted_pull_up = "Weighted_pull_up",
-  Weighted_ring_dip = "Weighted_ring_dip",
 }
 
 export enum UserRole {
@@ -124,6 +116,11 @@ export interface CreateLikeInWodInput {
   wodId: number;
 }
 
+export interface CreateOneRmRecordInput {
+  oneRm: OneRmList;
+  record: number;
+}
+
 export interface CreateWodInput {
   title: string;
   titleDate?: any | null;
@@ -139,6 +136,10 @@ export interface DeleteLikeInWodInput {
   wodId: number;
 }
 
+export interface DeleteOneRmInput {
+  oneRmId: number;
+}
+
 export interface DeleteWodInput {
   wodId: number;
 }
@@ -146,6 +147,11 @@ export interface DeleteWodInput {
 export interface EditBorInput {
   content?: string | null;
   borId: number;
+}
+
+export interface EditOneRmRecordInput {
+  record?: number | null;
+  oneRmId: number;
 }
 
 export interface EditWodInput {

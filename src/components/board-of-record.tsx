@@ -8,7 +8,7 @@ import Spinner from "./spinner";
 import { useRef } from "react";
 import { createBor, createBorVariables } from "@/__generated__/createBor";
 import { useForm } from "react-hook-form";
-import { BoardListBoxEditContent } from "@/pages/user/board-of-record-content";
+import { BoardListBoxContent } from "@/pages/user/board-of-record-content";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
 
 export const CREATE_BOR = gql`
@@ -146,7 +146,7 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
                 {boardofRecordList?.allBoardofRecords.bors.length !== 0
                 ? (
                     boardofRecordList?.allBoardofRecords.bors.map((bor:IBorList) => (
-                        <BoardListBoxEditContent
+                        <BoardListBoxContent
                             key={bor.id}
                             borId={bor.id}
                             wodId={wodId}
