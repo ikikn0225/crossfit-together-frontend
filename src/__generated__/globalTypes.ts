@@ -116,6 +116,11 @@ export interface CreateLikeInWodInput {
   wodId: number;
 }
 
+export interface CreateNamedWodRecordInput {
+  namedWod: NamedWodsList;
+  record: number;
+}
+
 export interface CreateOneRmRecordInput {
   oneRm: OneRmList;
   record: number;
@@ -136,6 +141,10 @@ export interface DeleteLikeInWodInput {
   wodId: number;
 }
 
+export interface DeleteNamedWodInput {
+  namedWodId: number;
+}
+
 export interface DeleteOneRmInput {
   oneRmId: number;
 }
@@ -147,6 +156,11 @@ export interface DeleteWodInput {
 export interface EditBorInput {
   content?: string | null;
   borId: number;
+}
+
+export interface EditNamedWodRecordInput {
+  record?: number | null;
+  namedWodId: number;
 }
 
 export interface EditOneRmRecordInput {

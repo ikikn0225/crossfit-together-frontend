@@ -44,10 +44,17 @@ export const _LeaderBoardTab = styled.li<ITab>`
 `;
 
 export const _LeaderBoardTabListContainer = styled.ul`
-
+    border:1px solid rgb(7,93,198);
 `;
 
-export const _LeaderBoardTabList = styled.li`
+interface ITabList {
+    oneRmList?:string;
+    namedWodList?:string;
+    oneRmState?:string;
+    namedWodState?:string;
+}
+
+export const _LeaderBoardTabList = styled.li<ITabList>`
     display: inline-block;
     border: 1px solid #3d3d3d;
     padding: 1rem;
@@ -55,6 +62,20 @@ export const _LeaderBoardTabList = styled.li`
     height:4rem;
     vertical-align: middle;
     line-height:normal;
+    cursor:pointer;
+
+    &:hover {
+        background-color: rgb(7,93,198);
+        border: 1px solid rgb(7,93,198);
+    }
+
+    ${(props)=>props.oneRmState && props.oneRmState == props.oneRmList
+        && "background-color: rgb(7,93,198); border: 1px solid rgb(7,93,198);"
+    }
+
+    ${(props)=>props.namedWodState && props.namedWodState == props.namedWodList
+        && "background-color: rgb(7,93,198); border: 1px solid rgb(7,93,198);"
+    }
 `;
 
 export const _LeaderBoardRecordListContainer = styled(_BoardListLayout)``;
@@ -76,17 +97,17 @@ export const _LeaderBoardListBox = styled.div`
     }
 
     // 순위 왕관 색상
-    & > div:nth-of-type(2) > svg:nth-of-type(1){
+    & > div:nth-of-type(2) > div:nth-of-type(1) > svg:nth-of-type(1){
         color:#FFD700;
         margin-bottom: 1rem;
         display:inline;
     }
-    & > div:nth-of-type(3) > svg:nth-of-type(1){
+    & > div:nth-of-type(3) > div:nth-of-type(1) > svg:nth-of-type(1){
         color:#C0C0C0;
         margin-bottom: 1rem;
         display:inline;
     }
-    & > div:nth-of-type(4) > svg:nth-of-type(1){
+    & > div:nth-of-type(4) > div:nth-of-type(1) > svg:nth-of-type(1){
         color:#C49C48;
         margin-bottom: 1rem;
         display:inline;
@@ -132,17 +153,25 @@ export const _LeaderBoardListBoxNewContentContainer = styled.div`
     border-bottom:1px solid #3d3d3d;
 `;
 
+export const _LeaderBoardFontAwesomeIcon = styled(FontAwesomeIcon)`
+    font-size:1.3rem;
+    border:0px;
+`;
+
+interface ICrown {
+    crown?:boolean;
+}
+export const _LeaderBoardFontAwesomeIconContainer = styled.div<ICrown>`
+    ${(props)=>props.crown
+        && "& > svg {display:none;}"
+    }
+`;
+
 interface IFont {
     userId?:number;
     borOwnerId?:number;
     editCheck?:boolean;
 }
-export const _LeaderBoardFontAwesomeIcon = styled(FontAwesomeIcon)`
-    display:none;
-    font-size:1.3rem;
-    border:0px;
-`;
-
 export const _LeaderBoardInputButton = styled.button<IFont>`
     padding:0;
     border:0;

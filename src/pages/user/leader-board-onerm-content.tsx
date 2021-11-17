@@ -14,9 +14,9 @@ import { useForm } from "react-hook-form";
 import { editBor, editBorVariables } from "@/__generated__/editBor";
 import { ALL_BOARD_OF_RECORDS } from "./board-of-records";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
-import { _LeaderBoardFontAwesomeIcon, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer } from "@/theme/components/_LeaderBoard";
+import { _LeaderBoardFontAwesomeIcon, _LeaderBoardFontAwesomeIconContainer, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer } from "@/theme/components/_LeaderBoard";
 
-export const EDIT_LB = gql`
+export const EDIT_ONE_RM_RECORDS = gql`
     mutation editOneRmRecord($input:EditOneRmRecordInput!) {
         editOneRmRecord(input:$input) {
             error
@@ -25,7 +25,7 @@ export const EDIT_LB = gql`
     }
 `;
 
-export const DELETE_LB = gql`
+export const DELETE_ONE_RM_RECORDS = gql`
     mutation deleteOneRmRecord($input:DeleteOneRmInput!) {
         deleteOneRmRecord(input:$input) {
             ok
@@ -46,7 +46,7 @@ interface ILeaderBoardContentProps {
 // }
 
 
-export const LeaderBoardListBoxContent:React.FC<ILeaderBoardContentProps> = ({onermid, record, ownername}) => {
+export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> = ({onermid, record, ownername}) => {
 //     const client = useApolloClient();
 //     const editFormRef = useRef<HTMLFormElement>(null);
 //     const checkBtnRef = useRef<HTMLButtonElement>(null);
@@ -142,7 +142,9 @@ export const LeaderBoardListBoxContent:React.FC<ILeaderBoardContentProps> = ({on
 
     return (
         <_LeaderBoardListBoxContentContainer key={onermid}>
-            <_LeaderBoardFontAwesomeIcon icon={faCrownSolid}/>
+            <_LeaderBoardFontAwesomeIconContainer crown={true}>
+                <_LeaderBoardFontAwesomeIcon icon={faCrownSolid}/>
+            </_LeaderBoardFontAwesomeIconContainer>
             <_LeaderBoardListBoxContent>{ownername}</_LeaderBoardListBoxContent>
             <_LeaderBoardListBoxContent record={record}>{record}</_LeaderBoardListBoxContent>
             <span>LB</span>

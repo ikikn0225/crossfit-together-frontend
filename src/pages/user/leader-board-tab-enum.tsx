@@ -11,14 +11,14 @@ export const oneRmList = [
     {id:8, oneRm:'Hang Power Snatch'},
     {id:9, oneRm:'Push Jerk'},
     {id:10, oneRm:'Split Jerk'},
-    {id:12, oneRm:'Push Press'},
-    {id:13, oneRm:'Shoulder Press'},
-    {id:14, oneRm:'Bench Press'},
-    {id:15, oneRm:'Thruster'},
-    {id:16, oneRm:'Back Squat'},
-    {id:17, oneRm:'Front Squat'},
-    {id:18, oneRm:'Overhead Squat'},
-    {id:19, oneRm:'Deadlift'}
+    {id:11, oneRm:'Push Press'},
+    {id:12, oneRm:'Shoulder Press'},
+    {id:13, oneRm:'Bench Press'},
+    {id:14, oneRm:'Thruster'},
+    {id:15, oneRm:'Back Squat'},
+    {id:16, oneRm:'Front Squat'},
+    {id:17, oneRm:'Overhead Squat'},
+    {id:18, oneRm:'Deadlift'}
 ];
 export const namedWodList = [
     {id:0, namedWod:'Murph'},
