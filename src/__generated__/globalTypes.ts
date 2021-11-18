@@ -185,6 +185,10 @@ export interface OneWodInput {
   wodId: number;
 }
 
+export interface RegisterHoldInput {
+  holdAt: any;
+}
+
 export interface VerifyEmailInput {
   code: string;
 }
