@@ -22,6 +22,8 @@ import { createOneRmRecord, createOneRmRecordVariables } from "@/__generated__/c
 import { OneRmList } from "@/__generated__/globalTypes";
 import { LeaderBoardListBoxOneRm } from "./leader-board-onerm-list-box";
 import { LeaderBoardListBoxNamedWod } from "./leader-board-namedwod-list-box";
+import { useMe } from "@/hooks/useMe";
+import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 
 export const ALL_ONE_RM_RECORDS = gql`
     query allOneRmRecords($input:AllOneRmRecordsInput!) {
@@ -32,6 +34,7 @@ export const ALL_ONE_RM_RECORDS = gql`
                 id
                 record
                 owner {
+                    id
                     name
                 }
             }
@@ -48,6 +51,7 @@ export const ALL_NAMED_WOD_RECORDS = gql`
                 id
                 record
                 owner {
+                    id
                     name
                 }
             }
@@ -70,6 +74,7 @@ interface IOwner {
 }
 
 export const LeaderBoard = () => {
+    const { data, loading, error } = useMe();
     const [menuOneRmState, setMenuOneRmState] = useState(1);
     const [menuNamedWodState, setMenuNamedWodState] = useState(0);
     const [oneRmState, setOneRmState] = useState("Clean");
@@ -111,6 +116,14 @@ export const LeaderBoard = () => {
         setNamedWodState(namedWod);
     }
 
+    if (!data || loading || error) {
+        return (
+            <_Loading>
+                <_LoadingSpan>Loading...</_LoadingSpan>
+            </_Loading>
+        );
+    }
+
     return(
         <>
             <Helmet>
@@ -146,6 +159,7 @@ export const LeaderBoard = () => {
                                 oneRmRecord={oneRmRecord}
                                 lbOneRmLoading={lbOneRmLoading}
                                 oneRmState={oneRmState}
+                                userId={data.me.id}
                             />
                         )
                         :(
@@ -153,6 +167,7 @@ export const LeaderBoard = () => {
                                 namedWodRecord={namedWodRecord}
                                 lbNamedWodLoading={lbNamedWodLoading}
                                 namedWodState={namedWodState}
+                                userId={data.me.id}
                             />
                         )}
                     </_LeaderBoardRecordListContainer>

@@ -14,7 +14,11 @@ import { useForm } from "react-hook-form";
 import { editBor, editBorVariables } from "@/__generated__/editBor";
 import { ALL_BOARD_OF_RECORDS } from "./board-of-records";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
-import { _LeaderBoardFontAwesomeIcon, _LeaderBoardFontAwesomeIconContainer, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer } from "@/theme/components/_LeaderBoard";
+import { _LeaderBoardFontAwesomeIcon, _LeaderBoardFontAwesomeIconContainer, _LeaderBoardInputButton, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer, _LeaderBoardListBoxContentInput, _LeaderBoardListInputForm } from "@/theme/components/_LeaderBoard";
+import { ALL_ONE_RM_RECORDS } from "./leader-board";
+import { OneRmList } from "@/__generated__/globalTypes";
+import { editOneRmRecord, editOneRmRecordVariables } from "@/__generated__/editOneRmRecord";
+import { deleteOneRmRecord, deleteOneRmRecordVariables } from "@/__generated__/deleteOneRmRecord";
 
 export const EDIT_ONE_RM_RECORDS = gql`
     mutation editOneRmRecord($input:EditOneRmRecordInput!) {
@@ -39,137 +43,141 @@ interface ILeaderBoardContentProps {
     onermid:number;
     record:number;
     ownername:string;
+    onermstate:string;
+    userid:number;
+    ownerid:number;
 }
 
-// interface IBoardEditForm {
-//     content: string;
-// }
+interface IBoardEditForm {
+    record: number;
+}
 
 
-export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> = ({onermid, record, ownername}) => {
-//     const client = useApolloClient();
-//     const editFormRef = useRef<HTMLFormElement>(null);
-//     const checkBtnRef = useRef<HTMLButtonElement>(null);
-//     const editBtnRef = useRef<HTMLButtonElement>(null);
-//     const editInputRef = useRef<HTMLInputElement>(null);
+export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> = ({onermid, record, ownername, onermstate, userid, ownerid}) => {
+    const client = useApolloClient();
+    const editFormRef = useRef<HTMLFormElement>(null);
+    const checkBtnRef = useRef<HTMLButtonElement>(null);
+    const editBtnRef = useRef<HTMLButtonElement>(null);
+    const editInputRef = useRef<HTMLInputElement>(null);
 
-//     const onCompleted = (data:editBor) => {
-//         const { editBor:{ok, error} } = data;
-//         if(ok) {
-//             const existingBoards = client.readQuery({ query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}} });
-//             client.writeQuery({ 
-//                 query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}},
-//                 data: {
-//                     allBoardofRecords: {
-//                         ...existingBoards.allBoardofRecords,
-//                         bors: [ editBor, ...existingBoards.allBoardofRecords.bors
-//                         ],
-//                     },
-//                 },
-//             });
-//         }
-//     }
+    const onCompleted = (data:editOneRmRecord) => {
+        const { editOneRmRecord:{ok, error} } = data;
+        if(ok) {
+            const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
+            const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+            client.writeQuery({ 
+                query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},
+                data: {
+                    allOneRmRecords: {
+                        ...existingBoards.allOneRmRecords,
+                        lbOneRms: [ editOneRmRecord, ...existingBoards.allOneRmRecords.lbOneRms
+                        ],
+                    },
+                },
+            });
+        }
+    }
 
-//     const [ editBor, { loading, data:editBorResult } ] = useMutation<editBor, editBorVariables>(EDIT_BOR, {
-//         onCompleted,
-//     });
+    const [ editOneRmRecord, { loading, data:editBorResult } ] = useMutation<editOneRmRecord, editOneRmRecordVariables>(EDIT_ONE_RM_RECORDS, {
+        onCompleted,
+    });
 
     
-//     const [ deleteBor, { loading:deleteLoading } ] = useMutation<deleteBor, deleteBorVariables>(DELETE_BOR, {
-//         onCompleted({ deleteBor }) {
-//             const existingBoards = client.readQuery({ query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}} });
-//             client.writeQuery({ 
-//                 query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}},
-//                 data: {
-//                     allBoardofRecords: {
-//                         ...existingBoards.allBoardofRecords,
-//                         bors: [deleteBor, ...existingBoards.allBoardofRecords.bors
-//                         ],
-//                     },
-//                 },
-//             });
-//         }
-//     })
+    const [ deleteOneRmRecord, { loading:deleteLoading } ] = useMutation<deleteOneRmRecord, deleteOneRmRecordVariables>(DELETE_ONE_RM_RECORDS, {
+        onCompleted({ deleteOneRmRecord }) {
+            const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
+            const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+            client.writeQuery({ 
+                query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},
+                data: {
+                    allOneRmRecords: {
+                        ...existingBoards.allOneRmRecords,
+                        lbOneRms: [deleteOneRmRecord, ...existingBoards.allOneRmRecords.lbOneRms
+                        ],
+                    },
+                },
+            });
+        }
+    })
 
 
-//     const { register, control, getValues, formState: { errors }, handleSubmit, formState } = useForm<IBoardEditForm>({
-//         mode:"onChange",
-//     });
+    const { register, control, getValues, formState: { errors }, handleSubmit, formState } = useForm<IBoardEditForm>({
+        mode:"onChange",
+    });
     
-//     const onSubmit = () => {
-//         try {
-//             const { content } = getValues();
-//             editBor({
-//                 variables:{
-//                     input:{
-//                         content,
-//                         borId,
-//                     }
-//                 },
-//             });
-//             if(editFormRef.current && checkBtnRef.current && editBtnRef.current && editInputRef.current) {
-//                 checkBtnRef.current.style.display = "none";
-//                 editInputRef.current.style.display = "none";
-//                 editBtnRef.current.style.display = 'inline-block';
-//                 editFormRef.current.children[3].setAttribute("style", "display:block;");
-//             }
-//         } catch (e:any) {
-//             console.log(e.response.data);
-//         }
-//     }
+    const onSubmit = () => {
+        try {
+            const { record } = getValues();
+            editOneRmRecord({
+                variables:{
+                    input:{
+                        record:+record,
+                        oneRmId:onermid,
+                    }
+                },
+            });
+            if(editFormRef.current && checkBtnRef.current && editBtnRef.current && editInputRef.current) {
+                checkBtnRef.current.style.display = "none";
+                editInputRef.current.style.display = "none";
+                editBtnRef.current.style.display = 'inline-block';
+                editFormRef.current.children[1].setAttribute("style", "display:inline-block;");
+                editFormRef.current.children[2].setAttribute("style", "display:inline-block;");
+            }
+        } catch (e:any) {
+            console.log(e.response.data);
+        }
+    }
 
-//     const handleEditInput = (content:string) => {
-//         if(editFormRef.current && checkBtnRef.current && editBtnRef.current && editInputRef.current) {
-//             checkBtnRef.current.style.display = 'block';
-//             editInputRef.current.style.display = 'inline-block';
-//             editBtnRef.current.style.display = 'none';
-//             editFormRef.current.children[3].setAttribute("style", "display:none;");
-//             editInputRef.current.value = content;
-//         }
-//     }
+    const handleEditInput = (record:number) => {
+        if(editFormRef.current && checkBtnRef.current && editBtnRef.current && editInputRef.current) {
+            checkBtnRef.current.style.display = 'block';
+            editInputRef.current.style.display = 'inline-block';
+            editInputRef.current.style.margin = '1rem';
+            editBtnRef.current.style.display = 'none';
+            editFormRef.current.children[1].setAttribute("style", "display:none;");
+            editFormRef.current.children[2].setAttribute("style", "display:none;");
+            editInputRef.current.value = record.toString();
+        }
+    }
 
-//     const onClickWodDelete = async(borId:number) => {
-//         if(deleteLoading === false) {
-//             deleteBor({
-//                 variables:{
-//                     input:{
-//                         id:borId,
-//                     }
-//                 }
-//             })
-//         }
-//     }
+    const onClickLbDelete = async(onermid:number) => {
+        if(deleteLoading === false) {
+            deleteOneRmRecord({
+                variables:{
+                    input:{
+                        oneRmId:onermid,
+                    }
+                }
+            })
+        }
+    }
 
     return (
         <_LeaderBoardListBoxContentContainer key={onermid}>
-            <_LeaderBoardFontAwesomeIconContainer crown={true}>
-                <_LeaderBoardFontAwesomeIcon icon={faCrownSolid}/>
-            </_LeaderBoardFontAwesomeIconContainer>
-            <_LeaderBoardListBoxContent>{ownername}</_LeaderBoardListBoxContent>
-            <_LeaderBoardListBoxContent record={record}>{record}</_LeaderBoardListBoxContent>
-            <span>LB</span>
+            <_LeaderBoardListInputForm onSubmit={handleSubmit(onSubmit)} ref={editFormRef}>
+                <_LeaderBoardFontAwesomeIconContainer crown={true}>
+                    <_LeaderBoardFontAwesomeIcon icon={faCrownSolid}/>
+                </_LeaderBoardFontAwesomeIconContainer>
+                <_LeaderBoardListBoxContent record={record}>{record}</_LeaderBoardListBoxContent>
+                <span>LB</span>
+                <_LeaderBoardListBoxContentInput
+                    {...register("record", {
+                        required: "Record is required",
+                    })}
+                    name="record"
+                    ref={editInputRef}
+                />
+                <_LeaderBoardInputButton type="button" onClick={()=>onClickLbDelete(onermid)} userId={userid} ownerid={ownerid}>
+                    <_LeaderBoardFontAwesomeIcon icon={faTimesSolid}/>
+                </_LeaderBoardInputButton>
+                <_LeaderBoardInputButton type="button" onClick={() => handleEditInput(record)} ref={editBtnRef} userId={userid} ownerid={ownerid}>
+                    <_LeaderBoardFontAwesomeIcon icon={faPencelAltSolid}/>
+                </_LeaderBoardInputButton>
+                <_LeaderBoardInputButton userId={userid} ownerid={ownerid} editCheck={true} ref={checkBtnRef}>
+                    <_LeaderBoardFontAwesomeIcon icon={faCheckSolid}/>
+                </_LeaderBoardInputButton>
+                <_LeaderBoardListBoxContent>{ownername}</_LeaderBoardListBoxContent>
+            </_LeaderBoardListInputForm>
         </_LeaderBoardListBoxContentContainer>
-//         <_BoardListBoxContentContainer key={borId}>
-//             <_BoardListInputForm onSubmit={handleSubmit(onSubmit)} ref={editFormRef}>
-//                 <_BoardInputButton type="button" onClick={()=>onClickWodDelete(borId)} userId={userId} borOwnerId={borOwnerId}>
-//                     <_BoardFontAwesomeIcon icon={faTimesSolid}/>
-//                 </_BoardInputButton>
-//                 <_BoardInputButton type="button" onClick={() => handleEditInput(content)} ref={editBtnRef} userId={userId} borOwnerId={borOwnerId}>
-//                     <_BoardFontAwesomeIcon icon={faPencelAltSolid}/>
-//                 </_BoardInputButton>
-//                 <_BoardInputButton userId={userId} borOwnerId={borOwnerId} editCheck={true} ref={checkBtnRef}>
-//                     <_BoardFontAwesomeIcon icon={faCheckSolid}/>
-//                 </_BoardInputButton>
-
-//                 <_BoardListBoxContent>{content}</_BoardListBoxContent>
-//                 <_BoardListBoxContentInput
-//                     {...register("content", {
-//                         required: "Content is required",
-//                     })}
-//                     name="content"
-//                     ref={editInputRef}
-//                 />
-//             </_BoardListInputForm>
-//         </_BoardListBoxContentContainer>
     )
 }

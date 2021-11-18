@@ -97,17 +97,17 @@ export const _LeaderBoardListBox = styled.div`
     }
 
     // 순위 왕관 색상
-    & > div:nth-of-type(2) > div:nth-of-type(1) > svg:nth-of-type(1){
+    & > div:nth-of-type(2) > form > div:nth-of-type(1) > svg:nth-of-type(1){
         color:#FFD700;
         margin-bottom: 1rem;
         display:inline;
     }
-    & > div:nth-of-type(3) > div:nth-of-type(1) > svg:nth-of-type(1){
+    & > div:nth-of-type(3) > form > div:nth-of-type(1) > svg:nth-of-type(1){
         color:#C0C0C0;
         margin-bottom: 1rem;
         display:inline;
     }
-    & > div:nth-of-type(4) > div:nth-of-type(1) > svg:nth-of-type(1){
+    & > div:nth-of-type(4) > form > div:nth-of-type(1) > svg:nth-of-type(1){
         color:#C49C48;
         margin-bottom: 1rem;
         display:inline;
@@ -169,7 +169,7 @@ export const _LeaderBoardFontAwesomeIconContainer = styled.div<ICrown>`
 
 interface IFont {
     userId?:number;
-    borOwnerId?:number;
+    ownerid?:number;
     editCheck?:boolean;
 }
 export const _LeaderBoardInputButton = styled.button<IFont>`
@@ -181,7 +181,7 @@ export const _LeaderBoardInputButton = styled.button<IFont>`
     background-color:#000;
     color:#fff;
 
-    ${(props)=>props.userId == props.borOwnerId
+    ${(props)=>props.userId == props.ownerid
         ? "display:block;"
         : "display:none;"
     }

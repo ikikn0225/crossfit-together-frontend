@@ -31,12 +31,11 @@ export const CREATE_ONE_RM_RECORD = gql`
     }
 `;
 
-
-
 interface ILeaderBoardContentProps {
     oneRmRecord:allOneRmRecords|undefined;
     lbOneRmLoading:boolean;
     oneRmState:string;
+    userId:number;
 }
 
 interface IBoardForm {
@@ -50,10 +49,11 @@ interface IBorList {
 }
 
 interface IOwner {
+    id:number;
     name:string;
 }
 
-export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneRmRecord, lbOneRmLoading, oneRmState}) => {
+export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneRmRecord, lbOneRmLoading, oneRmState, userId}) => {
     const client = useApolloClient();
     const showDivRef = useRef<HTMLDivElement>(null);
     const focusRef = useRef<HTMLInputElement>(null);
@@ -121,9 +121,6 @@ export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneR
             console.log(e.response.data);
         }
     }
-console.log(oneRmRecord?.allOneRmRecords?.lbOneRms?.length);
-
-
 
     return (
         <>
@@ -157,6 +154,9 @@ console.log(oneRmRecord?.allOneRmRecords?.lbOneRms?.length);
                             onermid={onerm.id}
                             record={onerm.record}
                             ownername={onerm.owner.name}
+                            ownerid={onerm.owner.id}
+                            onermstate={oneRmState}
+                            userid={userId}
                         />
                     ))
                 )

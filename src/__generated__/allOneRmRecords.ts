@@ -11,6 +11,7 @@ import { AllOneRmRecordsInput } from "./globalTypes";
 
 export interface allOneRmRecords_allOneRmRecords_lbOneRms_owner {
   __typename: "User";
+  id: number;
   name: string;
 }
 

@@ -11,6 +11,7 @@ import { AllNamedWodRecordsInput } from "./globalTypes";
 
 export interface allNamedWodRecords_allNamedWodRecords_lbNamedWods_owner {
   __typename: "User";
+  id: number;
   name: string;
 }
 

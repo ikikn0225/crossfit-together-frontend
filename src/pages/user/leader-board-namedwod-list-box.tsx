@@ -36,6 +36,7 @@ interface ILeaderBoardContentProps {
     namedWodRecord:allNamedWodRecords|undefined;
     lbNamedWodLoading:boolean;
     namedWodState:string;
+    userId:number;
 }
 
 interface IBoardForm {
@@ -49,10 +50,11 @@ interface IBorList {
 }
 
 interface IOwner {
+    id:number;
     name:string;
 }
 
-export const LeaderBoardListBoxNamedWod:React.FC<ILeaderBoardContentProps> = ({namedWodRecord, lbNamedWodLoading, namedWodState}) => {
+export const LeaderBoardListBoxNamedWod:React.FC<ILeaderBoardContentProps> = ({namedWodRecord, lbNamedWodLoading, namedWodState, userId}) => {
     const client = useApolloClient();
     const showDivRef = useRef<HTMLDivElement>(null);
     const focusRef = useRef<HTMLInputElement>(null);
@@ -120,9 +122,6 @@ export const LeaderBoardListBoxNamedWod:React.FC<ILeaderBoardContentProps> = ({n
             console.log(e.response.data);
         }
     }
-console.log(namedWodRecord?.allNamedWodRecords?.lbNamedWods?.length);
-
-
 
     return (
         <>
@@ -156,6 +155,9 @@ console.log(namedWodRecord?.allNamedWodRecords?.lbNamedWods?.length);
                             namedwodid={namedWod.id}
                             record={namedWod.record}
                             ownername={namedWod.owner.name}
+                            ownerid={namedWod.owner.id}
+                            namedwodstate={namedWodState}
+                            userid={userId}
                         />
                     ))
                 )
