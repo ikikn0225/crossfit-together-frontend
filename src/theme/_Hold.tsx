@@ -25,7 +25,7 @@ export const _HoldForm = styled.form`
 
 export const _HoldCalendarButton = styled(_ButtonCommon)`
     display:inline-block;
-    color: #000;
+    color: gray;
     font-size:1em;
     width:auto;
 `;
@@ -36,3 +36,8 @@ export const _HoldListContainer = styled(_BoardListLayout)`
 export const _HoldSpan = styled(_CreateWodSpan)``;
 
 export const _HoldNoContent = styled(_LeaderBoardNoContent)``;
+
+export const _HoldListTitle = styled.div`
+    font-size:1em;
+    padding:1rem;
+`;

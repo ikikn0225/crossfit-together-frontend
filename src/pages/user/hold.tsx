@@ -1,6 +1,6 @@
 import { Button } from "@/components/button"
 import { FormError } from "@/components/form-error"
-import { _HoldImg, _HoldImgContainer, _HoldImgTitle, _HoldContainer, _HoldSubContainer, _HoldForm, _HoldCalendarButton, _HoldListContainer, _HoldNoContent } from "@/theme/_Hold"
+import { _HoldImg, _HoldImgContainer, _HoldImgTitle, _HoldContainer, _HoldSubContainer, _HoldForm, _HoldCalendarButton, _HoldListContainer, _HoldNoContent, _HoldSpan, _HoldListTitle } from "@/theme/_Hold"
 import { Helmet } from "react-helmet-async"
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
@@ -8,13 +8,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { registerHold, registerHoldVariables } from "@/__generated__/registerHold";
 import { changeDateToTitle } from "../coach/create-wod";
-import React from "react";
-import { allHolds } from "@/__generated__/allHolds";
+import React, { useEffect, useState } from "react";
+// import { allHolds } from "@/__generated__/allHolds";
 import { HoldList } from "./hold-list";
+import { allDistinctHolds } from "@/__generated__/allDistinctHolds";
 
-export const ALL_HOLDS = gql`
-    query allHolds{
-        allHolds{
+export const ALL_DISTINCT_HOLDS = gql`
+    query allDistinctHolds {
+        allDistinctHolds {
             error
             ok
             holds {
@@ -68,8 +69,8 @@ const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onCl
 });
 
 export const Hold = () => {
-    const { data:allHolds } = useQuery<allHolds>(ALL_HOLDS);
-    console.log(allHolds);
+    const { data:allDistinctHolds } = useQuery<allDistinctHolds>(ALL_DISTINCT_HOLDS);
+    console.log(allDistinctHolds);
     
     const onCompleted = (data:registerHold) => {
         const {
@@ -145,16 +146,18 @@ export const Hold = () => {
                     {registerHoldResult?.registerHold.error && <FormError errorMessage={registerHoldResult.registerHold.error}/>}
                 </_HoldForm>
                 <_HoldListContainer>
-                    {allHolds?.allHolds?.holds?.length !== 0
+                    {allDistinctHolds?.allDistinctHolds?.holds?.length !== 0
                     ? (
-                        allHolds?.allHolds.holds?.map((hold:IHoldListProps) => (
+                        allDistinctHolds?.allDistinctHolds.holds?.map((hold:IHoldListProps) => (
                             //container 안에 holdlist 넣어주기 allHolds는 return값에 날짜 중복 제외, 날짜별 홀드를 가져와야한다.
-                            <HoldList
-                                key={hold.id}
-                                holdAt={hold.holdAt}
-                                ownerId={hold.owner.id}
-                                ownerName={hold.owner.name}
-                            />
+                            <div key={hold.id}>
+                                <_HoldListTitle>{hold.holdAt.toString().substring(0, 10)}</_HoldListTitle>
+                                <HoldList
+                                    holdAt={hold.holdAt}
+                                    ownerId={hold.owner.id}
+                                    ownerName={hold.owner.name}
+                                />
+                            </div>
                         ))
                     )
                     :(

@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { AllHoldsInput } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: allHolds
 // ====================================================
@@ -29,4 +31,8 @@ export interface allHolds_allHolds {
 
 export interface allHolds {
   allHolds: allHolds_allHolds;
+}
+
+export interface allHoldsVariables {
+  input: AllHoldsInput;
 }

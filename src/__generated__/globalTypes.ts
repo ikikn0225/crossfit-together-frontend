@@ -76,6 +76,10 @@ export interface AllBoardofRecordInput {
   id: number;
 }
 
+export interface AllHoldsInput {
+  holdAt?: any | null;
+}
+
 export interface AllLikesInWodInput {
   wodId: number;
 }
