@@ -36,6 +36,7 @@ export const _BoardListLayout = styled.div`
     border-bottom:0px;
     margin-top:2rem;
     margin-bottom:2rem;
+    text-align:left;
 `;
 
 export const _BoardListBox = styled.div`

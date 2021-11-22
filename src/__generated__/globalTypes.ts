@@ -76,8 +76,8 @@ export interface AllBoardofRecordInput {
   id: number;
 }
 
-export interface AllHoldsInput {
-  holdAt?: any | null;
+export interface AllDistinctHoldsInput {
+  affiliatedBoxId?: number | null;
 }
 
 export interface AllLikesInWodInput {
@@ -90,6 +90,10 @@ export interface AllNamedWodRecordsInput {
 
 export interface AllOneRmRecordsInput {
   oneRm: OneRmList;
+}
+
+export interface AllSpecificHoldsInput {
+  holdAt?: any | null;
 }
 
 export interface AllWodsInput {
@@ -138,6 +142,10 @@ export interface CreateWodInput {
 }
 
 export interface DeleteBorInput {
+  id: number;
+}
+
+export interface DeleteHoldInput {
   id: number;
 }
 

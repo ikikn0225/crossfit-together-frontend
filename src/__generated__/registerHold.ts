@@ -13,6 +13,7 @@ export interface registerHold_registerHold {
   __typename: "RegisterHoldOutput";
   error: string | null;
   ok: boolean;
+  holdId: number;
 }
 
 export interface registerHold {

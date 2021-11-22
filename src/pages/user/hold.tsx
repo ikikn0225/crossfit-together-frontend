@@ -1,21 +1,22 @@
 import { Button } from "@/components/button"
 import { FormError } from "@/components/form-error"
-import { _HoldImg, _HoldImgContainer, _HoldImgTitle, _HoldContainer, _HoldSubContainer, _HoldForm, _HoldCalendarButton, _HoldListContainer, _HoldNoContent, _HoldSpan, _HoldListTitle } from "@/theme/_Hold"
+import { _HoldImg, _HoldImgContainer, _HoldImgTitle, _HoldContainer, _HoldSubContainer, _HoldForm, _HoldCalendarButton, _HoldListContainer, _HoldNoContent, _HoldSpan, _HoldListTitle, _HoldMemberListContainer } from "@/theme/_Hold"
 import { Helmet } from "react-helmet-async"
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { registerHold, registerHoldVariables } from "@/__generated__/registerHold";
 import { changeDateToTitle } from "../coach/create-wod";
 import React, { useEffect, useState } from "react";
-// import { allHolds } from "@/__generated__/allHolds";
-import { HoldList } from "./hold-list";
+import { ALL_SPECIFIC_HOLDS, HoldMemberList } from "./hold-member-list";
 import { allDistinctHolds } from "@/__generated__/allDistinctHolds";
+import { myHolds } from "@/__generated__/myHolds";
+import { useMe } from "@/hooks/useMe";
 
 export const ALL_DISTINCT_HOLDS = gql`
-    query allDistinctHolds {
-        allDistinctHolds {
+    query allDistinctHolds($input:AllDistinctHoldsInput!) {
+        allDistinctHolds(input:$input) {
             error
             ok
             holds {
@@ -35,6 +36,20 @@ export const REGISTER_HOLD = gql`
         registerHold(input:$input) {
             error
             ok
+            holdId
+        }
+    }
+`;
+
+export const MY_HOLDS = gql`
+    query myHolds {
+        myHolds {
+            error
+            ok
+            holds {
+                id
+                holdAt
+            }
         }
     }
 `;
@@ -69,15 +84,77 @@ const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onCl
 });
 
 export const Hold = () => {
-    const { data:allDistinctHolds } = useQuery<allDistinctHolds>(ALL_DISTINCT_HOLDS);
-    console.log(allDistinctHolds);
+    const client = useApolloClient();
+    const { data:me } = useMe();
+    const { data:allDistinctHolds } = useQuery<allDistinctHolds>(ALL_DISTINCT_HOLDS, {
+        variables: {
+            input: {
+                affiliatedBoxId:me?.me.affiliatedBoxId
+            }
+        }
+    });
+    const { data:myHolds } = useQuery<myHolds>(MY_HOLDS);
+    // console.log(allDistinctHolds);
     
     const onCompleted = (data:registerHold) => {
         const {
-            registerHold: { ok },
+            registerHold: { ok, holdId },
         } = data;
         if(ok) {
             // handleModalOpen();
+            const { date } = getValues();
+            const existingDistinctHolds = client.readQuery({ query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}}});
+            client.writeQuery({
+                query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}},
+                data: {
+                    allDistinctHolds: {
+                        ...existingDistinctHolds.allDistinctHolds,
+                        holds: [
+                            {
+                                id:holdId,
+                                holdAt:date,
+                                __typename: 'AllDistinctHoldsOutput'
+                            },
+                            ...existingDistinctHolds.allDistinctHolds.holds,
+                        ],
+                    },
+                },
+            });
+
+            const existingSpecificHolds = client.readQuery({ query: ALL_SPECIFIC_HOLDS, variables: { input: {holdAt:date}}});
+            if(existingSpecificHolds) {
+                client.writeQuery({
+                    query: ALL_SPECIFIC_HOLDS, variables: { input: {holdAt:date}},
+                    data: {
+                        allSpecificHolds: {
+                            ...existingSpecificHolds.allSpecificHolds,
+                            holds: [
+                                {
+                                    id:holdId,
+                                    holdAt:date,
+                                    __typename: 'AllSpecificHoldsOutput'
+                                },
+                                ...existingSpecificHolds.allSpecificHolds.holds,
+                            ],
+                        },
+                    },
+                });
+            } else {
+                client.writeQuery({
+                    query: ALL_SPECIFIC_HOLDS, variables: { input: {holdAt:date}},
+                    data: {
+                        allSpecificHolds: {
+                            holds: [
+                                {
+                                    id:holdId,
+                                    holdAt:date,
+                                    __typename: 'AllSpecificHoldsOutput'
+                                }
+                            ],
+                        },
+                    },
+                });
+            }
         }
 
     }
@@ -93,12 +170,10 @@ export const Hold = () => {
     const onSubmit = () => {
         try {
             const { date } = getValues();
-            let titleDateSum = changeDateToTitle(date);
-
             registerHold({
                 variables: {
                     input: {
-                        holdAt:titleDateSum,
+                        holdAt:date,
                     }
                 }
             })
@@ -108,13 +183,15 @@ export const Hold = () => {
     }
 
     //즉시 실행함수로 excludeDates 함수 생성
-    // let excludeDates:Date[]|undefined = new Array();
-    // module.exports = (function isWeekday() {
-    //     const holdList = wods?.allWods.wods?.map((wod:any) => { 
-    //         return new Date(wod.titleDate); 
-    //     });
-    //     excludeDates = wodsList;
-    // })();
+    let excludeDates:Date[]|undefined = new Array();
+    module.exports = (function isWeekday() {
+        if(myHolds?.myHolds.holds.length !== 0) {
+            const holdList = myHolds?.myHolds.holds.map((hold:any) => { 
+                return new Date(hold.holdAt); 
+            });
+            excludeDates = holdList;
+        }
+    })();
 
     return(
         <>
@@ -127,43 +204,47 @@ export const Hold = () => {
             </_HoldImgContainer>
             <_HoldContainer>
                 <_HoldSubContainer>
-                <_HoldForm  onSubmit={handleSubmit(onSubmit)}>
-                    <Controller 
-                        name="date" 
-                        control={control}
-                        render= {({ field }) => (
-                        <DatePicker
-                            className="input"
-                            dateFormat="yyyyMMdd"
-                            placeholderText="Select WOD Date"
-                            onChange={(e) => field.onChange(e)}
-                            selected={field.value}
-                            customInput={React.createElement(ExampleCustomInput)}
+                    <_HoldForm  onSubmit={handleSubmit(onSubmit)}>
+                        <Controller 
+                            name="date" 
+                            control={control}
+                            render= {({ field }) => (
+                            <DatePicker
+                                className="input"
+                                dateFormat="yyyyMMdd"
+                                placeholderText="Select WOD Date"
+                                onChange={(e) => field.onChange(e)}
+                                selected={field.value}
+                                excludeDates={excludeDates}
+                                customInput={React.createElement(ExampleCustomInput)}
+                            />
+                            )}
                         />
+                        <Button canClick={formState.isValid} loading={loading} actionText={"POST"} />
+                        {registerHoldResult?.registerHold.error && <FormError errorMessage={registerHoldResult.registerHold.error}/>}
+                    </_HoldForm>
+                    <_HoldListContainer>
+                        {allDistinctHolds?.allDistinctHolds?.holds?.length !== 0
+                        ? (
+                            allDistinctHolds?.allDistinctHolds.holds?.map((hold:IHoldListProps) => (
+                                <div key={hold.id}>
+                                    <_HoldListTitle>{hold.holdAt.toString().substring(0, 10)}</_HoldListTitle>
+                                    <_HoldMemberListContainer>
+                                        <HoldMemberList
+                                            holdAt={hold.holdAt}
+                                            ownerId={hold.owner.id}
+                                            ownerName={hold.owner.name}
+                                            meId={me?.me.id}
+                                            affiliatedBoxId={me?.me.affiliatedBoxId}
+                                        />
+                                    </_HoldMemberListContainer>
+                                </div>
+                            ))
+                        )
+                        :(
+                            <_HoldNoContent>Sorry, No Rep!</_HoldNoContent>
                         )}
-                    />
-                    <Button canClick={formState.isValid} loading={loading} actionText={"POST"} />
-                    {registerHoldResult?.registerHold.error && <FormError errorMessage={registerHoldResult.registerHold.error}/>}
-                </_HoldForm>
-                <_HoldListContainer>
-                    {allDistinctHolds?.allDistinctHolds?.holds?.length !== 0
-                    ? (
-                        allDistinctHolds?.allDistinctHolds.holds?.map((hold:IHoldListProps) => (
-                            //container 안에 holdlist 넣어주기 allHolds는 return값에 날짜 중복 제외, 날짜별 홀드를 가져와야한다.
-                            <div key={hold.id}>
-                                <_HoldListTitle>{hold.holdAt.toString().substring(0, 10)}</_HoldListTitle>
-                                <HoldList
-                                    holdAt={hold.holdAt}
-                                    ownerId={hold.owner.id}
-                                    ownerName={hold.owner.name}
-                                />
-                            </div>
-                        ))
-                    )
-                    :(
-                        <_HoldNoContent>Sorry, No Rep!</_HoldNoContent>
-                    )}
-                </_HoldListContainer>
+                    </_HoldListContainer>
                 </_HoldSubContainer>
             </_HoldContainer>
         </>
