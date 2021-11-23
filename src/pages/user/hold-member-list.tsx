@@ -56,6 +56,7 @@ interface IOwner {
 }
 export const HoldMemberList:React.FC<IHoldMemberListProps> = ({holdAt, ownerId, ownerName, meId, affiliatedBoxId}) => {
     const client = useApolloClient();
+    
     const { data:allSpecificHolds, loading:allSpecificHoldsLoading } = useQuery<allSpecificHolds>(ALL_SPECIFIC_HOLDS, {
         variables: {
             input: {
@@ -63,6 +64,7 @@ export const HoldMemberList:React.FC<IHoldMemberListProps> = ({holdAt, ownerId, 
             }
         }
     });
+    
     const [ deleteHold, { loading:deleteLoading } ] = useMutation<deleteHold, deleteHoldVariables>(DELETE_HOLD, {
         onCompleted({ deleteHold }) {
                 const existingDistinctHolds = client.readQuery({ query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId}}});

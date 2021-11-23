@@ -211,7 +211,7 @@ export const Hold = () => {
                             render= {({ field }) => (
                             <DatePicker
                                 className="input"
-                                dateFormat="yyyyMMdd"
+                                dateFormat="yyyy-MM-dd"
                                 placeholderText="Select WOD Date"
                                 onChange={(e) => field.onChange(e)}
                                 selected={field.value}
@@ -230,13 +230,13 @@ export const Hold = () => {
                                 <div key={hold.id}>
                                     <_HoldListTitle>{hold.holdAt.toString().substring(0, 10)}</_HoldListTitle>
                                     <_HoldMemberListContainer>
-                                        <HoldMemberList
+                                        {/* <HoldMemberList
                                             holdAt={hold.holdAt}
                                             ownerId={hold.owner.id}
                                             ownerName={hold.owner.name}
                                             meId={me?.me.id}
                                             affiliatedBoxId={me?.me.affiliatedBoxId}
-                                        />
+                                        /> */}
                                     </_HoldMemberListContainer>
                                 </div>
                             ))
