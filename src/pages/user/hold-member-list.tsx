@@ -5,7 +5,7 @@ import { allSpecificHolds } from "@/__generated__/allSpecificHolds";
 import { deleteHold, deleteHoldVariables } from "@/__generated__/deleteHold";
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import { ALL_DISTINCT_HOLDS } from "./hold";
+import { DISTINCT_HOLD_LIST } from "./hold";
 import { faCheckSquare as faCheckSquareSolid, faWindowClose as faWindowCloseSolid, faCheck as faCheckSolid, faTimes as faTimesSolid, faPencilAlt as faPencelAltSolid } from "@fortawesome/free-solid-svg-icons";
 
 export const ALL_SPECIFIC_HOLDS = gql`
@@ -67,28 +67,35 @@ export const HoldMemberList:React.FC<IHoldMemberListProps> = ({holdAt, ownerId, 
     
     const [ deleteHold, { loading:deleteLoading } ] = useMutation<deleteHold, deleteHoldVariables>(DELETE_HOLD, {
         onCompleted({ deleteHold }) {
-                const existingDistinctHolds = client.readQuery({ query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId}}});
+                // const existingDistinctHolds = client.readQuery({ query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId}}});
+                const existingDistinctHolds = client.readQuery({ query: DISTINCT_HOLD_LIST, variables: { input: {affiliatedBoxId}}});
                 if(!existingDistinctHolds) {
                     client.writeQuery({
-                        query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId}},
+                        query: DISTINCT_HOLD_LIST, variables: { input: {affiliatedBoxId}},
                         data: {
-                            allDistinctHolds: {
-                                ...existingDistinctHolds.allDistinctHolds,
-                                holds: {
-                                    deleteHold
-                                },
+                            distinctHoldList: {
+                                ...existingDistinctHolds.distinctHoldList,
+                                edges: [
+                                    ...existingDistinctHolds.distinctHoldList.edges,
+                                    {
+                                        deleteHold
+                                    },
+                                ],
                             },
                         },
                     });
                 } else {
                     client.writeQuery({
-                        query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId}},
+                        query: DISTINCT_HOLD_LIST, variables: { input: {affiliatedBoxId}},
                         data: {
-                            allDistinctHolds: {
-                                ...existingDistinctHolds.allDistinctHolds,
-                                holds: [
-                                    deleteHold,
-                                    ...existingDistinctHolds.allDistinctHolds.holds,
+                            distinctHoldList: {
+                                ...existingDistinctHolds.distinctHoldList,
+                                edges: [
+                                    ...existingDistinctHolds.distinctHoldList.edges,
+                                    {
+                                        deleteHold,
+                                        ...existingDistinctHolds.distinctHoldList.edges.node,
+                                    },
                                 ],
                             },
                         },

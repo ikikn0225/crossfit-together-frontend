@@ -10,28 +10,10 @@ import { registerHold, registerHoldVariables } from "@/__generated__/registerHol
 import { changeDateToTitle } from "../coach/create-wod";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ALL_SPECIFIC_HOLDS, HoldMemberList } from "./hold-member-list";
-import { allDistinctHolds } from "@/__generated__/allDistinctHolds";
 import { myHolds } from "@/__generated__/myHolds";
 import { useMe } from "@/hooks/useMe";
 import { distinctHoldList } from "@/__generated__/distinctHoldList";
 import Spinner from "@/components/spinner";
-
-export const ALL_DISTINCT_HOLDS = gql`
-    query allDistinctHolds($input:AllDistinctHoldsInput!) {
-        allDistinctHolds(input:$input) {
-            error
-            ok
-            holds {
-                id
-                holdAt
-                owner {
-                    id
-                    name
-                }
-            }
-        }
-    }
-`;
 
 export const DISTINCT_HOLD_LIST = gql`
     query distinctHoldList($first: Int, $after: Int) {
@@ -123,7 +105,6 @@ export const Hold = () => {
         notifyOnNetworkStatusChange: true,
     });
     const { data:myHolds } = useQuery<myHolds>(MY_HOLDS);
-    console.log(distinctHoldList);
     
     const onCompleted = (data:registerHold) => {
         const {

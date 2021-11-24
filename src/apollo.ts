@@ -45,6 +45,8 @@ export const client = new ApolloClient({
                 },
                 wodList: relayStylePagination(),
                 distinctHoldList: relayStylePagination(),
+                distinctFreeTrialList: relayStylePagination(),
+                myFreeTrial: relayStylePagination(),
             },
         },
     },

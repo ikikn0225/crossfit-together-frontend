@@ -76,10 +76,6 @@ export interface AllBoardofRecordInput {
   id: number;
 }
 
-export interface AllDistinctHoldsInput {
-  affiliatedBoxId?: number | null;
-}
-
 export interface AllLikesInWodInput {
   wodId: number;
 }
@@ -90,6 +86,10 @@ export interface AllNamedWodRecordsInput {
 
 export interface AllOneRmRecordsInput {
   oneRm: OneRmList;
+}
+
+export interface AllSpecificFreeTrialsInput {
+  freeTrialAt?: any | null;
 }
 
 export interface AllSpecificHoldsInput {
@@ -145,6 +145,10 @@ export interface DeleteBorInput {
   id: number;
 }
 
+export interface DeleteFreeTrialInput {
+  id: number;
+}
+
 export interface DeleteHoldInput {
   id: number;
 }
@@ -193,8 +197,16 @@ export interface LoginInput {
   password: string;
 }
 
+export interface MyFreeTrialInput {
+  affiliatedBoxId?: number | null;
+}
+
 export interface OneWodInput {
   wodId: number;
+}
+
+export interface RegisterFreeTrialInput {
+  freeTrialAt: any;
 }
 
 export interface RegisterHoldInput {
