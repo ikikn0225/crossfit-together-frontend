@@ -44,6 +44,7 @@ export const client = new ApolloClient({
                     }
                 },
                 wodList: relayStylePagination(),
+                distinctHoldList: relayStylePagination(),
             },
         },
     },

@@ -8,11 +8,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { registerHold, registerHoldVariables } from "@/__generated__/registerHold";
 import { changeDateToTitle } from "../coach/create-wod";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ALL_SPECIFIC_HOLDS, HoldMemberList } from "./hold-member-list";
 import { allDistinctHolds } from "@/__generated__/allDistinctHolds";
 import { myHolds } from "@/__generated__/myHolds";
 import { useMe } from "@/hooks/useMe";
+import { distinctHoldList } from "@/__generated__/distinctHoldList";
+import Spinner from "@/components/spinner";
 
 export const ALL_DISTINCT_HOLDS = gql`
     query allDistinctHolds($input:AllDistinctHoldsInput!) {
@@ -25,6 +27,28 @@ export const ALL_DISTINCT_HOLDS = gql`
                 owner {
                     id
                     name
+                }
+            }
+        }
+    }
+`;
+
+export const DISTINCT_HOLD_LIST = gql`
+    query distinctHoldList($first: Int, $after: Int) {
+        distinctHoldList(first: $first, after: $after) {
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+            edges {
+                cursor
+                node {
+                    id
+                    holdAt
+                    owner {
+                        id
+                        name
+                    }
                 }
             }
         }
@@ -69,6 +93,11 @@ interface IOwner {
     name:string;
 }
 
+export interface IHoldEdge {
+    cursor:number;
+    node:IHoldListProps;
+}
+
 const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onClick(): void }>(
     ({ value, onClick }, ref) => {
     
@@ -85,37 +114,41 @@ const ExampleCustomInput = React.forwardRef<HTMLInputElement, { value: any; onCl
 
 export const Hold = () => {
     const client = useApolloClient();
+    const loader = useRef<HTMLDivElement>(null);
+    const [holdTrigger, setHoldTrigger] = useState<boolean>(false);
     const { data:me } = useMe();
-    const { data:allDistinctHolds } = useQuery<allDistinctHolds>(ALL_DISTINCT_HOLDS, {
-        variables: {
-            input: {
-                affiliatedBoxId:me?.me.affiliatedBoxId
-            }
-        }
+    const delay = true;
+    const { loading:distinctHoldLoading, data:distinctHoldList, fetchMore } = useQuery<distinctHoldList>(DISTINCT_HOLD_LIST, {
+        fetchPolicy: 'cache-and-network',
+        notifyOnNetworkStatusChange: true,
     });
     const { data:myHolds } = useQuery<myHolds>(MY_HOLDS);
-    // console.log(allDistinctHolds);
+    console.log(distinctHoldList);
     
     const onCompleted = (data:registerHold) => {
         const {
             registerHold: { ok, holdId },
         } = data;
+        
         if(ok) {
             // handleModalOpen();
             const { date } = getValues();
-            const existingDistinctHolds = client.readQuery({ query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}}});
+            const existingDistinctHolds = client.readQuery({ query: DISTINCT_HOLD_LIST, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}}});
             client.writeQuery({
-                query: ALL_DISTINCT_HOLDS, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}},
+                query: DISTINCT_HOLD_LIST, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}},
                 data: {
-                    allDistinctHolds: {
-                        ...existingDistinctHolds.allDistinctHolds,
-                        holds: [
+                    distinctHoldList: {
+                        ...existingDistinctHolds.distinctHoldList,
+                        edges: [
+                            ...existingDistinctHolds.distinctHoldList.edges,
                             {
-                                id:holdId,
-                                holdAt:date,
-                                __typename: 'AllDistinctHoldsOutput'
+                                node: {
+                                        id:holdId,
+                                        holdAt:date,
+                                        __typename: 'AllDistinctHoldsOutput'
+                                },
+                                ...existingDistinctHolds.distinctHoldList.edges.node,
                             },
-                            ...existingDistinctHolds.allDistinctHolds.holds,
                         ],
                     },
                 },
@@ -156,8 +189,42 @@ export const Hold = () => {
                 });
             }
         }
-
     }
+
+    const handleObserver = useCallback((entries) => {
+        const target = entries[0];
+        setHoldTrigger(target.isIntersecting);
+    }, []);
+
+    const fetchHold = async () => {
+        setHoldTrigger(false);
+        await fetchMore({
+            variables: {
+                after:distinctHoldList?.distinctHoldList.pageInfo?.endCursor,
+                delay,
+            },
+        })
+    }
+
+    useEffect(() => {   //일반 함수에는 gql 데이터가 들어가지 않아 트리거를 사용함.
+        if(distinctHoldList?.distinctHoldList.pageInfo?.hasNextPage) {
+            if(holdTrigger) {
+                fetchHold();
+            }
+        }
+    }, [holdTrigger]);
+    
+    useEffect(() => {
+        const option = {
+            root: null,
+            rootMargin: "20px",
+            threshold: 0
+        };
+        const observer = new IntersectionObserver(handleObserver, option);
+        if(loader && loader.current) {
+            observer.observe(loader.current);
+        }
+    }, [handleObserver]);
 
     const [registerHold, { loading, data:registerHoldResult }] = useMutation<registerHold, registerHoldVariables>(REGISTER_HOLD, {
         onCompleted,   
@@ -224,19 +291,20 @@ export const Hold = () => {
                         {registerHoldResult?.registerHold.error && <FormError errorMessage={registerHoldResult.registerHold.error}/>}
                     </_HoldForm>
                     <_HoldListContainer>
-                        {allDistinctHolds?.allDistinctHolds?.holds?.length !== 0
+                    {distinctHoldList?.distinctHoldList.edges?.length !== 0
                         ? (
-                            allDistinctHolds?.allDistinctHolds.holds?.map((hold:IHoldListProps) => (
-                                <div key={hold.id}>
-                                    <_HoldListTitle>{hold.holdAt.toString().substring(0, 10)}</_HoldListTitle>
+                            distinctHoldList?.distinctHoldList.edges?.map((hold:IHoldEdge) => (
+                                <div key={hold.node.id}>
+                                    <_HoldListTitle>{new Date(hold.node.holdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }).substring(0, 13)} 
+                                            &nbsp;({new Date(hold.node.holdAt).toDateString().substring(0, 3)})</_HoldListTitle>
                                     <_HoldMemberListContainer>
-                                        {/* <HoldMemberList
-                                            holdAt={hold.holdAt}
-                                            ownerId={hold.owner.id}
-                                            ownerName={hold.owner.name}
+                                        <HoldMemberList
+                                            holdAt={hold.node.holdAt}
+                                            ownerId={hold.node.owner.id}
+                                            ownerName={hold.node.owner.name}
                                             meId={me?.me.id}
                                             affiliatedBoxId={me?.me.affiliatedBoxId}
-                                        /> */}
+                                        />
                                     </_HoldMemberListContainer>
                                 </div>
                             ))
@@ -244,6 +312,10 @@ export const Hold = () => {
                         :(
                             <_HoldNoContent>Sorry, No Rep!</_HoldNoContent>
                         )}
+                        {distinctHoldLoading && 
+                            <Spinner />
+                        }
+                        <div ref={loader} />
                     </_HoldListContainer>
                 </_HoldSubContainer>
             </_HoldContainer>
