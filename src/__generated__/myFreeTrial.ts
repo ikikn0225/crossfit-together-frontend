@@ -19,7 +19,7 @@ export interface myFreeTrial_myFreeTrial {
   __typename: "MyFreeTrialOutput";
   error: string | null;
   ok: boolean;
-  freeTrial: myFreeTrial_myFreeTrial_freeTrial;
+  freeTrial: myFreeTrial_myFreeTrial_freeTrial | null;
 }
 
 export interface myFreeTrial {

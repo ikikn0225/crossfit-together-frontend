@@ -88,6 +88,7 @@ export const _LeaderBoardListBox = styled.div`
     max-height: 500px;
     border:1px solid #3d3d3d;
     overflow-y: auto;
+    text-align: center;
     ::-webkit-scrollbar {
         width: 5px;
         border-radious: 10px;

@@ -12,10 +12,12 @@ import { UserRole } from "./globalTypes";
 export interface meQuery_me {
   __typename: "User";
   id: number;
+  name: string;
   email: string;
   role: UserRole;
   verified: boolean;
   affiliatedBoxId: number | null;
+  profileImg: string | null;
 }
 
 export interface meQuery {

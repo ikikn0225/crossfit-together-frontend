@@ -3,7 +3,7 @@ import { allNamedWodRecords } from "@/__generated__/allNamedWodRecords";
 import { allOneRmRecords } from "@/__generated__/allOneRmRecords";
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import { ALL_NAMED_WOD_RECORDS } from "./leader-board";
+import { ALL_NAMED_WOD_RECORDS } from "./leader-board-tab";
 
 interface ITabList {
     list:string;

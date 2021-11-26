@@ -16,10 +16,11 @@ import { Wods } from "@/pages/user/wods";
 import { FreeTrial } from "@/pages/user/free-trial";
 import { Hold } from "@/pages/user/hold";
 import { BoardOfRecords } from "@/pages/user/board-of-records";
-import { LeaderBoard } from "@/pages/user/leader-board";
+import { LeaderBoard } from "@/pages/user/leader-board/leader-board";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { CreateWod } from "@/pages/coach/create-wod";
 import { EditWod } from "@/pages/coach/edit-wod";
+import { MyPage } from "@/pages/user/mypage/mypage";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
@@ -40,7 +41,8 @@ const affiliatedBoxRoutes = [
     { path:"/hold", component:<Hold/> },
     { path:"/free-trial", component:<FreeTrial/> },
     { path:"/confirm", component: <ConfirmEmail /> },
-    { path:"/wods/:slug", component: <Wods/> }
+    { path:"/wods/:slug", component: <Wods/> },
+    { path:"/mypage", component: <MyPage/> },
 ];
 
 const commonRoutes = [

@@ -175,10 +175,12 @@ export const FreeTrial = () => {
                 });
             }
 
+            const existingMyFreeTrials = client.readQuery({ query: MY_FREETRIAL, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}}});
             client.writeQuery({
                 query: MY_FREETRIAL, variables: { input: {affiliatedBoxId:me?.me.affiliatedBoxId}},
                 data: {
                     myFreeTrial: {
+                        ...existingMyFreeTrials.myFreeTrial,
                         freeTrial:
                         {
                             id:freeTrialId,
@@ -249,8 +251,6 @@ export const FreeTrial = () => {
         }
     }
 
-    useEffect(() => {}, [myFreeTrial])
-
     return(
         <>
             <Helmet>
@@ -263,10 +263,10 @@ export const FreeTrial = () => {
             <_FreeTrialContainer>
                 <_FreeTrialSubContainer>
                     <_FreeTrialForm  onSubmit={handleSubmit(onSubmit)}>
-                        {myFreeTrial !== undefined
+                        {myFreeTrial?.myFreeTrial.freeTrial !== null && myFreeTrial !== undefined
                         ?(
                             <_FreeTrialMyTrialDateLayout>
-                                <_FreeTrialMyTrialDateTitle>Your Free Trial Date</_FreeTrialMyTrialDateTitle>
+                                <_FreeTrialMyTrialDateTitle>Your Free Trial Date is</_FreeTrialMyTrialDateTitle>
                                 <_FreeTrialMyTrialDate>{new Date(myFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} 
                                             &nbsp;({new Date(myFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toDateString().substring(0, 3)})</_FreeTrialMyTrialDate>
                             </_FreeTrialMyTrialDateLayout>

@@ -12,7 +12,7 @@ ReactDOM.render(
     <React.StrictMode>
         <ApolloProvider client={client}>
             <HelmetProvider>
-                {/* <GlobalStyle />  */}
+                <GlobalStyle /> 
                 <App />
             </HelmetProvider>
         </ApolloProvider>

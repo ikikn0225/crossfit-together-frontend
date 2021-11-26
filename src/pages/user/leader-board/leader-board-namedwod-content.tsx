@@ -12,38 +12,37 @@ import gql from "graphql-tag";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { editBor, editBorVariables } from "@/__generated__/editBor";
-import { ALL_BOARD_OF_RECORDS } from "./board-of-records";
+import { ALL_BOARD_OF_RECORDS } from "../board-of-records";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
 import { _LeaderBoardFontAwesomeIcon, _LeaderBoardFontAwesomeIconContainer, _LeaderBoardInputButton, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer, _LeaderBoardListBoxContentInput, _LeaderBoardListInputForm } from "@/theme/components/_LeaderBoard";
-import { ALL_ONE_RM_RECORDS } from "./leader-board";
-import { OneRmList } from "@/__generated__/globalTypes";
-import { editOneRmRecord, editOneRmRecordVariables } from "@/__generated__/editOneRmRecord";
-import { deleteOneRmRecord, deleteOneRmRecordVariables } from "@/__generated__/deleteOneRmRecord";
+import { ALL_NAMED_WOD_RECORDS, ALL_ONE_RM_RECORDS } from "./leader-board-tab";
+import { editNamedWodRecord, editNamedWodRecordVariables } from "@/__generated__/editNamedWodRecord";
+import { NamedWodsList } from "@/__generated__/globalTypes";
+import { deleteNamedWodRecord, deleteNamedWodRecordVariables } from "@/__generated__/deleteNamedWodRecord";
 
-export const EDIT_ONE_RM_RECORDS = gql`
-    mutation editOneRmRecord($input:EditOneRmRecordInput!) {
-        editOneRmRecord(input:$input) {
+export const EDIT_NAMED_WOD_RECORDS = gql`
+    mutation editNamedWodRecord($input:EditNamedWodRecordInput!) {
+        editNamedWodRecord(input:$input) {
             error
             ok
         }
     }
 `;
 
-export const DELETE_ONE_RM_RECORDS = gql`
-    mutation deleteOneRmRecord($input:DeleteOneRmInput!) {
-        deleteOneRmRecord(input:$input) {
+export const DELETE_NAMED_WOD_RECORDS = gql`
+    mutation deleteNamedWodRecord($input:DeleteNamedWodInput!) {
+        deleteNamedWodRecord(input:$input) {
             ok
             error
         }
     }
 `;
-
 
 interface ILeaderBoardContentProps {
-    onermid:number;
+    namedwodid:number;
     record:number;
     ownername:string;
-    onermstate:string;
+    namedwodstate:string;
     userid:number;
     ownerid:number;
 }
@@ -53,24 +52,24 @@ interface IBoardEditForm {
 }
 
 
-export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> = ({onermid, record, ownername, onermstate, userid, ownerid}) => {
+export const LeaderBoardListBoxNamedWodContent:React.FC<ILeaderBoardContentProps> = ({namedwodid, record, ownername, namedwodstate, userid, ownerid}) => {
     const client = useApolloClient();
     const editFormRef = useRef<HTMLFormElement>(null);
     const checkBtnRef = useRef<HTMLButtonElement>(null);
     const editBtnRef = useRef<HTMLButtonElement>(null);
     const editInputRef = useRef<HTMLInputElement>(null);
 
-    const onCompleted = (data:editOneRmRecord) => {
-        const { editOneRmRecord:{ok, error} } = data;
+    const onCompleted = (data:editNamedWodRecord) => {
+        const { editNamedWodRecord:{ok, error} } = data;
         if(ok) {
-            const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
-            const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+            const namedwodEnum:NamedWodsList =  NamedWodsList[namedwodstate as keyof typeof NamedWodsList];
+            const existingBoards = client.readQuery({ query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}} });
             client.writeQuery({ 
-                query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},
+                query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}},
                 data: {
-                    allOneRmRecords: {
-                        ...existingBoards.allOneRmRecords,
-                        lbOneRms: [ editOneRmRecord, ...existingBoards.allOneRmRecords.lbOneRms
+                    allNamedWodRecords: {
+                        ...existingBoards.allNamedWodRecords,
+                        lbNamedWods: [ editNamedWodRecord, ...existingBoards.allNamedWodRecords.lbNamedWods
                         ],
                     },
                 },
@@ -78,21 +77,21 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
         }
     }
 
-    const [ editOneRmRecord, { loading, data:editBorResult } ] = useMutation<editOneRmRecord, editOneRmRecordVariables>(EDIT_ONE_RM_RECORDS, {
+    const [ editNamedWodRecord, { loading, data:editBorResult } ] = useMutation<editNamedWodRecord, editNamedWodRecordVariables>(EDIT_NAMED_WOD_RECORDS, {
         onCompleted,
     });
 
     
-    const [ deleteOneRmRecord, { loading:deleteLoading } ] = useMutation<deleteOneRmRecord, deleteOneRmRecordVariables>(DELETE_ONE_RM_RECORDS, {
-        onCompleted({ deleteOneRmRecord }) {
-            const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
-            const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+    const [ deleteNamedWodRecord, { loading:deleteLoading } ] = useMutation<deleteNamedWodRecord, deleteNamedWodRecordVariables>(DELETE_NAMED_WOD_RECORDS, {
+        onCompleted({ deleteNamedWodRecord }) {
+            const namedwodEnum:NamedWodsList =  NamedWodsList[namedwodstate as keyof typeof NamedWodsList];
+            const existingBoards = client.readQuery({ query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}} });
             client.writeQuery({ 
-                query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},
+                query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}},
                 data: {
-                    allOneRmRecords: {
-                        ...existingBoards.allOneRmRecords,
-                        lbOneRms: [deleteOneRmRecord, ...existingBoards.allOneRmRecords.lbOneRms
+                    allNamedWodRecords: {
+                        ...existingBoards.allNamedWodRecords,
+                        lbNamedWods: [deleteNamedWodRecord, ...existingBoards.allNamedWodRecords.lbNamedWods
                         ],
                     },
                 },
@@ -108,11 +107,11 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
     const onSubmit = () => {
         try {
             const { record } = getValues();
-            editOneRmRecord({
+            editNamedWodRecord({
                 variables:{
                     input:{
                         record:+record,
-                        oneRmId:onermid,
+                        namedWodId:namedwodid,
                     }
                 },
             });
@@ -140,12 +139,12 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
         }
     }
 
-    const onClickLbDelete = async(onermid:number) => {
+    const onClickLbDelete = async(namedwodid:number) => {
         if(deleteLoading === false) {
-            deleteOneRmRecord({
+            deleteNamedWodRecord({
                 variables:{
                     input:{
-                        oneRmId:onermid,
+                        namedWodId:namedwodid,
                     }
                 }
             })
@@ -153,7 +152,7 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
     }
 
     return (
-        <_LeaderBoardListBoxContentContainer key={onermid}>
+        <_LeaderBoardListBoxContentContainer key={namedwodid}>
             <_LeaderBoardListInputForm onSubmit={handleSubmit(onSubmit)} ref={editFormRef}>
                 <_LeaderBoardFontAwesomeIconContainer crown={true}>
                     <_LeaderBoardFontAwesomeIcon icon={faCrownSolid}/>
@@ -167,7 +166,7 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
                     name="record"
                     ref={editInputRef}
                 />
-                <_LeaderBoardInputButton type="button" onClick={()=>onClickLbDelete(onermid)} userId={userid} ownerid={ownerid}>
+                <_LeaderBoardInputButton type="button" onClick={()=>onClickLbDelete(namedwodid)} userId={userid} ownerid={ownerid}>
                     <_LeaderBoardFontAwesomeIcon icon={faTimesSolid}/>
                 </_LeaderBoardInputButton>
                 <_LeaderBoardInputButton type="button" onClick={() => handleEditInput(record)} ref={editBtnRef} userId={userid} ownerid={ownerid}>

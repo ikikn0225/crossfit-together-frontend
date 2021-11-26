@@ -201,6 +201,14 @@ export interface MyFreeTrialInput {
   affiliatedBoxId?: number | null;
 }
 
+export interface MyNamedWodRecordsInput {
+  namedWod: NamedWodsList;
+}
+
+export interface MyOneRmRecordsInput {
+  oneRm: OneRmList;
+}
+
 export interface OneWodInput {
   wodId: number;
 }

@@ -7,6 +7,7 @@ import { DISTINCT_FREETRIAL_LIST, MY_FREETRIAL } from "./free-trial";
 import { _FreeTrialFontAwesomeIcon, _FreeTrialInputButton, _FreeTrialSpan, _FreeTrialSpanContainer } from "@/theme/components/_FreeTrial";
 import { allSpecificFreeTrials } from "@/__generated__/allSpecificFreeTrials";
 import { deleteFreeTrial, deleteFreeTrialVariables } from "@/__generated__/deleteFreeTrial";
+import { useEffect } from "react";
 
 export const ALL_SPECIFIC_FREETRIALS = gql`
     query allSpecificFreeTrials($input:AllSpecificFreeTrialsInput!){
@@ -116,17 +117,13 @@ export const FreeTrialMemberList:React.FC<IFreeTrialMemberListProps> = ({freeTri
                 });
 
                 const existingMyFreeTrials = client.readQuery({ query: MY_FREETRIAL, variables: { input: {affiliatedBoxId}}});
-                console.log("deleteFreeTrial", deleteFreeTrial);
-                console.log("existingMyFreeTrials", existingMyFreeTrials);
-                
+
                 client.writeQuery({
                     query: MY_FREETRIAL, variables: { input: {affiliatedBoxId}},
                     data: {
                         myFreeTrial: {
                             ...existingMyFreeTrials.myFreeTrial,
-                            freeTrial: {
-                                deleteFreeTrial
-                            }
+                            freeTrial:null
                         },
                     },
                 });

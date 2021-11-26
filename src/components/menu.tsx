@@ -12,7 +12,7 @@ const HeaderBurger = () => {
                 <div />
                 <div />
             </_HeaderBurger>
-            <HeaderRightNav open={open}/>
+            <HeaderRightNav open={open} setOpen={setOpen}/>
         </>
     )
 }

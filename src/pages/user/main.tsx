@@ -15,7 +15,7 @@ export const Main = () => {
                 <title>Main | CrossfiTogether</title>
             </Helmet>
             <_MainImgBox>
-                <_MainImg backgroundImage={myAffiliatedBox?.myAffiliatedBox.affiliatedBox.coverImg+""}></_MainImg>
+                {/* <_MainImg backgroundImage={myAffiliatedBox?.myAffiliatedBox.affiliatedBox.coverImg+""}></_MainImg> */}
                 <_MainBackgroundImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit_main_cover.jpeg"}></_MainBackgroundImg>
             </_MainImgBox>
             <_MainNavUl>

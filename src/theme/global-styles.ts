@@ -10,6 +10,7 @@ ${reset}
         padding:0;
         min-width:300px;
         height:100%;
+        background: black;
         ::-webkit-scrollbar {
             width: 5px;
             border-radious: 10px;

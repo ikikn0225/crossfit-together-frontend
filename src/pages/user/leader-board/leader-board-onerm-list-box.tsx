@@ -12,7 +12,7 @@ import gql from "graphql-tag";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { editBor, editBorVariables } from "@/__generated__/editBor";
-import { ALL_BOARD_OF_RECORDS } from "./board-of-records";
+import { ALL_BOARD_OF_RECORDS } from "../board-of-records";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
 import { _LeaderBoardCreateBoardContainer, _LeaderBoardCreateWodButton, _LeaderBoardFontAwesomeIcon, _LeaderBoardInputButton, _LeaderBoardListBox, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer, _LeaderBoardListBoxNewContentContainer, _LeaderBoardListInput, _LeaderBoardListInputForm, _LeaderBoardNoContent } from "@/theme/components/_LeaderBoard";
 import Spinner from "@/components/spinner";
@@ -20,7 +20,7 @@ import { LeaderBoardListBoxOneRmContent } from "./leader-board-onerm-content";
 import { allOneRmRecords } from "@/__generated__/allOneRmRecords";
 import { createOneRmRecord, createOneRmRecordVariables } from "@/__generated__/createOneRmRecord";
 import { OneRmList } from "@/__generated__/globalTypes";
-import { ALL_ONE_RM_RECORDS } from "./leader-board";
+import { ALL_ONE_RM_RECORDS } from "./leader-board-tab";
 
 export const CREATE_ONE_RM_RECORD = gql`
     mutation createOneRmRecord($input:CreateOneRmRecordInput!) {
