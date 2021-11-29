@@ -9,6 +9,8 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { LeaderBoardTab } from "../leader-board/leader-board-tab";
 import { LeaderBoardTabContainer } from "../leader-board/leader-board-tab-container";
+import { MyPageBoardOfRecord } from "./mypage-board-of-record";
+import { MyPageFreeTrial } from "./mypage-free-trial";
 import { MyPageLeaderBoard } from "./mypage-leader-board";
 
 
@@ -42,7 +44,7 @@ export const MyPage = () => {
             </_MyPageImgContainer>
             <_MyPageProfileContainer>
                 <_MyPageProfileImgContainer>
-                    <_MyPageProfileImg img={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_MyPageProfileImg>
+                    <_MyPageProfileImg img={me?.me.profileImg}></_MyPageProfileImg>
                 </_MyPageProfileImgContainer>
                 <_MyPageProfileSpan>{me?.me.name}</_MyPageProfileSpan>
                 <_MyPageProfileSpan>{me?.me.email}</_MyPageProfileSpan>
@@ -58,15 +60,15 @@ export const MyPage = () => {
                     <_MyPageContents>
                         {menuFirstState == 1
                         && (
-                            <MyPageLeaderBoard title={"Leader Board"} />
+                            <MyPageLeaderBoard />
                         )}
                         {menuFirstState == 2
                         && (
-                            <span>2</span>
+                            <MyPageBoardOfRecord me={me?.me} />
                         )}
                         {menuFirstState == 3
                         && (
-                            <span>3</span>
+                            <MyPageFreeTrial me={me?.me} />
                         )}
                         {menuFirstState == 4
                         && (

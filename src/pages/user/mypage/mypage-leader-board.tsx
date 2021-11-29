@@ -1,4 +1,4 @@
-import { _MyPageLeaderBoardTitle, _MyPageListBoxContent, _MyPageListBoxContentContainer, _MyPageNoContent } from "@/theme/components/_MyPage";
+import { _MyPageLeaderBoardContentContainer, _MyPageTitle, _MyPageListBoxContent, _MyPageListBoxContentContainer, _MyPageNoContent } from "@/theme/components/_MyPage";
 import { myNamedWodRecords } from "@/__generated__/myNamedWodRecords";
 import { myOneRmRecords } from "@/__generated__/myOneRmRecords";
 import { useQuery } from "@apollo/client";
@@ -40,10 +40,7 @@ query myNamedWodRecords($input:MyNamedWodRecordsInput!) {
 }
 `;
 
-interface ISpan {
-    title:string;
-}
-export const MyPageLeaderBoard:React.FC<ISpan> = ({title}) => {
+export const MyPageLeaderBoard = () => {
 
     const [menuOneRmState, setMenuOneRmState] = useState(1);
     const [menuNamedWodState, setMenuNamedWodState] = useState(0);
@@ -68,46 +65,48 @@ export const MyPageLeaderBoard:React.FC<ISpan> = ({title}) => {
 
     return(
         <>
-            <_MyPageLeaderBoardTitle>{title}</_MyPageLeaderBoardTitle>
-            <LeaderBoardTabContainer
-                menuOneRmState={menuOneRmState}
-                menuNamedWodState={menuNamedWodState}
-                oneRmState={oneRmState}
-                namedWodState={namedWodState}
-                setOneRmState={setOneRmState}
-                setNamedWodState={setNamedWodState}
-                setMenuOneRmState={setMenuOneRmState}
-                setMenuNamedWodState={setMenuNamedWodState}
-            />
-            {menuOneRmState
-            ?(
-                myOneRmRecord?.myOneRmRecords.lbOneRms !== undefined && myOneRmRecord?.myOneRmRecords.lbOneRms !== null
-                ? (
-
-                    <_MyPageListBoxContentContainer>
-                        <_MyPageListBoxContent>Your <span>{oneRmState}</span> Record :  </_MyPageListBoxContent>
-                        <_MyPageListBoxContent record={myOneRmRecord?.myOneRmRecords.lbOneRms.record}>{myOneRmRecord?.myOneRmRecords.lbOneRms.record}</_MyPageListBoxContent>
-                        <span>LB</span>
-                    </_MyPageListBoxContentContainer>
-                )
-                :(
-                    <_MyPageNoContent>Sorry, No Rep!</_MyPageNoContent>
-                )
-            )
-            :(
-                myNamedWodRecord?.myNamedWodRecords.lbNamedWods !== undefined && myNamedWodRecord?.myNamedWodRecords.lbNamedWods !== null
+            <_MyPageTitle>Leader Board</_MyPageTitle>
+            <_MyPageLeaderBoardContentContainer>
+                <LeaderBoardTabContainer
+                    menuOneRmState={menuOneRmState}
+                    menuNamedWodState={menuNamedWodState}
+                    oneRmState={oneRmState}
+                    namedWodState={namedWodState}
+                    setOneRmState={setOneRmState}
+                    setNamedWodState={setNamedWodState}
+                    setMenuOneRmState={setMenuOneRmState}
+                    setMenuNamedWodState={setMenuNamedWodState}
+                />
+                {menuOneRmState
+                ?(
+                    myOneRmRecord?.myOneRmRecords.lbOneRms !== undefined && myOneRmRecord?.myOneRmRecords.lbOneRms !== null
                     ? (
 
                         <_MyPageListBoxContentContainer>
-                            <_MyPageListBoxContent>Your <span>{namedWodState}</span> Record :  </_MyPageListBoxContent>
-                            <_MyPageListBoxContent record={myNamedWodRecord?.myNamedWodRecords.lbNamedWods.record}>{myNamedWodRecord?.myNamedWodRecords.lbNamedWods.record}</_MyPageListBoxContent>
-                            {/* <span>LB</span> */}
+                            <_MyPageListBoxContent>Your <span>{oneRmState}</span> Record :  </_MyPageListBoxContent>
+                            <_MyPageListBoxContent record={myOneRmRecord?.myOneRmRecords.lbOneRms.record}>{myOneRmRecord?.myOneRmRecords.lbOneRms.record}</_MyPageListBoxContent>
+                            <span>LB</span>
                         </_MyPageListBoxContentContainer>
                     )
                     :(
                         <_MyPageNoContent>Sorry, No Rep!</_MyPageNoContent>
                     )
-            )}
+                )
+                :(
+                    myNamedWodRecord?.myNamedWodRecords.lbNamedWods !== undefined && myNamedWodRecord?.myNamedWodRecords.lbNamedWods !== null
+                        ? (
+
+                            <_MyPageListBoxContentContainer>
+                                <_MyPageListBoxContent>Your <span>{namedWodState}</span> Record :  </_MyPageListBoxContent>
+                                <_MyPageListBoxContent record={myNamedWodRecord?.myNamedWodRecords.lbNamedWods.record}>{myNamedWodRecord?.myNamedWodRecords.lbNamedWods.record}</_MyPageListBoxContent>
+                                {/* <span>LB</span> */}
+                            </_MyPageListBoxContentContainer>
+                        )
+                        :(
+                            <_MyPageNoContent>Sorry, No Rep!</_MyPageNoContent>
+                        )
+                )}
+            </_MyPageLeaderBoardContentContainer>
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { ALL_BOARD_OF_RECORDS } from "@/pages/user/board-of-records";
+import { ALL_BOARD_OF_RECORDS } from "@/pages/user/board-of-record/board-of-records";
 import { _BoardCreateBoardContainer, _BoardCreateWodButton, _BoardFontAwesomeIcon, _BoardInputButton, _BoardListBox, _BoardListBoxContent, _BoardListBoxContentContainer, _BoardListBoxNewContentContainer, _BoardListInput, _BoardListInputForm, _BoardListLayout, _BoardNoContent } from "@/theme/components/_BoardOfRecords";
 import { allBoardofRecords } from "@/__generated__/allBoardofRecords";
 import { faCheckSquare as faCheckSquareSolid, faWindowClose as faWindowCloseSolid, faCheck as faCheckSolid, faTimes as faTimesSolid, faPencilAlt as faPencelAltSolid } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,7 @@ import Spinner from "./spinner";
 import { useRef } from "react";
 import { createBor, createBorVariables } from "@/__generated__/createBor";
 import { useForm } from "react-hook-form";
-import { BoardListBoxContent } from "@/pages/user/board-of-record-content";
+import { BoardListBoxContent } from "@/pages/user/board-of-record/board-of-record-content";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
 
 export const CREATE_BOR = gql`

@@ -12,7 +12,7 @@ import gql from "graphql-tag";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { editBor, editBorVariables } from "@/__generated__/editBor";
-import { ALL_BOARD_OF_RECORDS } from "../board-of-records";
+import { ALL_BOARD_OF_RECORDS } from "../board-of-record/board-of-records";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
 import { _LeaderBoardCreateBoardContainer, _LeaderBoardCreateWodButton, _LeaderBoardFontAwesomeIcon, _LeaderBoardInputButton, _LeaderBoardListBox, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer, _LeaderBoardListBoxNewContentContainer, _LeaderBoardListInput, _LeaderBoardListInputForm, _LeaderBoardNoContent } from "@/theme/components/_LeaderBoard";
 import Spinner from "@/components/spinner";

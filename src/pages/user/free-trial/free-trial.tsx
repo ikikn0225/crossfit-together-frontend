@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
-import { changeDateToTitle } from "../coach/create-wod";
+import { changeDateToTitle } from "../../coach/create-wod";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useMe } from "@/hooks/useMe";
 import Spinner from "@/components/spinner";

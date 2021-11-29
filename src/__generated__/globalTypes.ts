@@ -197,6 +197,10 @@ export interface LoginInput {
   password: string;
 }
 
+export interface MyBoardofRecordInput {
+  id: number;
+}
+
 export interface MyFreeTrialInput {
   affiliatedBoxId?: number | null;
 }

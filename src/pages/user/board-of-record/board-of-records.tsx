@@ -11,7 +11,7 @@ import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async"
-import { IWodEdge, WOD_LIST } from "./wods";
+import { IWodEdge, WOD_LIST } from "../wods";
 
 export const ALL_BOARD_OF_RECORDS = gql`
     query allBoardofRecords($input:AllBoardofRecordInput!) {
