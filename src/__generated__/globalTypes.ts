@@ -72,6 +72,10 @@ export enum UserRole {
   Crossfiter = "Crossfiter",
 }
 
+export interface AddTimeTableInput {
+  timeTableImg?: string | null;
+}
+
 export interface AllBoardofRecordInput {
   id: number;
 }

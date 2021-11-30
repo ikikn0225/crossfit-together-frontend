@@ -8,7 +8,7 @@ import { allLikesInWod } from "@/__generated__/allLikesInWod";
 import { useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { createLikeInWod, createLikeInWodVariables } from "@/__generated__/createLikeInWod";
 import { deleteLikeInWod, deleteLikeInWodVariables } from "@/__generated__/deleteLikeInWod";
-import { ALL_LIKES_IN_WOD, CREATE_LIKE_MUTATION, DELETE_LIKE_MUTATION } from "@/components/wod";
+import { ALL_LIKES_IN_WOD, CREATE_LIKE_MUTATION, DELETE_LIKE_MUTATION } from "@/pages/user/wod/wod";
 
 interface IWodProps {
     wodId:number;

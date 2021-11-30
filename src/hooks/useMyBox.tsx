@@ -10,6 +10,7 @@ query myAffiliatedBoxQuery {
             name
             coverImg
             address
+            timeTableImg
         }
     }
 }

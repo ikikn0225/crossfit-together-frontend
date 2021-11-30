@@ -122,6 +122,7 @@ export const _HeaderLink = styled(Link)`
     padding: 18px 10px;
     color: #fff;
     text-decoration: none;
+    border-bottom:1px solid gray;
 `;
 
 export const _HeaderLogOutButton = styled.li`

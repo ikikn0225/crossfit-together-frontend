@@ -85,7 +85,7 @@ export const CreateAffiliatedBox = () => {
                     }
                 }
             })
-        } catch (e) {
+        } catch (e:any) {
             console.log(e.response.data);
         }
     }

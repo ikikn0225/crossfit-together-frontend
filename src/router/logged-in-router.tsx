@@ -12,15 +12,16 @@ import { CreateAffiliatedBox } from "@/pages/coach/create-affiliated-box";
 import { Main } from "@/pages/user/main";
 import { clearCookie } from "@/cookie";
 import { ConfirmEmail } from "@/pages/confirm-email";
-import { Wods } from "@/pages/user/wods";
+import { Wods } from "@/pages/user/wod/wods";
 import { FreeTrial } from "@/pages/user/free-trial/free-trial";
-import { Hold } from "@/pages/user/hold";
+import { Hold } from "@/pages/user/hold/hold";
 import { BoardOfRecords } from "@/pages/user/board-of-record/board-of-records";
 import { LeaderBoard } from "@/pages/user/leader-board/leader-board";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { CreateWod } from "@/pages/coach/create-wod";
 import { EditWod } from "@/pages/coach/edit-wod";
 import { MyPage } from "@/pages/user/mypage/mypage";
+import { TimeTable } from "@/pages/user/time-table";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
@@ -43,6 +44,7 @@ const affiliatedBoxRoutes = [
     { path:"/confirm", component: <ConfirmEmail /> },
     { path:"/wods/:slug", component: <Wods/> },
     { path:"/mypage", component: <MyPage/> },
+    { path:"/time-table", component: <TimeTable/> },
 ];
 
 const commonRoutes = [

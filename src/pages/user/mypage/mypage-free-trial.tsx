@@ -1,4 +1,4 @@
-import { _MyPageContainer, _MyPageLeaderBoardContentContainer, _MyPageListBoxContent, _MyPageListBoxContentContainer, _MyPageNoContent, _MyPageSubContainer, _MyPageTitle, _MyPageWodDateSpan, _MyPageFreeTrialContentContainer, _MyPageFreeTrialContent, _MyPageFreeTrialContentTitle, _MyPageFreeTrialContentDate } from "@/theme/components/_MyPage";
+import { _MyPageContainer, _MyPageLeaderBoardContentContainer, _MyPageListBoxContent, _MyPageListBoxContentContainer, _MyPageNoContent, _MyPageSubContainer, _MyPageTitle, _MyPageWodDateSpan, _MyPageFreeTrialContentContainer, _MyPageFreeTrialContent, _MyPageFreeTrialContentTitle, _MyPageFreeTrialContentDate, _MyPageFreeTrialContentLink } from "@/theme/components/_MyPage";
 import { myNamedWodRecords } from "@/__generated__/myNamedWodRecords";
 import { myOneRmRecords } from "@/__generated__/myOneRmRecords";
 import { useQuery } from "@apollo/client";
@@ -6,9 +6,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LeaderBoardTabContainer } from "../leader-board/leader-board-tab-container";
 import gql from "graphql-tag";
 import { wodList } from "@/__generated__/wodList";
-import { IWodEdge, WOD_LIST } from "../wods";
-import { Wod } from "@/components/wod";
-import { BoardOfRecord } from "@/components/board-of-record";
+import { IWodEdge, WOD_LIST } from "../wod/wods";
+import { Wod } from "@/pages/user/wod/wod";
+import { BoardOfRecord } from "@/pages/user/board-of-record/board-of-record";
 import Spinner from "@/components/spinner";
 import { MyPageBoardOfRecordContent } from "./mypage-board-of-record-content";
 import { myFreeTrial } from "@/__generated__/myFreeTrial";
@@ -39,29 +39,32 @@ export const MyPageFreeTrial:React.FC<IMyPageMyPageFreeTrial> = (me) => {
 
     return(
         <>
-            <_MyPageTitle>Free Trial</_MyPageTitle>
-            {/* <_MyPageContainer>
-                <_MyPageSubContainer> */}
-                    <_MyPageFreeTrialContentContainer>
-                        <_MyPageFreeTrialContent>
-                            {myPageFreeTrial?.myFreeTrial.freeTrial !== null
-                            ? (
-                                <>
-                                    <_MyPageFreeTrialContentTitle>You Have Already Booked At</_MyPageFreeTrialContentTitle>
-                                    <_MyPageFreeTrialContentDate>{new Date(myPageFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} 
-                                                &nbsp;({new Date(myPageFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toDateString().substring(0, 3)})</_MyPageFreeTrialContentDate>
-                                </>
-                            )
-                            :(
-                                <_MyPageFreeTrialContentTitle norep={1}>Try Crossfit For Free!</_MyPageFreeTrialContentTitle> //링크로 FreeTrial 페이지로 이동하기
-                            )}
-                        </_MyPageFreeTrialContent>
-                    </_MyPageFreeTrialContentContainer>
+            <_MyPageContainer>
+                <_MyPageSubContainer>
+                    <_MyPageTitle>Free Trial</_MyPageTitle>
+                    <_MyPageFreeTrialContentLink to="/free-trial">
+                        <_MyPageFreeTrialContentContainer>
+                            <_MyPageFreeTrialContent>
+                                {myPageFreeTrial?.myFreeTrial.freeTrial !== null
+                                ? (
+                                    <>
+                                        <_MyPageFreeTrialContentTitle>You Have Already Booked At</_MyPageFreeTrialContentTitle>
+                                        <_MyPageFreeTrialContentDate>{new Date(myPageFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} 
+                                                    &nbsp;({new Date(myPageFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toDateString().substring(0, 3)})</_MyPageFreeTrialContentDate>
+                                    </>
+                                )
+                                :(
+                                    
+                                    <_MyPageFreeTrialContentTitle norep={1}>Try Crossfit For Free!</_MyPageFreeTrialContentTitle>
+                                )}
+                            </_MyPageFreeTrialContent>
+                        </_MyPageFreeTrialContentContainer>
+                    </_MyPageFreeTrialContentLink>
                     {myPageFreeTrialLoading && 
                         <Spinner />
                     }
-                {/* </_MyPageSubContainer>
-            </_MyPageContainer> */}
+                </_MyPageSubContainer>
+            </_MyPageContainer>
         </>
     )
 }

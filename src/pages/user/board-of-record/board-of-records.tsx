@@ -1,6 +1,6 @@
-import { BoardOfRecord } from "@/components/board-of-record";
+import { BoardOfRecord } from "@/pages/user/board-of-record/board-of-record";
 import Spinner from "@/components/spinner";
-import { Wod } from "@/components/wod";
+import { Wod } from "@/pages/user/wod/wod";
 import { useMe } from "@/hooks/useMe";
 import { _BoardCreateBoardContainer, _BoardCreateWodButton, _BoardCreateWodButtonContainer, _BoardImg, _BoardImgContainer, _BoardImgTitle, _BoardListContainer, _BoardListSubContainer, _BoardNoContent } from "@/theme/components/_BoardOfRecords"
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
@@ -11,7 +11,7 @@ import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async"
-import { IWodEdge, WOD_LIST } from "../wods";
+import { IWodEdge, WOD_LIST } from "../wod/wods";
 
 export const ALL_BOARD_OF_RECORDS = gql`
     query allBoardofRecords($input:AllBoardofRecordInput!) {

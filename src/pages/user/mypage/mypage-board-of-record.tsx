@@ -6,9 +6,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LeaderBoardTabContainer } from "../leader-board/leader-board-tab-container";
 import gql from "graphql-tag";
 import { wodList } from "@/__generated__/wodList";
-import { IWodEdge, WOD_LIST } from "../wods";
-import { Wod } from "@/components/wod";
-import { BoardOfRecord } from "@/components/board-of-record";
+import { IWodEdge, WOD_LIST } from "../wod/wods";
+import { Wod } from "@/pages/user/wod/wod";
+import { BoardOfRecord } from "@/pages/user/board-of-record/board-of-record";
 import Spinner from "@/components/spinner";
 import { MyPageBoardOfRecordContent } from "./mypage-board-of-record-content";
 

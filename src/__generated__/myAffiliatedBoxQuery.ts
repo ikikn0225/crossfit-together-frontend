@@ -13,6 +13,7 @@ export interface myAffiliatedBoxQuery_myAffiliatedBox_affiliatedBox {
   name: string;
   coverImg: string | null;
   address: string;
+  timeTableImg: string | null;
 }
 
 export interface myAffiliatedBoxQuery_myAffiliatedBox {

@@ -8,7 +8,7 @@ import { allLikesInWod } from "@/__generated__/allLikesInWod";
 import { useMutation, useQuery } from "@apollo/client";
 import { createLikeInWod, createLikeInWodVariables } from "@/__generated__/createLikeInWod";
 import { deleteLikeInWod, deleteLikeInWodVariables } from "@/__generated__/deleteLikeInWod";
-import { WodListLike } from "@/pages/user/wod-like";
+import { WodListLike } from "@/pages/user/wod/wod-like";
 
 export const ALL_LIKES_IN_WOD = gql`
     query allLikesInWod($input:AllLikesInWodInput!) {

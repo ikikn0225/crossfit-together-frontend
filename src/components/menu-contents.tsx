@@ -18,8 +18,13 @@ const HeaderRightNav = ({ open, setOpen }:any) => {
     }
     return (
         <_HeaderUl open={open}>
-            {/* <_HeaderLink to="/">NOTICE</_HeaderLink>
-            <_HeaderLink to="/">TIME TABLE</_HeaderLink> */}
+            {/* <_HeaderLink to="/">NOTICE</_HeaderLink> */}
+            {/* <_HeaderLink to="/wod" onClick={closeMenu}>WOD</_HeaderLink>
+            <_HeaderLink to="/leader-board" onClick={closeMenu}>LEADER BOARD</_HeaderLink>
+            <_HeaderLink to="/board-of-record" onClick={closeMenu}>BOARD OF RECORD</_HeaderLink>
+            <_HeaderLink to="/free-trial" onClick={closeMenu}>FREE TRIAL</_HeaderLink>
+            <_HeaderLink to="/hold" onClick={closeMenu}>HOLD</_HeaderLink> */}
+            <_HeaderLink to="/time-table" onClick={closeMenu}>TIME TABLE</_HeaderLink>
             <_HeaderLink to="/mypage" onClick={closeMenu}>MY PAGE</_HeaderLink>
             <_HeaderLogOutButton onClick={logOutClick}> LOGOUT </_HeaderLogOutButton>
         </_HeaderUl>

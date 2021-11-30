@@ -73,7 +73,7 @@ interface ITab {
 }
 export const _MyPageTab = styled.li<ITab>`
     display: inline-block;
-    border-right: 1px solid #3d3d3d;
+    border-right: 1px solid #636363;
     padding: 1rem;
     background-color:gray;
 
@@ -123,6 +123,8 @@ export const _MyPageNoContent = styled(_WodNoContent)`
 
 export const _MyPageContents = styled.div`
     margin-top:3rem;
+    padding-left:2rem;
+    padding-right:2rem;
 `;
 
 export const _MyPageTitle = styled.span`
@@ -216,4 +218,35 @@ export const _MyPageFreeTrialContentDate = styled.div`
     padding-top:1rem;
     font-weight:${(props) => props.theme.fontWeights.bold};
     font-size:${(props) => props.theme.fontSizes.lg};
+`;
+
+export const _MyPageFreeTrialContentLink = styled(Link)`
+    color: #fff; 
+    text-decoration: none;
+    
+    & > div:hover {
+        transform: scale( 1.1 );
+    }
+`;
+
+export const _MyPageHoldContentTitle = styled(_MyPageFreeTrialContentTitle)`
+    margin-top:2rem;
+`;
+
+export const _MyPageHoldListTitleContainer = styled.div`
+    border:1px solid gray;
+    margin-top:1rem;
+    margin-bottom:3rem;
+`;
+
+export const _MyPageHoldListTitle = styled.div`
+    font-size:1em;
+    padding:1rem;
+    font-size:${(props) => props.theme.fontSizes.xl};
+    font-weight:${(props) => props.theme.fontWeights.bold};
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        font-size:${(props) => props.theme.fontSizes.xxl};
+        font-weight:${(props) => props.theme.fontWeights.bold};
+    }
 `;

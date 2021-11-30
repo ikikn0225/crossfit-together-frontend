@@ -11,6 +11,7 @@ import { LeaderBoardTab } from "../leader-board/leader-board-tab";
 import { LeaderBoardTabContainer } from "../leader-board/leader-board-tab-container";
 import { MyPageBoardOfRecord } from "./mypage-board-of-record";
 import { MyPageFreeTrial } from "./mypage-free-trial";
+import { MyPageHold } from "./mypage-hold";
 import { MyPageLeaderBoard } from "./mypage-leader-board";
 
 
@@ -72,7 +73,7 @@ export const MyPage = () => {
                         )}
                         {menuFirstState == 4
                         && (
-                            <span>4</span>
+                            <MyPageHold />
                         )}
                     </_MyPageContents>
                 </_MyPageSubContainer>

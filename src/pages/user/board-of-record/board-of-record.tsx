@@ -4,7 +4,7 @@ import { allBoardofRecords } from "@/__generated__/allBoardofRecords";
 import { faCheckSquare as faCheckSquareSolid, faWindowClose as faWindowCloseSolid, faCheck as faCheckSolid, faTimes as faTimesSolid, faPencilAlt as faPencelAltSolid } from "@fortawesome/free-solid-svg-icons";
 import { faCheckSquare, faWindowClose } from "@fortawesome/free-regular-svg-icons";
 import { useQuery, gql, useMutation, useApolloClient } from "@apollo/client";
-import Spinner from "./spinner";
+import Spinner from "../../../components/spinner";
 import { useRef } from "react";
 import { createBor, createBorVariables } from "@/__generated__/createBor";
 import { useForm } from "react-hook-form";

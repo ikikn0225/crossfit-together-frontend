@@ -59,7 +59,7 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
             &&(
                 myBoardofRecord?.myBoardofRecords.bors.map((bor:IMyPageBorList) => (
                     bor.id !== undefined &&(
-                        <_MyPageListBoxContentContainer myPageContent={"mypage"}>
+                        <_MyPageListBoxContentContainer key={bor.id} myPageContent={"mypage"}>
                             <_MyPageListBoxContentLayout key={bor.id}>
                                 <_MyPageWodDateSpan>{bor.wod.title}</_MyPageWodDateSpan>
                                 <_MyPageListBoxContent >Your Record : </_MyPageListBoxContent>

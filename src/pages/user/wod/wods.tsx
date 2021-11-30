@@ -1,4 +1,4 @@
-import { Wod } from "@/components/wod";
+import { Wod } from "@/pages/user/wod/wod";
 import { useMe } from "@/hooks/useMe";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { 
@@ -27,9 +27,9 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async"
 import { useHistory } from "react-router-dom";
-import ModalBase from "../modal-base";
+import ModalBase from "../../modal-base";
 import { useParams } from "react-router"
-import { CategoryList } from "./category-list";
+import { CategoryList } from "../category-list";
 import { wodList } from "@/__generated__/wodList";
 import Spinner from "@/components/spinner";
 

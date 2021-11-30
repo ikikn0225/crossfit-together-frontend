@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { registerHold, registerHoldVariables } from "@/__generated__/registerHold";
-import { changeDateToTitle } from "../coach/create-wod";
+import { changeDateToTitle } from "../../coach/create-wod";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ALL_SPECIFIC_HOLDS, HoldMemberList } from "./hold-member-list";
 import { myHolds } from "@/__generated__/myHolds";
