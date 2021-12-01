@@ -81,6 +81,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
         onCompleted,   
     });
     const { data:boxes } = useQuery<allAffiliatedBoxesQuery>(ALL_AFFILIATED_BOXES);
+console.log(boxes);
 
     const onSubmit = async() => {
         try {
@@ -213,7 +214,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                 </_CreateAccountForm>
                 <_CreateAccountExtra>
                     <div>
-                        Alreay have an account? <_CreateAccountLoginLink to="/" > SIGN IN NOW</_CreateAccountLoginLink>
+                        Already have an account? <_CreateAccountLoginLink to="/" > Sign In Now</_CreateAccountLoginLink>
                     </div>
                 </_CreateAccountExtra>
                 <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"Welcome To CrossfiTogether"} modalButtonText={"SIGN IN NOW"}> </ModalBase>
