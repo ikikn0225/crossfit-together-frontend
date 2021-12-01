@@ -18,7 +18,6 @@ export const App = () => {
   //     ? { mode: light, fontSizes, fontWeights, reactiveTheme }
   //     : { mode: dark, fontSizes, fontWeights, reactiveTheme };
   const theme = { mode: dark, fontSizes, fontWeights, reactiveTheme };
-console.log(theme);
 
   return (
     <>

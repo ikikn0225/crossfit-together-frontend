@@ -70,10 +70,11 @@ export const Login = ({themeMode}:ILoginTheme) => {
                 <title>Login | CrossfiTogether</title>
             </Helmet>
             <_SubContainer>
-                {themeMode === "light" 
+                {/* {themeMode === "light" 
                     ? <_LoginLogoImage src="../../public/images/logo_white_fake.jpg" />
                     : <_LoginLogoImage src="https://crossfitogether0225.s3.amazonaws.com/logo_black.jpg" />
-                }
+                } */}
+                <_LoginLogoImage src="https://crossfitogether0225.s3.amazonaws.com/logo_black.jpg" />
                 <_LoginForm  onSubmit={handleSubmit(onSubmit)}>
                     <_LoginInput 
                         {...register("email", {
