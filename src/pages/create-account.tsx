@@ -81,7 +81,6 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
         onCompleted,   
     });
     const { data:boxes } = useQuery<allAffiliatedBoxesQuery>(ALL_AFFILIATED_BOXES);
-console.log(boxes);
 
     const onSubmit = async() => {
         try {

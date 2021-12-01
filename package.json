@@ -79,7 +79,7 @@
     "apollo:codegen": "rimraf src/__generated__ && npx apollo client:codegen src/__generated__ --target=typescript --outputFlat",
     "build": "webpack --mode production",
     "prestart": "npm build",
-    "start": "webpack --mode development"
+    "start": "npm run apollo:codegen & webpack serve development"
   },
   "browser": {
     "crypto": false
