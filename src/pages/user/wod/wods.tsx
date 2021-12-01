@@ -29,7 +29,7 @@ import { Helmet } from "react-helmet-async"
 import { useHistory } from "react-router-dom";
 import ModalBase from "../../modal-base";
 import { useParams } from "react-router"
-import { CategoryList } from "../category-list";
+import { CategoryList } from "./category-list";
 import { wodList } from "@/__generated__/wodList";
 import Spinner from "@/components/spinner";
 

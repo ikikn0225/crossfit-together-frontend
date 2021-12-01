@@ -33,9 +33,8 @@ export const TimeTable = () => {
     const {data:myAffiliatedBox} = useMyBox();
     const [file, setFile] = useState(null)
     const [imageUrl, setImageUrl] = useState("");
-    const [uploading, setUploading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const history = useHistory();
+    const [imgHeight, setImgHeight] = useState<number|undefined>(0);
     
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -77,8 +76,6 @@ export const TimeTable = () => {
                 })
             ).json();
             
-            setImageUrl(timeTableImg);
-            
             addTimeTable({
                 variables: {
                     input: {
@@ -87,12 +84,12 @@ export const TimeTable = () => {
                 }
             })
         } catch (e:any) {
-            console.log(e.response.data);
+            console.log(e);
         }
     }
 
-    const fileHandler = (e:any) => {
-        setFile(e.target.files[0])
+    const changeInput = (e:any) => {
+        setFile(e.target.files[0]);
     }
 
     if (!me || meLoading || meError) {
@@ -123,13 +120,12 @@ export const TimeTable = () => {
                                 })}
                                 type="file"
                                 accept="image/*"
-                                onChange={fileHandler}
+                                onChange={changeInput}
                                 id="input-file"
                             />
-                            <_TimeTableFileLabel className="input-file-button" htmlFor="input-file"> Click to Select a Image </_TimeTableFileLabel>
-                            <img src={file? URL.createObjectURL(file) : undefined}/>
-                            <Button canClick={true} loading={loading} actionText={"ADD TIME TABLE"} />
-                            {addTimeTableResult?.addTimeTable.error && <FormError errorMessage={addTimeTableResult?.addTimeTable.error}/>}
+                            {/* <_TimeTableFileLabel className="input-file-button" htmlFor="input-file"> Click to Select a Image... </_TimeTableFileLabel> */}
+                            <Button canClick={true} loading={loading} actionText={"Confirm"} />
+                            <img src={file? URL.createObjectURL(file) : undefined} id="preview"/>
                         </_TimeTableForm>
                     )}
                     {myAffiliatedBox?.myAffiliatedBox.affiliatedBox.timeTableImg !== null && myAffiliatedBox?.myAffiliatedBox.affiliatedBox.timeTableImg !== undefined

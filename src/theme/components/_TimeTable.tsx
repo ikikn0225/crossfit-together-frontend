@@ -19,13 +19,13 @@ export const _TimeTableProfileContainer = styled.div`
 export const _TimeTableForm = styled.form``;
 
 export const _TimeTableFileInput = styled.input`
-    display:none;
+    // display:none;
 `;
 
 export const _TimeTableNoContent = styled(_WodNoContent)``;
 
 export const _TimeTableContentImgContainer = styled.div`
-    height:500px;
+    height:300px;
     width:100%;
     background-color:gray;
     text-align:center;
@@ -33,7 +33,7 @@ export const _TimeTableContentImgContainer = styled.div`
 `;
 
 interface ITimeTableImgProps {
-    backgroundImage:string;
+    backgroundImage?:string;
 }
 
 export const _TimeTableContentImg = styled.img<ITimeTableImgProps>`

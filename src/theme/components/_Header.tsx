@@ -19,7 +19,6 @@ export const _HeaderContainer = styled.div`
 `;
 
 export const _HeaderLogo = styled(Link)`
-    // width: 9rem;
 `;
 
 export const _HeaderNav = styled.nav`
@@ -31,7 +30,7 @@ export const _HeaderNav = styled.nav`
 
     .logo {
         padding: 15px 0;
-        width: 9rem;
+        width: 13rem;
     }
 `
 

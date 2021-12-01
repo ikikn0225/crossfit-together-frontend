@@ -3,7 +3,7 @@ import { _WodCategoryContainer, _WodCategoryFontAwesomeIcon } from "@/theme/comp
 import { allCategories } from "@/__generated__/allCategories";
 import { useQuery } from "@apollo/client";
 import { useEffect, useRef, useState } from "react";
-import { ALL_CATEGORIES } from "../coach/create-wod";
+import { ALL_CATEGORIES } from "../../coach/create-wod";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 let TOTAL_SLIDES = 3;
