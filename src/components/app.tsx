@@ -10,31 +10,15 @@ import Toggle from './dark-mode-toggle';
 import GlobalStyle from '@/theme/global-styles';
 import Footer from './footer';
 
-
-// const fade = keyframes`
-//   0%,100% { opacity: 0 }
-//   50% { opacity: 1 }
-// `
-
-// const Container = styled.div`
-// display: flex;
-// justify-content: center;
-// align-items: center;
-// height: 100vh; 
-// `
-
-// const DivAnime = styled.div`
-//   animation: ${fade} 5s; 
-//   animation-fill-mode: forwards;
-// `
-
 export const App = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   const [themeMode, toggleTheme] = useDarkMode();
-  const theme =
-    themeMode === "light"
-      ? { mode: light, fontSizes, fontWeights, reactiveTheme }
-      : { mode: dark, fontSizes, fontWeights, reactiveTheme };
+  // const theme =
+  //   themeMode === "light"
+  //     ? { mode: light, fontSizes, fontWeights, reactiveTheme }
+  //     : { mode: dark, fontSizes, fontWeights, reactiveTheme };
+  const theme = { mode: dark, fontSizes, fontWeights, reactiveTheme };
+console.log(theme);
 
   return (
     <>
@@ -48,23 +32,6 @@ export const App = () => {
       </ThemeProvider>
     </>
   )
-
-    // return (
-    //   <>
-    //     <Global
-    //       styles={{
-    //         body: {
-    //           background: 'black',
-    //         }
-    //       }}
-    //     />
-    //     <Container>
-    //       <DivAnime>
-    //         <img src="./public/images/ikikn.jpg" alt="ikikn" />
-    //       </DivAnime>
-    //     </Container>
-    //     </>
-    // );
 }
 
 const CommonStyle = styled.div`
