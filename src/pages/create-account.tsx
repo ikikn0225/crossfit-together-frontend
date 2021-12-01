@@ -121,10 +121,11 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                 <title>Create Account | CrossfiTogether</title>
             </Helmet>
             <_SubContainer>
-                {themeMode === "light" 
+                {/* {themeMode === "light" 
                     ? <img src="../../public/images/logo_white_fake.jpg" />
                     : <img src="../../public/images/logo_black_fake.jpg" />
-                }
+                } */}
+                <img src="https://crossfitogether0225.s3.amazonaws.com/logo_black.jpg" />
                 <_CreateAccountForm  onSubmit={handleSubmit(onSubmit)}>
                     <_CreateAccountInput 
                         {...register("name", {
