@@ -77,7 +77,7 @@
   "scripts": {
     "dev": "npm run apollo:codegen & webpack serve --mode development --open --hot",
     "apollo:codegen": "rimraf src/__generated__ && npx apollo client:codegen src/__generated__ --target=typescript --outputFlat",
-    "build": "webpack --config ./webpack.prod.js --mode production",
+    "build": "webpack --mode production",
     "prestart": "npm build",
     "start": "webpack --mode development"
   },
