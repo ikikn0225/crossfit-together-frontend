@@ -32,6 +32,7 @@ import { useParams } from "react-router"
 import { CategoryList } from "./category-list";
 import { wodList } from "@/__generated__/wodList";
 import Spinner from "@/components/spinner";
+import 'regenerator-runtime';
 
 export const WOD_LIST = gql`
     query wodList($first: Int, $after: Int, $slug: String) {
@@ -115,7 +116,6 @@ export const Wods = () => {
     }, []);
 
     const fetchWod = async () => {
-        setWodTrigger(false);
         await fetchMore({
             variables: {
                 after:wodList?.wodList.pageInfo?.endCursor,
@@ -131,6 +131,7 @@ export const Wods = () => {
                 fetchWod();
             }
         }
+        setWodTrigger(false);
     }, [wodTrigger]);
     
     useEffect(() => {

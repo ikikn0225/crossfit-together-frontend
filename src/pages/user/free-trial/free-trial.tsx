@@ -199,7 +199,6 @@ export const FreeTrial = () => {
     }, []);
 
     const fetchFreeTrial = async () => {
-        setFreeTrialTrigger(false);
         await fetchMore({
             variables: {
                 after:distinctFreeTrialList?.distinctFreeTrialList.pageInfo?.endCursor,
@@ -214,6 +213,7 @@ export const FreeTrial = () => {
                 fetchFreeTrial();
             }
         }
+        setFreeTrialTrigger(false);
     }, [freeTrialTrigger]);
     
     useEffect(() => {

@@ -178,7 +178,6 @@ export const Hold = () => {
     }, []);
 
     const fetchHold = async () => {
-        setHoldTrigger(false);
         await fetchMore({
             variables: {
                 after:distinctHoldList?.distinctHoldList.pageInfo?.endCursor,
@@ -193,6 +192,7 @@ export const Hold = () => {
                 fetchHold();
             }
         }
+        setHoldTrigger(false);
     }, [holdTrigger]);
     
     useEffect(() => {
@@ -272,27 +272,26 @@ export const Hold = () => {
                         {registerHoldResult?.registerHold.error && <FormError errorMessage={registerHoldResult.registerHold.error}/>}
                     </_HoldForm>
                     <_HoldListContainer>
-                    {distinctHoldList?.distinctHoldList.edges?.length !== 0
-                        ? (
-                            distinctHoldList?.distinctHoldList.edges?.map((hold:IHoldEdge) => (
-                                <div key={hold.node.id}>
-                                    <_HoldListTitle>{new Date(hold.node.holdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }).substring(0, 13)} 
-                                            &nbsp;({new Date(hold.node.holdAt).toDateString().substring(0, 3)})</_HoldListTitle>
-                                    <_HoldMemberListContainer>
-                                        <HoldMemberList
-                                            holdAt={hold.node.holdAt}
-                                            ownerId={hold.node.owner.id}
-                                            ownerName={hold.node.owner.name}
-                                            meId={me?.me.id}
-                                            affiliatedBoxId={me?.me.affiliatedBoxId}
-                                        />
-                                    </_HoldMemberListContainer>
-                                </div>
-                            ))
-                        )
-                        :(
-                            <_HoldNoContent>Sorry, No Rep!</_HoldNoContent>
-                        )}
+                        {distinctHoldList?.distinctHoldList.edges?.length !== 0
+                            ? (
+                                distinctHoldList?.distinctHoldList.edges?.map((hold:IHoldEdge) => (
+                                    <div key={hold.node.id}>
+                                        <_HoldListTitle>{new Date(hold.node.holdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }).substring(0, 13)} 
+                                                &nbsp;({new Date(hold.node.holdAt).toDateString().substring(0, 3)})</_HoldListTitle>
+                                        <_HoldMemberListContainer>
+                                            <HoldMemberList
+                                                holdAt={hold.node.holdAt}
+                                                meId={me?.me.id}
+                                                affiliatedBoxId={me?.me.affiliatedBoxId}
+                                            />
+                                        </_HoldMemberListContainer>
+                                    </div>
+                                ))
+                            )
+                            :(
+                                <_HoldNoContent>Sorry, No Rep!</_HoldNoContent>
+                            )
+                        }
                         {distinctHoldLoading && 
                             <Spinner />
                         }

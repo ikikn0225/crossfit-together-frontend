@@ -38,8 +38,6 @@ export const DELETE_HOLD = gql`
 
 interface IHoldMemberListProps {
     holdAt:Date;
-    ownerId:number;
-    ownerName:string;
     meId:undefined|number;
     affiliatedBoxId:undefined|null|number;
 }
@@ -54,7 +52,7 @@ interface IOwner {
     id:number;
     name:string;
 }
-export const HoldMemberList:React.FC<IHoldMemberListProps> = ({holdAt, ownerId, ownerName, meId, affiliatedBoxId}) => {
+export const HoldMemberList:React.FC<IHoldMemberListProps> = ({holdAt, meId, affiliatedBoxId}) => {
     const client = useApolloClient();
     
     const { data:allSpecificHolds, loading:allSpecificHoldsLoading } = useQuery<allSpecificHolds>(ALL_SPECIFIC_HOLDS, {
