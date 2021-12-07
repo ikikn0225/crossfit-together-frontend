@@ -30,27 +30,27 @@ const authLink = setContext((_, { headers }) => {
 
 export const client = new ApolloClient({
     link: authLink.concat(httpLink),
-    credentials: 'include',
+    // credentials: 'include',
     cache: new InMemoryCache({
-    typePolicies: {
-        Query: {
-            fields: {
-                isLoggedIn: {
-                    read() {
-                        return isLoggedInVar();
+        typePolicies: {
+            Query: {
+                fields: {
+                    isLoggedIn: {
+                        read() {
+                            return isLoggedInVar();
+                        },
                     },
+                    token: {
+                        read() {
+                            return authTokenVar();
+                        }
+                    },
+                    wodList: relayStylePagination(),
+                    distinctHoldList: relayStylePagination(),
+                    distinctFreeTrialList: relayStylePagination(),
+                    myFreeTrial: relayStylePagination(),
                 },
-                token: {
-                    read() {
-                        return authTokenVar();
-                    }
-                },
-                wodList: relayStylePagination(),
-                distinctHoldList: relayStylePagination(),
-                distinctFreeTrialList: relayStylePagination(),
-                myFreeTrial: relayStylePagination(),
             },
         },
-    },
     }),
 });
