@@ -118,7 +118,6 @@ export const _MyPageListBoxContent = styled.div<IContent>`
 export const _MyPageNoContent = styled(_WodNoContent)`
     margin:3rem;
     padding-bottom:100px;
-    border:1px solid #3d3d3d;
 `;
 
 export const _MyPageContents = styled.div`

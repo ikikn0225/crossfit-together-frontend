@@ -53,8 +53,8 @@ export const _WodCreateWodButtonContainer = styled.div`
 
 export const _WodCreateWodButton = styled(_ButtonCommon)`
     margin:20px;
-    // background-color: rgb(7,93,198);
-    background-color: black;
+    background-color: rgb(7,93,198);
+    // background-color: black;
     border-color:rgb(7,93,198);
     cursor:pointer;
 
@@ -84,8 +84,8 @@ export const _WodUpdateWodLinkContainer = styled.div`
 
 export const _WodUpdateWodLink = styled(Link)`
     padding:5px;
-    // background-color: rgb(7,93,198);
-    background-color: black;
+    background-color: rgb(7,93,198);
+    // background-color: black;
     border-color:rgb(7,93,198);
     color:${({ theme }) => theme.mode.primaryText};
     font-size: 1.125rem;
@@ -110,8 +110,8 @@ export const _WodUpdateWodLink = styled(Link)`
 `;
 
 export const _WodDeleteWodButton = styled(_ButtonCommon)`
-    // background-color:#FF0000;
-    background-color: black;
+    background-color:#FF0000;
+    // background-color: black;
     font-size: 1.125rem;
     font-weight: bold;
     cursor:pointer;

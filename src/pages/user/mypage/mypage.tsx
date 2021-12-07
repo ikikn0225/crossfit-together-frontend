@@ -53,9 +53,9 @@ export const MyPage = () => {
             <_MyPageContainer>
                 <_MyPageSubContainer>
                     <_MyPageTabContainer>
-                        <_MyPageTab active={menuFirstState} tabId={1} onClick={()=>handleMenu(1)}>Leader Board</_MyPageTab>
-                        <_MyPageTab active={menuFirstState} tabId={2} onClick={()=>handleMenu(2)}>Board of Record</_MyPageTab>
-                        <_MyPageTab active={menuFirstState} tabId={3} onClick={()=>handleMenu(3)}>Free Trial</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={1} onClick={()=>handleMenu(1)}>LB</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={2} onClick={()=>handleMenu(2)}>BoR</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={3} onClick={()=>handleMenu(3)}>FT</_MyPageTab>
                         <_MyPageTab active={menuFirstState} tabId={4} onClick={()=>handleMenu(4)}>Hold</_MyPageTab>
                     </_MyPageTabContainer>
                     <_MyPageContents>
