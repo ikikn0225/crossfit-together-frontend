@@ -76,10 +76,13 @@ export const MyPageBoardOfRecord:React.FC<IMyPageBoardOfRecord> = (me) => {
             <_MyPageContainer>
                 <_MyPageSubContainer>
                     {wodList?.wodList.edges?.length !== 0
-                    && (
+                    ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
                             <MyPageBoardOfRecordContent key={wod.node.title} wodId={wod.node.id} />
                         ))
+                    )
+                    :(
+                        <_MyPageNoContent>Sorry, No Rep!</_MyPageNoContent>
                     )}
                     {wodLoading && 
                         <Spinner />

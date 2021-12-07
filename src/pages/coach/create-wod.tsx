@@ -214,7 +214,7 @@ export const CreateWod = () => {
                         onChange={e => setStateOptions(e.target.value)}
                         value={stateOptions}
                         >
-                            {categories?.allCategories?.categories?.length !== 0 
+                            {categories?.allCategories.categories.length !== 0 
                             ? (
                                 categories?.allCategories.categories?.map((cate:{id:number; name:string}, index:number) => (<option key={index} value={cate.id}>{cate.name}</option>))
                             )

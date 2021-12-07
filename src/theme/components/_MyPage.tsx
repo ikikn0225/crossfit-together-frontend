@@ -82,6 +82,10 @@ export const _MyPageTab = styled.li<ITab>`
         : "background-color: gray;"
     }
 
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        height:90px;
+    }
+
 `;
 
 interface IMyPageContent {
@@ -236,6 +240,7 @@ export const _MyPageHoldListTitleContainer = styled.div`
     border:1px solid gray;
     margin-top:1rem;
     margin-bottom:3rem;
+    text-align:center;
 `;
 
 export const _MyPageHoldListTitle = styled.div`
