@@ -97,7 +97,6 @@ export const MyPageLeaderBoard = () => {
                         ? (
 
                             <_MyPageListBoxContentContainer>
-                                <_MyPageListBoxContent>Your <span>{namedWodState}</span> Record :  </_MyPageListBoxContent>
                                 <_MyPageListBoxContent record={myNamedWodRecord?.myNamedWodRecords.lbNamedWods.record}>{myNamedWodRecord?.myNamedWodRecords.lbNamedWods.record}</_MyPageListBoxContent>
                                 {/* <span>LB</span> */}
                             </_MyPageListBoxContentContainer>

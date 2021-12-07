@@ -62,10 +62,8 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
                         <_MyPageListBoxContentContainer key={bor.id} myPageContent={"mypage"}>
                             <_MyPageListBoxContentLayout key={bor.id}>
                                 <_MyPageWodDateSpan>{bor.wod.title}</_MyPageWodDateSpan>
-                                <_MyPageListBoxContent >Your Record : </_MyPageListBoxContent>
                                 <_MyPageListBoxContent record={bor.id}>{bor.content}</_MyPageListBoxContent>
                             </_MyPageListBoxContentLayout>
-
                         </_MyPageListBoxContentContainer>
                     )
                 ))
