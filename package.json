@@ -52,7 +52,9 @@
     "subscriptions-transport-ws": "^0.9.19",
     "type-graphql": "1.1.1",
     "universal-cookie": "^4.0.4",
-    "webpack-bundle-analyzer": "^4.4.2"
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-pwa-manifest": "^4.3.0",
+    "workbox-webpack-plugin": "^6.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
