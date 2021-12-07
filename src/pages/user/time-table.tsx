@@ -69,8 +69,12 @@ export const TimeTable = () => {
             const actualFile = timeTableImg[0];
             const formBody = new FormData();
             formBody.append("file", actualFile);
+            let uri:string;
+            process.env.NODE_ENV === "production"
+            ? uri='https://crossfitogether0225.herokuapp.com/uploads'
+            : uri='http://localhost:4000/uploads'
             const { url: timeTableImgUrl } = await (
-                await fetch("http://localhost:4000/uploads/", {
+                await fetch(uri, {
                     method:"POST",
                     body:formBody,
                 })
