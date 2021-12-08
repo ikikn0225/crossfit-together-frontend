@@ -62,7 +62,7 @@ export const LeaderBoardListBoxNamedWod:React.FC<ILeaderBoardContentProps> = ({n
     const onCompleted = (data:createNamedWodRecord) => {
         const { createNamedWodRecord:{ok} } = data;
         const { record } = getValues();
-        const namedwodEnum:NamedWodsList =  NamedWodsList[namedWodState as keyof typeof NamedWodsList];
+        const namedwodEnum:NamedWodsList =  NamedWodsList[namedWodState.split(' ').join('_') as keyof typeof NamedWodsList];
         if(ok) {
             // handleModalOpen();
             
@@ -106,7 +106,7 @@ export const LeaderBoardListBoxNamedWod:React.FC<ILeaderBoardContentProps> = ({n
     }
 
     const onSubmit = () => {
-        const namedWodEnum:NamedWodsList =  NamedWodsList[namedWodState as keyof typeof NamedWodsList];
+        const namedWodEnum:NamedWodsList =  NamedWodsList[namedWodState.split(' ').join('_') as keyof typeof NamedWodsList];
         try {
             const { record } = getValues();
             createNamedWodRecord({

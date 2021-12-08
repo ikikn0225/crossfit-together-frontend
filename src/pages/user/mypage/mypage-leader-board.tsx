@@ -5,6 +5,12 @@ import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { LeaderBoardTabContainer } from "../leader-board/leader-board-tab-container";
 import gql from "graphql-tag";
+import { _LeaderBoardFontAwesomeIcon, _LeaderBoardListMore, _ToggleButton } from "@/theme/components/_LeaderBoard";
+import { 
+    faSortDown as faSortDownSolid, 
+    faSortUp as faSortUpSolid, 
+} from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare, faWindowClose } from "@fortawesome/free-regular-svg-icons";
 
 export const MY_ONE_RM_RECORDS = gql`
 query myOneRmRecords($input:MyOneRmRecordsInput!) {
@@ -46,6 +52,7 @@ export const MyPageLeaderBoard = () => {
     const [menuNamedWodState, setMenuNamedWodState] = useState(0);
     const [oneRmState, setOneRmState] = useState("Clean");
     const [namedWodState, setNamedWodState] = useState("Murph");
+    const [tabToggleState, setTabToggleState] = useState("close");
 
     const { data:myOneRmRecord, loading:lbOneRmLoading } = useQuery<myOneRmRecords>(MY_ONE_RM_RECORDS, {
         variables: {
@@ -63,11 +70,17 @@ export const MyPageLeaderBoard = () => {
         }
     });
 
+    const handleTabListToggle = (toggle:string) => {
+        if(toggle == "open")        setTabToggleState("close");
+        else if(toggle == "close")  setTabToggleState("open");
+    }
+
     return(
         <>
             <_MyPageTitle>Leader Board</_MyPageTitle>
             <_MyPageLeaderBoardContentContainer>
                 <LeaderBoardTabContainer
+                    toggle={tabToggleState}
                     menuOneRmState={menuOneRmState}
                     menuNamedWodState={menuNamedWodState}
                     oneRmState={oneRmState}
@@ -77,14 +90,33 @@ export const MyPageLeaderBoard = () => {
                     setMenuOneRmState={setMenuOneRmState}
                     setMenuNamedWodState={setMenuNamedWodState}
                 />
+                {tabToggleState == "open" 
+                ? (
+                    <>
+                        <_ToggleButton onClick={()=>handleTabListToggle(tabToggleState)} >
+                            <span>Close </span>
+                            <_LeaderBoardFontAwesomeIcon icon={faSortUpSolid}/>
+                        </_ToggleButton>
+                    </>
+                ) 
+                : (
+                    <>
+                        <_LeaderBoardListMore>...</_LeaderBoardListMore>
+                        <_ToggleButton onClick={()=>handleTabListToggle(tabToggleState)} >
+                            <span>Open </span>
+                            <_LeaderBoardFontAwesomeIcon icon={faSortDownSolid}/>
+                        </_ToggleButton>
+                    </>
+                )
+            }
                 {menuOneRmState
                 ?(
                     myOneRmRecord?.myOneRmRecords.lbOneRms !== undefined && myOneRmRecord?.myOneRmRecords.lbOneRms !== null
                     ? (
 
                         <_MyPageListBoxContentContainer>
-                            <_MyPageListBoxContent>Your <span>{oneRmState}</span> Record :  </_MyPageListBoxContent>
-                            <_MyPageListBoxContent record={myOneRmRecord?.myOneRmRecords.lbOneRms.record}>{myOneRmRecord?.myOneRmRecords.lbOneRms.record}</_MyPageListBoxContent>
+                            {/* <_MyPageListBoxContent>Your <span>{oneRmState}</span> Record :  </_MyPageListBoxContent> */}
+                            <_MyPageListBoxContent record={myOneRmRecord?.myOneRmRecords.lbOneRms.record}><span>{oneRmState}</span> {myOneRmRecord?.myOneRmRecords.lbOneRms.record}</_MyPageListBoxContent>
                             <span>LB</span>
                         </_MyPageListBoxContentContainer>
                     )

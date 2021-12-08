@@ -18,6 +18,7 @@ const HeaderRightNav = ({ open, setOpen }:any) => {
     }
     return (
         <_HeaderUl open={open}>
+            <_HeaderLink to="/">HOME</_HeaderLink>
             {/* <_HeaderLink to="/">NOTICE</_HeaderLink> */}
             {/* <_HeaderLink to="/wod" onClick={closeMenu}>WOD</_HeaderLink>
             <_HeaderLink to="/leader-board" onClick={closeMenu}>LEADER BOARD</_HeaderLink>

@@ -43,8 +43,20 @@ export const _LeaderBoardTab = styled.li<ITab>`
 
 `;
 
-export const _LeaderBoardTabListContainer = styled.ul`
+interface ITabListToggle {
+    toggle?:string;
+}
+
+export const _LeaderBoardTabListContainer = styled.ul<ITabListToggle>`
     border:1px solid rgb(7,93,198);
+
+    ${(props)=>props.toggle == "close"
+        && "display:none; transition: 0.4s;"
+    }
+
+    ${(props)=>props.toggle == "open"
+        && "display:block; transition: 0.4s;"
+    }
 `;
 
 interface ITabList {
@@ -59,7 +71,7 @@ export const _LeaderBoardTabList = styled.li<ITabList>`
     border: 1px solid #3d3d3d;
     padding: 1rem;
     width: 33.333%;
-    height:4rem;
+    height:6rem;
     vertical-align: middle;
     line-height:normal;
     cursor:pointer;
@@ -197,3 +209,21 @@ export const _LeaderBoardListInput = styled.input`
 `;
 
 export const _LeaderBoardListInputForm = styled.form``;
+
+export const _ToggleButton = styled.button`
+    font-size: 1.125rem;font-size: 1.125rem;
+    height: 2.25rem;
+    font-weight: bold;
+    background-color: rgb(7,93,198);
+    border: 1px solid rgb(7,93,198);
+    color: #fff;
+    cursor: pointer;
+    width:100%;
+`;
+
+export const _LeaderBoardListMore = styled.div`
+    font-size:${(props) => props.theme.fontSizes.xxl};
+    font-weight:${(props) => props.theme.fontWeights.bold};
+    padding: 1rem;
+    border: 1px solid rgb(7,93,198);
+`;

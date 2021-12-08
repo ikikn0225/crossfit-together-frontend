@@ -61,7 +61,7 @@ export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneR
     const onCompleted = (data:createOneRmRecord) => {
         const { createOneRmRecord:{ok} } = data;
         const { record } = getValues();
-        const onermEnum:OneRmList =  OneRmList[oneRmState as keyof typeof OneRmList];
+        const onermEnum:OneRmList =  OneRmList[oneRmState.split(' ').join('_') as keyof typeof OneRmList];
         if(ok) {
             // handleModalOpen();
             
@@ -105,7 +105,8 @@ export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneR
     }
 
     const onSubmit = () => {
-        const onermEnum:OneRmList =  OneRmList[oneRmState as keyof typeof OneRmList];
+        const onermEnum:OneRmList =  OneRmList[oneRmState.split(' ').join('_') as keyof typeof OneRmList];
+        
         try {
             const { record } = getValues();
             createOneRmRecord({

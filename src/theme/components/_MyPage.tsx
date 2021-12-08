@@ -96,8 +96,8 @@ export const _MyPageListBoxContentContainer = styled.div<IMyPageContent>`
     border:1px solid #3d3d3d;
 
     ${(props)=>props.myPageContent
-        ? "margin:1rem; padding-left: 2rem; padding-top: 1rem; padding-bottom: 1rem;"
-        : "margin:3rem; padding-top:100px; padding-bottom:100px;"
+        ? "margin-top:1rem; margin-bottom:1rem; padding-left: 2rem; padding-top: 1rem; padding-bottom: 1rem;"
+        : "margin-top:1rem; margin-bottom:1rem; padding-top:100px; padding-bottom:100px; width:100%;"
     }
 `;
 
@@ -120,8 +120,10 @@ export const _MyPageListBoxContent = styled.div<IContent>`
 `;
 
 export const _MyPageNoContent = styled(_WodNoContent)`
-    margin:3rem;
+    margin-top:1rem;
+    margin-bottom:1rem;
     padding-bottom:100px;
+    border:1px solid #3d3d3d;
 `;
 
 export const _MyPageContents = styled.div`

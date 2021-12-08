@@ -3,6 +3,7 @@ import { namedWodList, oneRmList } from "./leader-board-tab-enum";
 
 
 interface ILeaderBoardTabContainer {
+    toggle:string;
     menuOneRmState:number;
     menuNamedWodState:number;
     oneRmState:string;
@@ -14,7 +15,7 @@ interface ILeaderBoardTabContainer {
 }
 
 export const LeaderBoardTabContainer:React.FC<ILeaderBoardTabContainer> = ({
-    menuOneRmState, menuNamedWodState, oneRmState, namedWodState, setOneRmState, setNamedWodState, setMenuNamedWodState, setMenuOneRmState
+    toggle, menuOneRmState, menuNamedWodState, oneRmState, namedWodState, setOneRmState, setNamedWodState, setMenuNamedWodState, setMenuOneRmState
     }) => {
 
     const handleTabOneRmList = (oneRm:string) => {
@@ -41,7 +42,7 @@ export const LeaderBoardTabContainer:React.FC<ILeaderBoardTabContainer> = ({
                 <_LeaderBoardTab active={menuOneRmState} onClick={()=>handleMenu(1)}>1 RM</_LeaderBoardTab>
                 <_LeaderBoardTab active={menuNamedWodState} onClick={()=>handleMenu(0)}>Named Wod</_LeaderBoardTab>
             </_LeaderBoardTabContainer>
-            <_LeaderBoardTabListContainer>
+            <_LeaderBoardTabListContainer toggle={toggle}>
                 {menuOneRmState
                 ?(
                     oneRmList.map((oneRm)=> (
@@ -54,7 +55,7 @@ export const LeaderBoardTabContainer:React.FC<ILeaderBoardTabContainer> = ({
                             {oneRm.oneRm}
                         </_LeaderBoardTabList>
                     ))
-                )
+                    )
                 :(
                     namedWodList.map((namedWod)=> (
                         <_LeaderBoardTabList 

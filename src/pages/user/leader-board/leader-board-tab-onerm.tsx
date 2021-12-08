@@ -9,23 +9,11 @@ interface ITabList {
     list:string;
 }
 
-const handleTabList = (oneRm:allOneRmRecords|undefined) => {
-    console.log(oneRm);
-    
-}
-
 export const LeaderBoardTabOneRm:React.FC<ITabList> = ({list}) => {
-    const { data:oneRm } = useQuery<allOneRmRecords>(ALL_ONE_RM_RECORDS, {
-        variables: {
-            input: {
-                oneRm:list.split(' ').join('_'),
-            }
-        }
-    });
     
     return (
         <>
-            <_LeaderBoardTabList onClick={()=>handleTabList(oneRm)}> {list} </_LeaderBoardTabList>
+            <_LeaderBoardTabList> {list} </_LeaderBoardTabList>
         </>
     );
 }
