@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { CreateAffiliatedBoxMutation, CreateAffiliatedBoxMutationVariables } from "@/__generated__/CreateAffiliatedBoxMutation";
 import { _Container, _SubContainer } from "../../theme/components/_Layout"
-import { _CreateAffiliatedBoxForm ,_CreateAffiliatedBoxInput ,_CreateAffiliatedBoxFileInput } from "../../theme/components/_CreateAffiliatedBox";
+import { _CreateAffiliatedBoxForm ,_CreateAffiliatedBoxInput ,_CreateAffiliatedBoxFileInput, _CreateAffiliatedBoxFileLabel } from "../../theme/components/_CreateAffiliatedBox";
 import ModalBase from "../modal-base";
 
 export const CREATE_AFFILIATED_BOX_MUTATION = gql`
@@ -34,6 +34,7 @@ export const CreateAffiliatedBox = () => {
     const {register, getValues, watch, formState: { errors }, handleSubmit, formState} = useForm<ICreateAffiliatedBoxForm>({
         mode:"onChange",
     });
+    const [file, setFile] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [uploading, setUploading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -60,11 +61,15 @@ export const CreateAffiliatedBox = () => {
         onCompleted,   
     });
 
+    const changeInput = (e:any) => {
+        setFile(e.target.files[0]);
+    }
+
     const onSubmit = async() => {
         try {
-            const { name, address, file } = getValues();
+            const { name, address } = getValues();
             
-            const actualFile = file[0];
+            const actualFile = file;
             const formBody = new FormData();
             formBody.append("file", actualFile);
             let uri:string;
@@ -130,7 +135,14 @@ export const CreateAffiliatedBox = () => {
                         })}
                         type="file"
                         accept="image/*"
+                        onChange={changeInput}
+                        id="input-file"
                     />
+                    <_CreateAffiliatedBoxFileLabel htmlFor="input-file"> 박스 메인 사진 선택하기 </_CreateAffiliatedBoxFileLabel>
+                    <img src={file? URL.createObjectURL(file) : undefined} id="preview"/>
+                    {errors.file?.message && (
+                        <FormError errorMessage={errors.file?.message} />
+                    )}
                     <Button canClick={formState.isValid} loading={loading} actionText={"Create My Box"} />
                     {createAffiliatedBoxMutationResult?.createAffiliatedBox.error && <FormError errorMessage={createAffiliatedBoxMutationResult.createAffiliatedBox.error}/>}
                 </_CreateAffiliatedBoxForm>

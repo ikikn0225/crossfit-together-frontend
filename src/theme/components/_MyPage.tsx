@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { _ButtonCommon } from './_Button';
+import { _CreateAffiliatedBoxForm } from './_CreateAffiliatedBox';
 import { _Container, _SubContainer } from './_Layout';
 import { _NoBoxSpan } from './_NoBox';
 import { _WodCreateWodButton, _WodCreateWodButtonContainer, _WodImg, _WodImgContainer, _WodImgTitle, _WodListContainer, _WodListLayout, _WodListSubContainer, _WodNoContent, _WodUpdateWodLinkContainer } from './_Wod';
@@ -52,19 +53,15 @@ export const _MyPageContainer = styled(_WodListContainer)``;
 
 export const _MyPageSubContainer = styled.div`
     width:auto;
-    // text-align:center;
+    text-align:center;
     overflow: hidden;
     margin-top:3rem;
 `;
 
 export const _MyPageTabContainer = styled.ul`
     text-align:center;
-    & > li:nth-child(3) {
-        width:25%;
-    }
-    & > li:nth-child(4) {
-        width:18%;
-    }
+    padding-left:2rem;
+    padding-right:2rem;
 `;
 
 interface ITab {
@@ -76,6 +73,7 @@ export const _MyPageTab = styled.li<ITab>`
     border-right: 1px solid #636363;
     padding: 1rem;
     background-color:gray;
+    width: 25%;
 
     ${(props)=>props.active == props.tabId
         ? "background-color: rgb(7,93,198); border: 1px solid rgb(7,93,198);"
@@ -96,7 +94,7 @@ export const _MyPageListBoxContentContainer = styled.div<IMyPageContent>`
     border:1px solid #3d3d3d;
 
     ${(props)=>props.myPageContent
-        ? "margin-top:1rem; margin-bottom:1rem; padding-left: 2rem; padding-top: 1rem; padding-bottom: 1rem;"
+        ? "margin-top:1rem; margin-bottom:1rem; padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem;"
         : "margin-top:1rem; margin-bottom:1rem; padding-top:100px; padding-bottom:100px; width:100%;"
     }
 `;
@@ -115,7 +113,7 @@ export const _MyPageListBoxContent = styled.div<IContent>`
         font-size:${(props) => props.theme.fontSizes.lg};
     }
     ${(props)=>props.record
-        && "font-size:x-large; font-weight:bold;display:inline-block;"
+        && "font-size:large; font-weight:regular;display:inline-block;"
     }
 `;
 
@@ -255,4 +253,36 @@ export const _MyPageHoldListTitle = styled.div`
         font-size:${(props) => props.theme.fontSizes.xxl};
         font-weight:${(props) => props.theme.fontWeights.bold};
     }
+`;
+
+export const _MyPageToggleButton = styled.button`
+    height: 2.25rem;
+    background-color: rgb(7,93,198);
+    border: 1px solid rgb(7,93,198);
+    color: #fff;
+    cursor: pointer;
+`;
+
+interface changePwToggle {
+    changePwToggleState:number;
+}
+export const _MyPageChangePwForm = styled(_CreateAffiliatedBoxForm)<changePwToggle>`
+    text-align:center;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 1rem;
+    width:auto;
+    ${(props)=>props.changePwToggleState
+        ? "display:grid;"
+        : "display:none;"
+    }
+`;
+
+export const _MyPageChangePwInput = styled.input`
+    display:block;
+    height: 2.25rem;
+    border-width: thin;
+    border-style: solid;
+    border-color: ${(props) => props.theme.mode.border}
+    border-radius: 2px;
 `;

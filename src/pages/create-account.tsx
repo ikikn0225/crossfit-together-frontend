@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { _Container, _SubContainer } from "../theme/components/_Layout";
-import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect, _CreateAccountLoginLink } from "../theme/components/_CreateAccount";
+import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect, _CreateAccountLoginLink, _CreateAccountFileLabel } from "../theme/components/_CreateAccount";
 import ModalBase from "./modal-base";
 
 export const ALL_AFFILIATED_BOXES = gql`
@@ -55,6 +55,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
             role: UserRole.Coach,
         }
     });
+    const [file, setFile] = useState("");
     const [imageUrl, setImageUrl] = useState("");
     const [uploading, setUploading] = useState(false);
     const [roleStatus, setRoleStatus] = useState("");
@@ -82,11 +83,15 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     });
     const { data:boxes } = useQuery<allAffiliatedBoxesQuery>(ALL_AFFILIATED_BOXES);
 
+    const changeInput = (e:any) => {
+        setFile(e.target.files[0]);
+    }
+
     const onSubmit = async() => {
         try {
-            const { name, email, password, role, file, myBox } = getValues();
+            const { name, email, password, role, myBox } = getValues();
             
-            const actualFile = file[0];
+            const actualFile = file;
             const formBody = new FormData();
             formBody.append("file", actualFile);
             let uri:string;
@@ -211,7 +216,14 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         })}
                         type="file"
                         accept="image/*"
+                        onChange={changeInput}
+                        id="input-file"
                     />
+                    <_CreateAccountFileLabel htmlFor="input-file"> 프로필 사진 선택하기 </_CreateAccountFileLabel>
+                    <img src={file? URL.createObjectURL(file) : undefined} id="preview"/>
+                    {errors.file?.message && (
+                        <FormError errorMessage={errors.file?.message} />
+                    )}
                     <Button canClick={formState.isValid} loading={loading} actionText={"CREATE ACCOUNT"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </_CreateAccountForm>

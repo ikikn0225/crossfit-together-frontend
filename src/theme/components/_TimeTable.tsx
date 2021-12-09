@@ -16,7 +16,12 @@ export const _TimeTableProfileContainer = styled.div`
     text-align:center;
 `;
 
-export const _TimeTableForm = styled.form``;
+export const _TimeTableForm = styled.form`
+    text-align:center;
+    & > button {
+        margin-top:2rem;
+    }
+`;
 
 export const _TimeTableFileInput = styled.input`
     // display:none;
@@ -49,6 +54,6 @@ export const _TimeTableFileLabel = styled.label `
     height: 2.25rem;
     border-radius: 3px;
     font-weight: bold;
-    outline: none;
-    border: none;
+    border:1px solid #fff;
+    padding:0.5rem;
 `;

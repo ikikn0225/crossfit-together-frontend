@@ -24,7 +24,7 @@ export const _CreateAccountExtra = styled.div`
 `;
 
 export const _CreateAccountFileInput = styled(_CreateAccountInput)`
-    height:auto;
+    display:none;
 `;
 
 export const _CreateAccountSelect = styled.select`
@@ -39,4 +39,13 @@ export const _CreateAccountSelect = styled.select`
 export const _CreateAccountLoginLink = styled(Link)`
     float:right;
     color:${({ theme }) => theme.mode.primaryText};
+`;
+
+export const _CreateAccountFileLabel = styled.label `
+    height: 2.25rem;
+    border-radius: 3px;
+    border:1px solid #fff;
+    background-color:#fff;
+    padding:0.5rem;
+    color:#282828;
 `;

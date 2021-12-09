@@ -11,6 +11,20 @@ import { Wod } from "@/pages/user/wod/wod";
 import { BoardOfRecord } from "@/pages/user/board-of-record/board-of-record";
 import Spinner from "@/components/spinner";
 import { MyPageBoardOfRecordContent } from "./mypage-board-of-record-content";
+import { allMyBoardofRecords } from "@/__generated__/allMyBoardofRecords";
+
+export const ALL_MY_BOARDS_OF_RECORDS = gql`
+query allMyBoardofRecords {
+    allMyBoardofRecords {
+        ok
+        error
+        bors {
+            id
+            content
+        }
+    }
+}
+`;
 
 interface IMyPageBoardOfRecord {
     me:IMe;
@@ -34,6 +48,7 @@ export const MyPageBoardOfRecord:React.FC<IMyPageBoardOfRecord> = (me) => {
         fetchPolicy: 'cache-and-network',
         notifyOnNetworkStatusChange: true,
     });
+    const { data:allMyBoardofRecords } = useQuery<allMyBoardofRecords>(ALL_MY_BOARDS_OF_RECORDS);
 
     const handleObserver = useCallback((entries) => {
         const target = entries[0];
@@ -75,11 +90,14 @@ export const MyPageBoardOfRecord:React.FC<IMyPageBoardOfRecord> = (me) => {
             <_MyPageTitle>Board of Record</_MyPageTitle>
             <_MyPageContainer>
                 <_MyPageSubContainer>
-                    {wodList?.wodList.edges?.length !== 0
-                    ? (
-                        wodList?.wodList.edges?.map((wod:IWodEdge) => (
-                            <MyPageBoardOfRecordContent key={wod.node.title} wodId={wod.node.id} />
-                        ))
+                    {allMyBoardofRecords?.allMyBoardofRecords.bors.length !== 0 
+                    ?(
+                        wodList?.wodList.edges?.length !== 0
+                        && (
+                            wodList?.wodList.edges?.map((wod:IWodEdge) => (
+                                <MyPageBoardOfRecordContent key={wod.node.title} wodId={wod.node.id} />
+                            ))
+                        )
                     )
                     :(
                         <_MyPageNoContent>Sorry, No Rep!</_MyPageNoContent>

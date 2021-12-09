@@ -31,10 +31,8 @@ interface ITimeTableForm {
 export const TimeTable = () => {
     const { data:me, loading:meLoading, error:meError } = useMe();
     const {data:myAffiliatedBox} = useMyBox();
-    const [file, setFile] = useState(null)
-    const [imageUrl, setImageUrl] = useState("");
+    const [file, setFile] = useState("");
     const [isOpen, setIsOpen] = useState(false);
-    const [imgHeight, setImgHeight] = useState<number|undefined>(0);
     
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -54,7 +52,6 @@ export const TimeTable = () => {
         if(ok) {
             // setUploading(false); 
             handleModalOpen();
-            console.log("성공");
             
         }
     }
@@ -66,27 +63,30 @@ export const TimeTable = () => {
         try {
             const { timeTableImg } = getValues();
             
-            const actualFile = timeTableImg[0];
-            const formBody = new FormData();
-            formBody.append("file", actualFile);
-            let uri:string;
-            process.env.NODE_ENV === "production"
-            ? uri='https://crossfitogether0225.herokuapp.com/uploads'
-            : uri='http://localhost:4000/uploads'
-            const { url: timeTableImgUrl } = await (
-                await fetch(uri, {
-                    method:"POST",
-                    body:formBody,
-                })
-            ).json();
-            
-            addTimeTable({
-                variables: {
-                    input: {
-                        timeTableImg:timeTableImgUrl
+            if(file) {
+                const actualFile = file;
+                const formBody = new FormData();
+                formBody.append("file", actualFile);
+                let uri:string;
+                process.env.NODE_ENV === "production"
+                ? uri='https://crossfitogether0225.herokuapp.com/uploads'
+                : uri='http://localhost:4000/uploads'
+                const { url: timeTableImgUrl } = await (
+                    await fetch(uri, {
+                        method:"POST",
+                        body:formBody,
+                    })
+                ).json();
+                
+                addTimeTable({
+                    variables: {
+                        input: {
+                            timeTableImg:timeTableImgUrl
+                        }
                     }
-                }
-            })
+                })
+                
+            }
         } catch (e:any) {
             console.log(e);
         }
@@ -126,8 +126,9 @@ export const TimeTable = () => {
                                 accept="image/*"
                                 onChange={changeInput}
                                 id="input-file"
+                                style={{ display: 'none' }}
                             />
-                            {/* <_TimeTableFileLabel className="input-file-button" htmlFor="input-file"> Click to Select a Image... </_TimeTableFileLabel> */}
+                            <_TimeTableFileLabel htmlFor="input-file"> Select a TimeTable Image... </_TimeTableFileLabel>
                             <Button canClick={true} loading={loading} actionText={"Confirm"} />
                             <img src={file? URL.createObjectURL(file) : undefined} id="preview"/>
                         </_TimeTableForm>
