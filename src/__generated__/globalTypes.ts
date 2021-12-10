@@ -133,6 +133,12 @@ export interface CreateNamedWodRecordInput {
   record: number;
 }
 
+export interface CreateNoticeInput {
+  title: string;
+  coverImg?: string | null;
+  contents: string;
+}
+
 export interface CreateOneRmRecordInput {
   oneRm: OneRmList;
   record: number;
@@ -186,6 +192,12 @@ export interface EditNamedWodRecordInput {
 export interface EditOneRmRecordInput {
   record?: number | null;
   oneRmId: number;
+}
+
+export interface EditPasswordInput {
+  password?: string | null;
+  currentPw: string;
+  changePw: string;
 }
 
 export interface EditWodInput {

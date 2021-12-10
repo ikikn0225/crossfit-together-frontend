@@ -22,6 +22,8 @@ import { CreateWod } from "@/pages/coach/create-wod";
 import { EditWod } from "@/pages/coach/edit-wod";
 import { MyPage } from "@/pages/user/mypage/mypage";
 import { TimeTable } from "@/pages/user/time-table";
+import { Notices } from "@/pages/user/notice/notices";
+import { CreateNotice } from "@/pages/user/notice/create-notice";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
@@ -45,6 +47,8 @@ const affiliatedBoxRoutes = [
     { path:"/wods/:slug", component: <Wods/> },
     { path:"/mypage", component: <MyPage/> },
     { path:"/time-table", component: <TimeTable/> },
+    { path:"/notices", component: <Notices/> },
+    { path:"/create-notice", component: <CreateNotice/> },
 ];
 
 const commonRoutes = [

@@ -49,7 +49,11 @@ export const _MyPageProfileSpan = styled.span`
     }
 `;
 
-export const _MyPageContainer = styled(_WodListContainer)``;
+export const _MyPageContainer = styled(_WodListContainer)`
+    & > div:last-child {
+        top: -50%;
+    }
+`;
 
 export const _MyPageSubContainer = styled.div`
     width:auto;

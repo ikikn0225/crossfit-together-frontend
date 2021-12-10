@@ -1,22 +1,37 @@
+import { client } from '@/apollo';
 import { Button } from "@/components/button";
 import { FormError } from "@/components/form-error";
+import { clearCookie } from "@/cookie";
 import { useMe } from "@/hooks/useMe";
+import ModalBase from "@/pages/modal-base";
 import { _ToggleButton } from "@/theme/components/_LeaderBoard";
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
 import { _MyPageImgContainer, _MyPageContents, _MyPageNoContent, _MyPageListBoxContentContainer, _MyPageListBoxContent, _MyPageSubContainer, _MyPageTabContainer, _MyPageTab, _MyPageImg, _MyPageImgTitle, _MyPageProfileContainer, _MyPageProfileImgContainer, _MyPageProfileImg, _MyPageProfileSpan, _MyPageContainer, _MyPageToggleButton, _MyPageChangePwForm, _MyPageChangePwInput } from "@/theme/components/_MyPage";
+import { encryptValue } from "@/util/crypto";
+import { editPassword, editPasswordVariables } from "@/__generated__/editPassword";
 import { myNamedWodRecords } from "@/__generated__/myNamedWodRecords";
 import { myOneRmRecords } from "@/__generated__/myOneRmRecords";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import { LeaderBoardTab } from "../leader-board/leader-board-tab";
 import { LeaderBoardTabContainer } from "../leader-board/leader-board-tab-container";
 import { MyPageBoardOfRecord } from "./mypage-board-of-record";
 import { MyPageFreeTrial } from "./mypage-free-trial";
 import { MyPageHold } from "./mypage-hold";
 import { MyPageLeaderBoard } from "./mypage-leader-board";
+
+const EDIT_PASSWORD = gql`
+    mutation editPassword($input:EditPasswordInput!) {
+        editPassword(input:$input) {
+            ok
+            error
+        }
+    }
+`;
 
 interface IMyPageChangePwForm {
     currentPw: string;
@@ -27,11 +42,35 @@ export const MyPage = () => {
     const { data:me, loading:meLoading, error:meError } = useMe();
     const [menuFirstState, setMenuFirstState] = useState(1);
     const [changePwToggleState, setChangePwToggleState] = useState(0);
-    const [uploading, setUploading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const history = useHistory();
 
     const {register, getValues, formState: { errors }, handleSubmit, formState} = useForm<IMyPageChangePwForm>({
         mode:"onChange",
     });
+
+    const onCompleted = (data: editPassword) => {
+        const { editPassword:{ ok }, } = data;
+        if(ok) {
+            handleModalOpen();
+        }
+    }
+    const [editPassword, { data:editPasswordResult, loading }] = useMutation<editPassword, editPasswordVariables>(EDIT_PASSWORD, {
+        onCompleted,
+    });
+
+    const handleModalOpen = () => {
+        setIsOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsOpen(false);
+        client.cache.reset().then(() => {
+            clearCookie('authorization');
+            location.reload();
+        })
+        history.push("/");
+    };
 
     const handleMenu = (flag:number) => {
         if(flag == 1)      { setMenuFirstState(1); } 
@@ -56,16 +95,20 @@ export const MyPage = () => {
     const onSubmit = async() => {
         try {
             const { currentPw, changePw } = getValues();
-            
-            // createAffiliatedBoxMutation({
-            //     variables: {
-            //         createAffiliatedBoxInput: {
-            //             name,
-            //             address,
-            //             coverImg
-            //         }
-            //     }
-            // })
+
+            if(!loading){
+                const cryptoCurrentPassword = encryptValue(currentPw);
+                const cryptoChangePassword = encryptValue(changePw);
+                editPassword({
+                    variables: {
+                        input: {
+                            password:cryptoCurrentPassword,
+                            currentPw:cryptoCurrentPassword,
+                            changePw:cryptoChangePassword,
+                        }
+                    },
+                },
+            )}
         } catch (e:any) {
             console.log(e.response.data);
         }
@@ -92,10 +135,10 @@ export const MyPage = () => {
                         <_MyPageChangePwForm onSubmit={handleSubmit(onSubmit)} changePwToggleState={changePwToggleState}>
                             <_MyPageChangePwInput  
                                 {...register("currentPw", {
-                                    required: "현재 비밀번호가 다릅니다.",
+                                    required: "현재 비밀번호가 적어주세요.",
                                 })}
                                 name="currentPw"
-                                type="currentPw"
+                                type="password"
                                 placeholder="현재 비밀번호"
                                 className="input"
                             />
@@ -104,17 +147,18 @@ export const MyPage = () => {
                             )}
                             <_MyPageChangePwInput  
                                 {...register("changePw", {
-                                    required: "새로운 비밀번호가 다릅니다.",
+                                    required: "새로운 비밀번호를 적어주세요.",
                                 })}
                                 name="changePw"
-                                type="changePw"
+                                type="password"
                                 placeholder="새로운 비밀번호"
                                 className="input"
                             />
                             {errors.changePw?.message && (
                                 <FormError errorMessage={errors.changePw?.message} />
                             )}
-                            {/* <Button canClick={formState.isValid} loading={loading} actionText={"변경"} /> */}
+                            <Button canClick={formState.isValid} loading={loading} actionText={"변경"} />
+                            {editPasswordResult?.editPassword.error &&<FormError errorMessage={editPasswordResult?.editPassword.error} />}
                         </_MyPageChangePwForm>
                     )
                 }
@@ -146,6 +190,7 @@ export const MyPage = () => {
                         )}
                     </_MyPageContents>
                 </_MyPageSubContainer>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"다시 로그인해주세요."} modalButtonText={"확인"}> </ModalBase>
             </_MyPageContainer>
         </>
     )

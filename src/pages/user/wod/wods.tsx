@@ -201,18 +201,21 @@ export const Wods = () => {
             <_WodListContainer>
                 <_WodListSubContainer>
                     <CategoryList />
+
                     {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
                             <div key={wod.node.title+1}>
-                            <_WodUpdateWodLinkContainer>
-                                <div>
-                                    <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>Edit Wod</_WodUpdateWodLink>
-                                </div>
-                                <div>
-                                    <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>Delete Wod</_WodDeleteWodButton>
-                                </div>
-                            </_WodUpdateWodLinkContainer>
+                            {data.me.role == UserRole.Coach && (
+                                <_WodUpdateWodLinkContainer>
+                                    <div>
+                                        <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>Edit Wod</_WodUpdateWodLink>
+                                    </div>
+                                    <div>
+                                        <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>Delete Wod</_WodDeleteWodButton>
+                                    </div>
+                                </_WodUpdateWodLinkContainer>
+                            )}
                             <Wod 
                                 key={wod.node.title}
                                 role={data.me.role}

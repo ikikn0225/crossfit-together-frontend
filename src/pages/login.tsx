@@ -78,12 +78,12 @@ export const Login = ({themeMode}:ILoginTheme) => {
                 <_LoginForm  onSubmit={handleSubmit(onSubmit)}>
                     <_LoginInput 
                         {...register("email", {
-                            required: "Email is required",
+                            required: "이메일을 적어주세요.",
                             pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                         })}
                         name="email"
                         type="email"
-                        placeholder="Email"
+                        placeholder="이메일"
                         className="input"
                     />
                     {errors.email?.message && (  
@@ -94,22 +94,22 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     )}
                     <_LoginInput  
                         {...register("password", {
-                            required: "Password is required",
+                            required: "비밀번호를 적어주세요.",
                         })}
                         name="password"
                         type="password"
-                        placeholder="Password"
+                        placeholder="비밀번호"
                         className="input"
                     />
                     {errors.password?.message && (
                         <FormError errorMessage={errors.password?.message} />
                     )}
-                    <Button canClick={formState.isValid} loading={loading} actionText={"Log in"}></Button>
+                    <Button canClick={formState.isValid} loading={loading} actionText={"로그인"}></Button>
                     {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
                 </_LoginForm>
                 <_LoginExtra>
                     <div>
-                        New to CrossfiTogether? <_LoginCreateAccountLink to="/create-account" >Create Account</_LoginCreateAccountLink>
+                        우리와 함께 하시겠어요? <_LoginCreateAccountLink to="/create-account" >회원가입</_LoginCreateAccountLink>
                     </div>
                 </_LoginExtra>
             </_SubContainer>
