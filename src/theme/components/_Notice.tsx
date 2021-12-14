@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { _CreateWodSubContainer, _CreateWodSpan, _CreateWodForm, _CreateWodTextArea } from "./_CreateWod";
 import { _CreateAccountInput } from "./_CreateAccount";
 import { _TimeTableFileLabel } from "./_TimeTable";
+import { Link } from "react-router-dom";
 
 
 export const _NoticeImgContainer = styled(_WodImgContainer)``;
@@ -42,8 +43,9 @@ export const _NoticeListContainer = styled(_WodListContainer)``;
 
 export const _NoticeListSubContainer = styled.div`
     width:auto;
-    text-align:center;
     overflow: hidden;
+    padding-left:2rem;
+    padding-right:2rem;
 `;
 
 export const _NoticeNoContent = styled(_WodNoContent)``;
@@ -53,8 +55,128 @@ export const _NoticeListLayout = styled.div`
     border-bottom:1px solid #3d3d3d;
     margin-bottom:4rem;
     padding-bottom:4rem;
+
+    & > img:first-child {
+        max-height: 100vh;
+        max-width: 100%;
+        width: auto;
+        margin: 2rem auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
 `;
 
-export const _NoticeListTitle = styled(_WodListTitle)``;
+export const _NoticeListTitle = styled.div`
+    padding-top: 1rem;
+    padding-bottom:1rem;
+    font-size:${(props) => props.theme.fontSizes.xl};
+    font-weight:${(props) => props.theme.fontWeights.bold};
 
-export const _NoticeListContent = styled(_WodListContent)``;
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
+        font-weight:${(props) => props.theme.fontWeights.extraBold};
+    }
+`;
+
+export const _NoticeListContent = styled.p`
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(149, 149, 149);
+`;
+
+export const _NoticeListFooter = styled.div`
+    padding: 0.625rem 1rem;
+    display: flex;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+`;
+
+export const _NoticeListProfile = styled.a`
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+
+    & > img {
+        object-fit: cover;
+        border-radius: 50%;
+        width: 1.5rem;
+        height: 1.5rem;
+        display: block;
+        margin-right: 0.5rem;
+    }
+`;
+
+export const _NoticeListProfileName = styled.span`
+    object-fit: cover;
+    border-radius: 50%;
+    width: 100%;
+    height: 1.5rem;
+    display: block;
+    margin-right: 0.5rem;
+`;
+
+export const _NoticeListLike = styled.div`
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+`;
+
+export const _NoticeListLink = styled(Link)`
+    text-decoration: none;
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+    color:#fff;
+`;
+
+export const _NoticeDetailProfileName = styled.span`
+    color: #fff;
+    font-size: 1rem;
+    &:focus {
+        text-decoration: underline;
+    }
+`;
+
+export const _NoticeDetailContainer = styled.div`
+    width: 100%;
+    margin-top:1rem;
+    & > div {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    & > div > h1 {
+        font-size: 3rem;
+        line-height: 1.5;
+        letter-spacing: -0.004em;
+        margin-top: 0px;
+        font-weight: 800;
+        color: #fff;
+        word-break: keep-all;
+    }
+
+    & > div:nth-child(2) {
+        margin: 5rem auto 0px;
+    }
+`;
+
+export const _NoticeDetailProfileSpan = styled.span`
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+`;
+
+export const _NoticeDetailContent = styled(_NoticeListContent)`
+    color:#fff;
+    margin-top: 1rem;
+`;

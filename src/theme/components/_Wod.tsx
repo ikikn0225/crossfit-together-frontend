@@ -126,6 +126,10 @@ export const _WodListSubContainer = styled.div`
     width:auto;
     text-align:center;
     overflow: hidden;
+    & > div:not(:first-of-type) {
+        padding-left:2rem;
+        padding-right:2rem;
+    }
     & > div:nth-child(1) {
         position:relative;
     }

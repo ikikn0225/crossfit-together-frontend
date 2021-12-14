@@ -201,7 +201,6 @@ export const Wods = () => {
             <_WodListContainer>
                 <_WodListSubContainer>
                     <CategoryList />
-
                     {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (

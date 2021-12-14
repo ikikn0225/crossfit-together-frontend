@@ -229,6 +229,10 @@ export interface MyOneRmRecordsInput {
   oneRm: OneRmList;
 }
 
+export interface OneNoticeInput {
+  noticeId: number;
+}
+
 export interface OneWodInput {
   wodId: number;
 }

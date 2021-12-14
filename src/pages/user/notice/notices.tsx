@@ -19,6 +19,10 @@ export const ALL_NOTICES = gql`
                 coverImg
                 contents
                 createdAt
+                owner {
+                    name
+                    profileImg
+                }
             }
         }
     }
@@ -30,19 +34,25 @@ export interface INoticeProps {
     contents:string;
     coverImg:string|null;
     createdAt:Date;
+    owner:IOwner;
+}
+
+interface IOwner {
+    name:string;
+    profileImg:string|null;
 }
 
 export const Notices = () => {
-    const { data, loading, error } = useMe();
+    const { data:me, loading, error } = useMe();
     const history = useHistory();
     const { loading:noticesLoading, error:noticesError, data:allNotices, fetchMore, refetch, networkStatus } = useQuery<allNotices>(ALL_NOTICES);
-    console.log(allNotices);
+    console.log(me);
 
     const gotoCreateNotice = () => {
         history.push("/create-notice");
     }
 
-    if (!data || loading || error) {
+    if (!me || loading || error) {
         return (
             <_Loading>
                 <_LoadingSpan>Loading...</_LoadingSpan>
@@ -75,6 +85,7 @@ export const Notices = () => {
                                     contents={notice.contents}
                                     coverImg={notice.coverImg}
                                     createAt={notice.createdAt}
+                                    owner={notice.owner}
                                 />
                             // </div>
                         ))

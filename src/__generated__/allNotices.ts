@@ -7,6 +7,12 @@
 // GraphQL query operation: allNotices
 // ====================================================
 
+export interface allNotices_allNotices_notices_owner {
+  __typename: "User";
+  name: string;
+  profileImg: string | null;
+}
+
 export interface allNotices_allNotices_notices {
   __typename: "Notice";
   id: number;
@@ -14,6 +20,7 @@ export interface allNotices_allNotices_notices {
   coverImg: string | null;
   contents: string;
   createdAt: any;
+  owner: allNotices_allNotices_notices_owner;
 }
 
 export interface allNotices_allNotices {

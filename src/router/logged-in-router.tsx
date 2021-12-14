@@ -24,6 +24,7 @@ import { MyPage } from "@/pages/user/mypage/mypage";
 import { TimeTable } from "@/pages/user/time-table";
 import { Notices } from "@/pages/user/notice/notices";
 import { CreateNotice } from "@/pages/user/notice/create-notice";
+import { NoticeDetail } from "@/pages/user/notice/notice-detail";
 
 interface ILoggedInRouterTheme {
     themeMode: string;
@@ -49,6 +50,7 @@ const affiliatedBoxRoutes = [
     { path:"/time-table", component: <TimeTable/> },
     { path:"/notices", component: <Notices/> },
     { path:"/create-notice", component: <CreateNotice/> },
+    { path:"/notice/:id", component:<NoticeDetail/> },
 ];
 
 const commonRoutes = [
