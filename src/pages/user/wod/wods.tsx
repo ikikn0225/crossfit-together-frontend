@@ -195,7 +195,7 @@ export const Wods = () => {
             </_WodImgContainer>
             {data.me.role == UserRole.Coach && (
                 <_WodCreateWodButtonContainer>
-                    <_WodCreateWodButton onClick={gotoCreateWod}>Wod 추가하기</_WodCreateWodButton>
+                    <_WodCreateWodButton onClick={gotoCreateWod}>WOD 추가</_WodCreateWodButton>
                 </_WodCreateWodButtonContainer>
             )}
             <_WodListContainer>
@@ -208,10 +208,10 @@ export const Wods = () => {
                             {data.me.role == UserRole.Coach && (
                                 <_WodUpdateWodLinkContainer>
                                     <div>
-                                        <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>Wod 수정하기</_WodUpdateWodLink>
+                                        <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>수정</_WodUpdateWodLink>
                                     </div>
                                     <div>
-                                        <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>Wod 삭제하기</_WodDeleteWodButton>
+                                        <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>삭제</_WodDeleteWodButton>
                                     </div>
                                 </_WodUpdateWodLinkContainer>
                             )}

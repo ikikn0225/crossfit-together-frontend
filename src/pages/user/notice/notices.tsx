@@ -66,10 +66,10 @@ export const Notices = () => {
             </Helmet>
             <_NoticeImgContainer>
                 <_NoticeImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_NoticeImg> 
-                <_NoticeImgTitle>Notice</_NoticeImgTitle>
+                <_NoticeImgTitle>게시판</_NoticeImgTitle>
             </_NoticeImgContainer>
             <_NoticeCreateNoticeButtonContainer>
-                <_NoticeCreateNoticeButton onClick={gotoCreateNotice}>Create Notice</_NoticeCreateNoticeButton>
+                <_NoticeCreateNoticeButton onClick={gotoCreateNotice}>게시물 추가하기</_NoticeCreateNoticeButton>
             </_NoticeCreateNoticeButtonContainer>
             <_NoticeListContainer>
                 <_NoticeListSubContainer>

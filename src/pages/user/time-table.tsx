@@ -120,7 +120,7 @@ export const TimeTable = () => {
                         <_TimeTableForm onSubmit={handleSubmit(onSubmit)}>
                             <_TimeTableFileInput 
                                 {...register("timeTableImg", {
-                                    required: "Image is required",
+                                    required: "시간표 이미지를 추가해줏에ㅛ",
                                 })}
                                 type="file"
                                 accept="image/*"
@@ -128,8 +128,8 @@ export const TimeTable = () => {
                                 id="input-file"
                                 style={{ display: 'none' }}
                             />
-                            <_TimeTableFileLabel htmlFor="input-file"> Select a TimeTable Image... </_TimeTableFileLabel>
-                            <Button canClick={true} loading={loading} actionText={"Confirm"} />
+                            <_TimeTableFileLabel htmlFor="input-file"> 시간표 이미지를 선택해주세요 </_TimeTableFileLabel>
+                            <Button canClick={true} loading={loading} actionText={"확인"} />
                             <img src={file? URL.createObjectURL(file) : undefined} id="preview"/>
                         </_TimeTableForm>
                     )}

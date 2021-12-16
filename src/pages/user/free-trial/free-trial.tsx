@@ -290,7 +290,7 @@ export const FreeTrial = () => {
                                     />
                                     )}
                                 />
-                                <Button canClick={formState.isValid} loading={loading} actionText={"POST"} />
+                                <Button canClick={formState.isValid} loading={loading} actionText={"확인"} />
                             </>
                         )}
                         {registerFreeTrialResult?.registerFreeTrial.error && <FormError errorMessage={registerFreeTrialResult.registerFreeTrial.error}/>}

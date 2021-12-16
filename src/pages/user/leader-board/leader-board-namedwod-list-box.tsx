@@ -126,7 +126,7 @@ export const LeaderBoardListBoxNamedWod:React.FC<ILeaderBoardContentProps> = ({n
     return (
         <>
             <_LeaderBoardCreateBoardContainer>
-                <_LeaderBoardCreateWodButton onClick={ShowRecordInput}>Create Record</_LeaderBoardCreateWodButton>
+                <_LeaderBoardCreateWodButton onClick={ShowRecordInput}>기록 추가하기</_LeaderBoardCreateWodButton>
             </_LeaderBoardCreateBoardContainer>
             <_LeaderBoardListBox>
                 <_LeaderBoardListBoxNewContentContainer ref={showDivRef}>

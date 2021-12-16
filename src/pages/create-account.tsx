@@ -224,7 +224,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     {errors.file?.message && (
                         <FormError errorMessage={errors.file?.message} />
                     )}
-                    <Button canClick={formState.isValid} loading={loading} actionText={"회원가입하기"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"회원가입"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </_CreateAccountForm>
                 <_CreateAccountExtra>

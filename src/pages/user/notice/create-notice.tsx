@@ -118,11 +118,11 @@ export const CreateNotice = () => {
             </Helmet>
             <_NoticeImgContainer>
                 <_NoticeImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_NoticeImg> 
-                <_NoticeImgTitle>Create Notice</_NoticeImgTitle>
+                <_NoticeImgTitle>게시물 추가</_NoticeImgTitle>
             </_NoticeImgContainer>
             <_CreateNoticeSubContainer>
                 <_CreateNoticeForm  onSubmit={handleSubmit(onSubmit)}>
-                    <_CreateNoticeSpan>* Notice Title</_CreateNoticeSpan>
+                    <_CreateNoticeSpan>* 게시물 제목</_CreateNoticeSpan>
                     <_CreateNoticeInput  
                         {...register("title", {
                             required: "제목을 적어주세요.",
@@ -135,7 +135,7 @@ export const CreateNotice = () => {
                     {errors.title?.message && (
                         <FormError errorMessage={errors.title?.message} />
                     )}
-                    <_CreateNoticeSpan>Notice Image</_CreateNoticeSpan>
+                    <_CreateNoticeSpan>게시물 이미지</_CreateNoticeSpan>
                     <_CreateNoticeFileInput
                             {...register("coverImg")}
                             type="file"
@@ -148,7 +148,7 @@ export const CreateNotice = () => {
                     <img src={file? URL.createObjectURL(file) : undefined} id="preview"/>
                     {errors.coverImg?.message && ( <FormError errorMessage={errors.coverImg?.message} />
                     )}
-                    <_CreateNoticeSpan>* Notice Content</_CreateNoticeSpan>
+                    <_CreateNoticeSpan>* 게시물 내용</_CreateNoticeSpan>
                     <_CreateNoticeTextArea 
                         {...register("contents", {
                             required: "내용을 적어주세요.",
@@ -164,7 +164,7 @@ export const CreateNotice = () => {
                     <Button canClick={formState.isValid} loading={loading} actionText={"작성 완료"} />
                     {createNoticeResult?.createNotice.error && <FormError errorMessage={createNoticeResult.createNotice.error}/>}
                 </_CreateNoticeForm>
-                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"게시물 작성 완료했습니다."} modalButtonText={"확인"}> </ModalBase>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"게시물 작성 완료했습니다"} modalButtonText={"확인"}> </ModalBase>
             </_CreateNoticeSubContainer>
         </>
     );

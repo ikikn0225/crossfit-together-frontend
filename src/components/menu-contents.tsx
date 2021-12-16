@@ -18,16 +18,16 @@ const HeaderRightNav = ({ open, setOpen }:any) => {
     }
     return (
         <_HeaderUl open={open}>
-            <_HeaderLink to="/" onClick={closeMenu}>HOME</_HeaderLink>
-            <_HeaderLink to="/notices" onClick={closeMenu}>NOTICE</_HeaderLink>
+            <_HeaderLink to="/" onClick={closeMenu}>홈</_HeaderLink>
+            <_HeaderLink to="/notices" onClick={closeMenu}>게시판</_HeaderLink>
             {/* <_HeaderLink to="/wod" onClick={closeMenu}>WOD</_HeaderLink>
             <_HeaderLink to="/leader-board" onClick={closeMenu}>LEADER BOARD</_HeaderLink>
             <_HeaderLink to="/board-of-record" onClick={closeMenu}>BOARD OF RECORD</_HeaderLink>
             <_HeaderLink to="/free-trial" onClick={closeMenu}>FREE TRIAL</_HeaderLink>
             <_HeaderLink to="/hold" onClick={closeMenu}>HOLD</_HeaderLink> */}
-            <_HeaderLink to="/time-table" onClick={closeMenu}>TIME TABLE</_HeaderLink>
-            <_HeaderLink to="/mypage" onClick={closeMenu}>MY PAGE</_HeaderLink>
-            <_HeaderLogOutButton onClick={logOutClick}> LOGOUT </_HeaderLogOutButton>
+            <_HeaderLink to="/time-table" onClick={closeMenu}>시간표</_HeaderLink>
+            <_HeaderLink to="/mypage" onClick={closeMenu}>마이페이지</_HeaderLink>
+            <_HeaderLogOutButton onClick={logOutClick}> 로그아웃 </_HeaderLogOutButton>
         </_HeaderUl>
     )
 }
