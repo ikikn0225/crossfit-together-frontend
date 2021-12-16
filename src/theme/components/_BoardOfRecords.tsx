@@ -43,6 +43,7 @@ export const _BoardListBox = styled.div`
     max-height: 200px;
     margin-left:3rem;
     margin-right:3rem;
+    text-align:center;
     border:1px solid #3d3d3d;
     overflow-y: auto;
     ::-webkit-scrollbar {
@@ -98,7 +99,7 @@ export const _BoardFontAwesomeIcon = styled(FontAwesomeIcon)`
 export const _BoardInputButton = styled.button<IFont>`
     padding:0;
     border:0;
-    float:right;
+    justify-self: end;
     margin-right:5px;
     width:1.5rem;
     background-color:#000;

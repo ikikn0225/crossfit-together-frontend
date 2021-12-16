@@ -77,7 +77,7 @@ export const MyPageLeaderBoard = () => {
 
     return(
         <>
-            <_MyPageTitle>Leader Board</_MyPageTitle>
+            <_MyPageTitle>운동별 순위</_MyPageTitle>
             <_MyPageLeaderBoardContentContainer>
                 <LeaderBoardTabContainer
                     toggle={tabToggleState}

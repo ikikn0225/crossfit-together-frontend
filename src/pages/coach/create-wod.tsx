@@ -200,14 +200,14 @@ export const CreateWod = () => {
             </Helmet>
             <_CreateWodImgContainer>
                 <_CreateWodImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_CreateWodImg> 
-                <_CreateWodImgTitle>Create WOD</_CreateWodImgTitle>
+                <_CreateWodImgTitle>WOD 추가하기</_CreateWodImgTitle>
             </_CreateWodImgContainer>
             <_CreateWodSubContainer>
                 <_CreateWodForm  onSubmit={handleSubmit(onSubmit)}>
-                    <_CreateWodSpan>WOD Category</_CreateWodSpan>
+                    <_CreateWodSpan>WOD 카테고리</_CreateWodSpan>
                     <_CreateWodCategorySelect 
                         {...register("categoryId", {
-                            required: "Category is required",
+                            required: "카테고리를 선택해주세요",
                         })}
                         name="categoryId"
                         className="input"
@@ -223,7 +223,7 @@ export const CreateWod = () => {
                             )}
                             
                     </_CreateWodCategorySelect>
-                    <_CreateWodSpan>WOD Title</_CreateWodSpan>
+                    <_CreateWodSpan>WOD 제목</_CreateWodSpan>
                     <Controller 
                         name="date" 
                         control={control}
@@ -231,7 +231,7 @@ export const CreateWod = () => {
                         <DatePicker
                             className="input"
                             dateFormat="yyyyMMdd"
-                            placeholderText="Select WOD Date"
+                            placeholderText="WOD 날짜 선택하기"
                             onChange={(e) => field.onChange(e)}
                             selected={field.value}
                             excludeDates={excludeDates}
@@ -242,18 +242,18 @@ export const CreateWod = () => {
                     <_CreateWodSpan>WOD Content</_CreateWodSpan>
                     <_CreateWodTextArea 
                         {...register("content", {
-                            required: "Content is required",
+                            required: "내용이 적어주세요",
                         })}
                         name="content"
-                        placeholder="Content"
+                        placeholder="내용"
                         className="textarea"
                         ref={ref}
                         onInput={handleResizeHeight}
                     />
-                    <Button canClick={formState.isValid} loading={loading} actionText={"CREATE WOD"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"WOD 추가하기"} />
                     {createWodMutationResult?.createWod.error && <FormError errorMessage={createWodMutationResult.createWod.error}/>}
                 </_CreateWodForm>
-                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"CREATE WOD COMPLETED!"} modalButtonText={"Go To Wod List"}> </ModalBase>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"WOD를 추가했습니다!"} modalButtonText={"확인"}> </ModalBase>
             </_CreateWodSubContainer>
         </>
     );

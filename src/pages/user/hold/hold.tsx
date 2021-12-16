@@ -248,7 +248,7 @@ export const Hold = () => {
             </Helmet>
             <_HoldImgContainer>
                 <_HoldImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_HoldImg> 
-                <_HoldImgTitle>Hold</_HoldImgTitle>
+                <_HoldImgTitle>일시정지</_HoldImgTitle>
             </_HoldImgContainer>
             <_HoldContainer>
                 <_HoldSubContainer>
@@ -260,7 +260,7 @@ export const Hold = () => {
                             <DatePicker
                                 className="input"
                                 dateFormat="yyyy-MM-dd"
-                                placeholderText="Select WOD Date"
+                                placeholderText="일시정지 날짜 선택하기"
                                 onChange={(e) => field.onChange(e)}
                                 selected={field.value}
                                 excludeDates={excludeDates}
@@ -268,7 +268,7 @@ export const Hold = () => {
                             />
                             )}
                         />
-                        <Button canClick={formState.isValid} loading={loading} actionText={"POST"} />
+                        <Button canClick={formState.isValid} loading={loading} actionText={"확인"} />
                         {registerHoldResult?.registerHold.error && <FormError errorMessage={registerHoldResult.registerHold.error}/>}
                     </_HoldForm>
                     <_HoldListContainer>

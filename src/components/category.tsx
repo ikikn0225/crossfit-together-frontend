@@ -6,8 +6,9 @@ import React from "react"
 interface ICategoryProps {
     id:number;
     name:string;
+    slug:string;
 }
 
-export const Category: React.FC<ICategoryProps> = ({id, name}) => (
-    <_WodCategoryLink key={id} to={`/wods/${name}`}>#{name}</_WodCategoryLink>
+export const Category: React.FC<ICategoryProps> = ({id, name, slug}) => (
+    <_WodCategoryLink key={id} to={`/wods/${slug}`}>#{name}</_WodCategoryLink>
 )

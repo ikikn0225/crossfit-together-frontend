@@ -43,11 +43,12 @@ export const CategoryList = () => {
             </div>
             <div></div>
             <_WodCategoryContainer ref={slideRef}>
-                {categories?.allCategories.categories?.map((cate:{id:number, name:string}) => (
+                {categories?.allCategories.categories?.map((cate:{id:number, name:string, slug:string}) => (
                     <Category
                         key={cate.id}
                         id={cate.id}
                         name={cate.name}
+                        slug={cate.slug}
                     />
                 ))}
             </_WodCategoryContainer>

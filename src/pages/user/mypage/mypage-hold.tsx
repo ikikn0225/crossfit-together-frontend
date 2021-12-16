@@ -13,7 +13,7 @@ export const MyPageHold = () => {
 
     return (
         <>
-            <_MyPageTitle>Hold</_MyPageTitle>
+            <_MyPageTitle>일시정지</_MyPageTitle>
             <_MyPageHoldContentTitle>Count: {myHolds?.myHolds.holds.length}</_MyPageHoldContentTitle>
             <_MyPageHoldListTitleContainer>
                 {myHolds?.myHolds.holds.length !==0

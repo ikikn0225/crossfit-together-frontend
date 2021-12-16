@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OneNoticeInput } from "./globalTypes";
+import { OneNoticeInput, UserRole } from "./globalTypes";
 
 // ====================================================
 // GraphQL query operation: notice
@@ -18,7 +18,9 @@ export interface notice_notice_notice_comments {
 
 export interface notice_notice_notice_owner {
   __typename: "User";
+  id: number;
   name: string;
+  role: UserRole;
 }
 
 export interface notice_notice_notice {

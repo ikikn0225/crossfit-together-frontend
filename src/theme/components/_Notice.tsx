@@ -4,6 +4,7 @@ import { _CreateWodSubContainer, _CreateWodSpan, _CreateWodForm, _CreateWodTextA
 import { _CreateAccountInput } from "./_CreateAccount";
 import { _TimeTableFileLabel } from "./_TimeTable";
 import { Link } from "react-router-dom";
+import { _ButtonCommon } from "./_Button";
 
 
 export const _NoticeImgContainer = styled(_WodImgContainer)``;
@@ -51,10 +52,10 @@ export const _NoticeListSubContainer = styled.div`
 export const _NoticeNoContent = styled(_WodNoContent)``;
 
 export const _NoticeListLayout = styled.div`
-    margin-top:2rem;
+    margin-top:3rem;
     border-bottom:1px solid #3d3d3d;
-    margin-bottom:4rem;
-    padding-bottom:4rem;
+    margin-bottom:3rem;
+    // padding-bottom:1rem;
 
     & > img:first-child {
         max-height: 100vh;
@@ -98,6 +99,7 @@ export const _NoticeListFooter = styled.div`
     line-height: 1.5;
     -webkit-box-pack: justify;
     justify-content: space-between;
+    margin-top:1rem;
 `;
 
 export const _NoticeListProfile = styled.a`
@@ -180,3 +182,62 @@ export const _NoticeDetailContent = styled(_NoticeListContent)`
     color:#fff;
     margin-top: 1rem;
 `;
+
+export const _NoticeUpdateLinkContainer = styled.div`
+    text-align:right;
+    margin-right:20px;
+    padding:5px;
+
+    div {
+        margin-bottom:10px;
+    }
+`;
+
+export const _NoticeUpdateLink = styled(Link)`
+    padding:5px;
+    background-color: rgb(7,93,198);
+    // background-color: black;
+    border-color:rgb(7,93,198);
+    color:${({ theme }) => theme.mode.primaryText};
+    font-size: 1.125rem;
+    border-radius: 3px;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    text-decoration:unset;
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        font-size: 1.3rem;
+        height: 2.5rem;
+        font-weight: 600;
+        margin:30px;
+    }
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
+        font-size: 1.5rem;
+        height: 2.75rem;
+        font-weight: 700;
+        margin:50px;
+    }
+`;
+
+export const _NoticeDeleteButton = styled(_ButtonCommon)`
+    background-color:#FF0000;
+    // background-color: black;
+    font-size: 1.125rem;
+    font-weight: bold;
+    cursor:pointer;
+`;
+
+export const _EditNoticeSubContainer = styled(_CreateNoticeSubContainer)``;
+
+export const _EditNoticeForm = styled(_CreateNoticeForm)``;
+
+export const _EditNoticeSpan = styled(_CreateNoticeSpan)``;
+
+export const _EditNoticeInput = styled(_CreateNoticeInput)``;
+
+export const _EditNoticeFileInput = styled(_CreateNoticeFileInput)``;
+
+export const _EditNoticeFileLabel = styled(_CreateNoticeFileLabel)``;
+
+export const _EditNoticeTextArea = styled(_CreateNoticeTextArea)``;

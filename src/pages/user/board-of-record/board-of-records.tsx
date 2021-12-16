@@ -90,7 +90,7 @@ export const BoardOfRecords = () => {
             </Helmet>
             <_BoardImgContainer>
                 <_BoardImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_BoardImg> 
-                <_BoardImgTitle>Board of Record</_BoardImgTitle>
+                <_BoardImgTitle>WOD 기록</_BoardImgTitle>
             </_BoardImgContainer>
             <_BoardListContainer>
                 <_BoardListSubContainer>

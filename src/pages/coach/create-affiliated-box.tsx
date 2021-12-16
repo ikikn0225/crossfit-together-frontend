@@ -107,11 +107,11 @@ export const CreateAffiliatedBox = () => {
                 <_CreateAffiliatedBoxForm onSubmit={handleSubmit(onSubmit)}>
                     <_CreateAffiliatedBoxInput
                         {...register("name", {
-                            required: "Name is required",
+                            required: "이름을 적어주세요",
                         })}
                         name="name"
                         type="name"
-                        placeholder="Name"
+                        placeholder="이름"
                         className="input"
                     />
                     {errors.name?.message && (  
@@ -119,11 +119,11 @@ export const CreateAffiliatedBox = () => {
                     )}
                     <_CreateAffiliatedBoxInput  
                         {...register("address", {
-                            required: "Address is required",
+                            required: "주소를 적어주세요",
                         })}
                         name="address"
                         type="address"
-                        placeholder="Address"
+                        placeholder="주소"
                         className="input"
                     />
                     {errors.address?.message && (
@@ -131,7 +131,7 @@ export const CreateAffiliatedBox = () => {
                     )}
                     <_CreateAffiliatedBoxFileInput 
                         {...register("file", {
-                            required: "Cover Image is required",
+                            required: "박스 커버 이미지를 선택해주세요",
                         })}
                         type="file"
                         accept="image/*"
@@ -143,10 +143,10 @@ export const CreateAffiliatedBox = () => {
                     {errors.file?.message && (
                         <FormError errorMessage={errors.file?.message} />
                     )}
-                    <Button canClick={formState.isValid} loading={loading} actionText={"Create My Box"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"박스 생성하기"} />
                     {createAffiliatedBoxMutationResult?.createAffiliatedBox.error && <FormError errorMessage={createAffiliatedBoxMutationResult.createAffiliatedBox.error}/>}
                 </_CreateAffiliatedBoxForm>
-                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"Congrats To make Affiliated Box!"} modalButtonText={"ENTER MY BOX"}> </ModalBase>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"박스 생성을 축하드립니다!"} modalButtonText={"내 박스로 들어가기"}> </ModalBase>
             </_SubContainer>
         </_Container>
     )

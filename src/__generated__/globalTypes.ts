@@ -171,6 +171,10 @@ export interface DeleteNamedWodInput {
   namedWodId: number;
 }
 
+export interface DeleteNoticeInput {
+  noticeId: number;
+}
+
 export interface DeleteOneRmInput {
   oneRmId: number;
 }
@@ -187,6 +191,13 @@ export interface EditBorInput {
 export interface EditNamedWodRecordInput {
   record?: number | null;
   namedWodId: number;
+}
+
+export interface EditNoticeInput {
+  title?: string | null;
+  coverImg?: string | null;
+  contents?: string | null;
+  noticeId: number;
 }
 
 export interface EditOneRmRecordInput {

@@ -192,10 +192,10 @@ export const EditWod = () => {
             </_EditWodImgContainer>
             <_EditWodSubContainer>
                 <_EditWodForm  onSubmit={handleSubmit(onSubmit)}>
-                <_EditWodSpan>WOD Category</_EditWodSpan>
+                <_EditWodSpan>WOD 카테고리</_EditWodSpan>
                     <_EditWodCategorySelect 
                         {...register("categoryId", {
-                            required: "Category is required",
+                            required: "카테고리를 선택해주세요",
                         })}
                         name="categoryId"
                         className="input"
@@ -210,7 +210,7 @@ export const EditWod = () => {
                                 <option value="" selected disabled>No Category here</option>  
                             )}
                     </_EditWodCategorySelect>
-                    <_EditWodSpan>WOD Title</_EditWodSpan>
+                    <_EditWodSpan>WOD 제목</_EditWodSpan>
                     <Controller 
                         name="date" 
                         control={control}
@@ -225,14 +225,14 @@ export const EditWod = () => {
                         />
                         )}
                     />
-                    <_EditWodSpan>WOD Content</_EditWodSpan>
+                    <_EditWodSpan>WOD 내용</_EditWodSpan>
                     <_EditWodTextArea
                         autoFocus 
                         {...register("content", {
-                            required: "Content is required",
+                            required: "내용을 추가해주세요",
                         })}
                         name="content"
-                        placeholder="Content"
+                        placeholder="내용"
                         className="textarea"
                         ref={ref}
                         onInput={handleResizeHeight}
@@ -241,10 +241,10 @@ export const EditWod = () => {
                     {errors.content?.message && (  
                         <FormError errorMessage={errors.content?.message} />
                     )}
-                    <Button canClick={true} loading={loading} actionText={"EDIT WOD"} />
+                    <Button canClick={true} loading={loading} actionText={"WOD 수정하기"} />
                     {editWodMutationResult?.editWod.error && <FormError errorMessage={editWodMutationResult.editWod.error}/>}
                 </_EditWodForm>
-                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"EDIT WOD COMPLETED!"} modalButtonText={"Go To Wod List"}> </ModalBase>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"WOD를 수정했습니다!"} modalButtonText={"확인"}> </ModalBase>
             </_EditWodSubContainer>
         </>
     )

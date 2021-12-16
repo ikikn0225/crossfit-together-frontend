@@ -41,14 +41,14 @@ export const MyPageFreeTrial:React.FC<IMyPageMyPageFreeTrial> = (me) => {
         <>
             <_MyPageContainer>
                 <_MyPageSubContainer>
-                    <_MyPageTitle>Free Trial</_MyPageTitle>
+                    <_MyPageTitle>무료 체험</_MyPageTitle>
                     <_MyPageFreeTrialContentLink to="/free-trial">
                         <_MyPageFreeTrialContentContainer>
                             <_MyPageFreeTrialContent>
                                 {myPageFreeTrial?.myFreeTrial.freeTrial !== null
                                 ? (
                                     <>
-                                        <_MyPageFreeTrialContentTitle>You Have Already Booked At</_MyPageFreeTrialContentTitle>
+                                        <_MyPageFreeTrialContentTitle>예약된 무료체험일</_MyPageFreeTrialContentTitle>
                                         <_MyPageFreeTrialContentDate>{new Date(myPageFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} 
                                                     &nbsp;({new Date(myPageFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toDateString().substring(0, 3)})</_MyPageFreeTrialContentDate>
                                     </>

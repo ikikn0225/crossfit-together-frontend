@@ -151,7 +151,7 @@ export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId
                 <_BoardListBoxContent>{content}</_BoardListBoxContent>
                 <_BoardListBoxContentInput
                     {...register("content", {
-                        required: "Content is required",
+                        required: "내용을 적어주세요",
                     })}
                     name="content"
                     ref={editInputRef}

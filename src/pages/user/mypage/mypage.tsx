@@ -166,10 +166,10 @@ export const MyPage = () => {
             <_MyPageContainer>
                 <_MyPageSubContainer>
                     <_MyPageTabContainer>
-                        <_MyPageTab active={menuFirstState} tabId={1} onClick={()=>handleMenu(1)}>LB</_MyPageTab>
-                        <_MyPageTab active={menuFirstState} tabId={2} onClick={()=>handleMenu(2)}>BoR</_MyPageTab>
-                        <_MyPageTab active={menuFirstState} tabId={3} onClick={()=>handleMenu(3)}>FT</_MyPageTab>
-                        <_MyPageTab active={menuFirstState} tabId={4} onClick={()=>handleMenu(4)}>Hold</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={1} onClick={()=>handleMenu(1)}>순위</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={2} onClick={()=>handleMenu(2)}>기록</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={3} onClick={()=>handleMenu(3)}>무료체험</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={4} onClick={()=>handleMenu(4)}>일시정지</_MyPageTab>
                     </_MyPageTabContainer>
                     <_MyPageContents>
                         {menuFirstState == 1

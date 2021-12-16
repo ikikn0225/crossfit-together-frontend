@@ -48,41 +48,42 @@ export const CreateNotice = () => {
     const onSubmit = async() => {
         try {
             const { title, contents} = getValues();
-            if(file) {
-                const actualFile = file;
-                const formBody = new FormData();
-                formBody.append("file", actualFile);
-                let uri:string;
-                process.env.NODE_ENV === "production"
-                ? uri='https://crossfitogether0225.herokuapp.com/uploads'
-                : uri='http://localhost:4000/uploads'
-                const { url: coverImg } = await (
-                    await fetch(uri, {
-                        method:"POST",
-                        body:formBody,
-                    })
-                ).json();
-
+            
+            if(!file) {
                 createNotice({
                     variables: {
                         input: {
                             title,
-                            contents,
-                            coverImg
+                            contents
                         }
                     }
                 })
                 return;
             }
+            const actualFile = file;
+            const formBody = new FormData();
+            formBody.append("file", actualFile);
+            let uri:string;
+            process.env.NODE_ENV === "production"
+            ? uri='https://crossfitogether0225.herokuapp.com/uploads'
+            : uri='http://localhost:4000/uploads'
+            const { url: coverImg } = await (
+                await fetch(uri, {
+                    method:"POST",
+                    body:formBody,
+                })
+            ).json();
 
             createNotice({
                 variables: {
                     input: {
                         title,
-                        contents
+                        contents,
+                        coverImg
                     }
                 }
             })
+            
         } catch (e:any) {
             console.log(e.response.data);
         }

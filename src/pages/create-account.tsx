@@ -138,10 +138,10 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                 <_CreateAccountForm  onSubmit={handleSubmit(onSubmit)}>
                     <_CreateAccountInput 
                         {...register("name", {
-                            required: "Name is required",
+                            required: "이름을 적어주세요",
                         })}
                         name="name"
-                        placeholder="Name"
+                        placeholder="이름"
                         className="input"
                     />
                     {errors.name?.message && (  
@@ -149,12 +149,12 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     )}
                     <_CreateAccountInput
                         {...register("email", {
-                            required: "Email is required",
+                            required: "이메일을 적어주세요",
                             pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                         })}
                         name="email"
                         type="email"
-                        placeholder="Email"
+                        placeholder="이메일"
                         className="input"
                     />
                     {errors.email?.message && (  
@@ -165,18 +165,18 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     )}
                     <_CreateAccountInput  
                         {...register("password", {
-                            required: "Password is required",
+                            required: "비밀번호를 적어주세요",
                         })}
                         name="password"
                         type="password"
-                        placeholder="Password"
+                        placeholder="비밀번호"
                         className="input"
                     />
                     {errors.password?.message && (
                         <FormError errorMessage={errors.password?.message} />
                     )}
                     {errors.password?.type === "minLength" && (
-                        <FormError errorMessage="Password must be more than 10 chars" />
+                        <FormError errorMessage="10자이상 적어주세요" />
                     )}
                     <_CreateAccountSelect 
                         {...register("role", {
@@ -212,7 +212,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     )}
                     <_CreateAccountFileInput 
                         {...register("file", {
-                            required: "Profile Image is required",
+                            required: "프로필 이미지를 넣어주세요",
                         })}
                         type="file"
                         accept="image/*"
@@ -224,15 +224,15 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     {errors.file?.message && (
                         <FormError errorMessage={errors.file?.message} />
                     )}
-                    <Button canClick={formState.isValid} loading={loading} actionText={"CREATE ACCOUNT"} />
+                    <Button canClick={formState.isValid} loading={loading} actionText={"회원가입하기"} />
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </_CreateAccountForm>
                 <_CreateAccountExtra>
                     <div>
-                        Already have an account? <_CreateAccountLoginLink to="/" > Sign In Now</_CreateAccountLoginLink>
+                        이미 회원가입 하셨나요? <_CreateAccountLoginLink to="/" > 로그인하기</_CreateAccountLoginLink>
                     </div>
                 </_CreateAccountExtra>
-                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"Welcome To CrossfiTogether"} modalButtonText={"SIGN IN NOW"}> </ModalBase>
+                <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"CrossfiTogether에 오신걸 환영합니다."} modalButtonText={"확인"}> </ModalBase>
             </_SubContainer>
         </_Container>
     )

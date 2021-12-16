@@ -46,7 +46,6 @@ export const Notices = () => {
     const { data:me, loading, error } = useMe();
     const history = useHistory();
     const { loading:noticesLoading, error:noticesError, data:allNotices, fetchMore, refetch, networkStatus } = useQuery<allNotices>(ALL_NOTICES);
-    console.log(me);
 
     const gotoCreateNotice = () => {
         history.push("/create-notice");

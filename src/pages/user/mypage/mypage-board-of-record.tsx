@@ -87,7 +87,7 @@ export const MyPageBoardOfRecord:React.FC<IMyPageBoardOfRecord> = (me) => {
 
     return(
         <>
-            <_MyPageTitle>Board of Record</_MyPageTitle>
+            <_MyPageTitle>WOD 기록</_MyPageTitle>
             <_MyPageContainer>
                 <_MyPageSubContainer>
                     {allMyBoardofRecords?.allMyBoardofRecords.bors.length !== 0 

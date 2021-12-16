@@ -258,7 +258,7 @@ export const FreeTrial = () => {
             </Helmet>
             <_FreeTrialImgContainer>
                 <_FreeTrialImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_FreeTrialImg> 
-                <_FreeTrialImgTitle>FREE TRIAL</_FreeTrialImgTitle>
+                <_FreeTrialImgTitle>무료 체험</_FreeTrialImgTitle>
             </_FreeTrialImgContainer>
             <_FreeTrialContainer>
                 <_FreeTrialSubContainer>
@@ -266,7 +266,7 @@ export const FreeTrial = () => {
                         {myFreeTrial?.myFreeTrial.freeTrial !== null && myFreeTrial !== undefined
                         ?(
                             <_FreeTrialMyTrialDateLayout>
-                                <_FreeTrialMyTrialDateTitle>Your Free Trial Date is</_FreeTrialMyTrialDateTitle>
+                                <_FreeTrialMyTrialDateTitle>예약된 무료 체험일</_FreeTrialMyTrialDateTitle>
                                 <_FreeTrialMyTrialDate>{new Date(myFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })} 
                                             &nbsp;({new Date(myFreeTrial?.myFreeTrial?.freeTrial.freeTrialAt).toDateString().substring(0, 3)})</_FreeTrialMyTrialDate>
                             </_FreeTrialMyTrialDateLayout>

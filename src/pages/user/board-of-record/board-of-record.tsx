@@ -122,17 +122,17 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
     return (
         <_BoardListLayout>
             <_BoardCreateBoardContainer>
-                <_BoardCreateWodButton onClick={ShowRecordInput}>Create Record</_BoardCreateWodButton>
+                <_BoardCreateWodButton onClick={ShowRecordInput}>기록 추가하기</_BoardCreateWodButton>
             </_BoardCreateBoardContainer>
             <_BoardListBox>
                 <_BoardListBoxNewContentContainer ref={showDivRef}>
                     <_BoardListInputForm onSubmit={handleSubmit(onSubmit)}>
                         <_BoardListInput 
                             {...register("content", {
-                                required: "Content is required",
+                                required: "내용을 적어주세요",
                             })}
                             name="content"
-                            placeholder="Name(Record)"
+                            placeholder="이름(기록)"
                             ref={focusRef}
                         />
                         <_BoardInputButton type="button" onClick={handleNewInputCancel}>

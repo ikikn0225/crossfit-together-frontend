@@ -109,7 +109,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                 </_LoginForm>
                 <_LoginExtra>
                     <div>
-                        우리와 함께 하시겠어요? <_LoginCreateAccountLink to="/create-account" >회원가입</_LoginCreateAccountLink>
+                        처음이신가요? <_LoginCreateAccountLink to="/create-account" >회원가입</_LoginCreateAccountLink>
                     </div>
                 </_LoginExtra>
             </_SubContainer>
