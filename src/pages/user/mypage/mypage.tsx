@@ -125,7 +125,7 @@ export const MyPage = () => {
             </_MyPageImgContainer>
             <_MyPageProfileContainer>
                 <_MyPageProfileImgContainer>
-                    <_MyPageProfileImg img={me?.me.profileImg?me?.me.profileImg:"https://crossfitogether0225.s3.amazonaws.com/1637884117442Crossfit_ZEST.png"}></_MyPageProfileImg>
+                    <_MyPageProfileImg img={me?.me.profileImg}></_MyPageProfileImg>
                 </_MyPageProfileImgContainer>
                 <_MyPageProfileSpan>{me?.me.name}</_MyPageProfileSpan>
                 <_MyPageProfileSpan>{me?.me.email}</_MyPageProfileSpan>

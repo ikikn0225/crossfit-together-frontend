@@ -15,7 +15,7 @@ interface INoticeProps {
     title:string;
     contents:string;
     coverImg:string|null;
-    createAt:Date;
+    createdAt:Date;
     owner:IOwner;
 }
 
@@ -24,7 +24,7 @@ interface IOwner {
     profileImg:string|null;
 }
 
-export const Notice:React.FC<INoticeProps> = ({id, title, contents, coverImg, createAt, owner}) => {
+export const Notice:React.FC<INoticeProps> = ({id, title, contents, coverImg, createdAt, owner}) => {
 
         return(
             <_NoticeListLayout>
@@ -44,7 +44,7 @@ export const Notice:React.FC<INoticeProps> = ({id, title, contents, coverImg, cr
                         )}
                         <_NoticeListProfileName>by {owner.name}</_NoticeListProfileName>
                     </_NoticeListProfile>
-                    <div>{new Date(createAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }).substring(0, 13)}</div>
+                    <div>{new Date(createdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }).substring(0, 13)}</div>
                 </_NoticeListFooter>
             </_NoticeListLayout>
         )

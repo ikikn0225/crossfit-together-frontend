@@ -1,6 +1,6 @@
 import { useMe } from "@/hooks/useMe";
 import ModalBase from "@/pages/modal-base";
-import { _NoticeDetailContainer, _NoticeDetailProfileName, _NoticeDetailProfileSpan, _NoticeDetailContent, _NoticeUpdateLinkContainer, _NoticeUpdateLink, _NoticeDeleteButton } from "@/theme/components/_Notice";
+import { _NoticeDetailContainer, _NoticeDetailProfileName, _NoticeDetailProfileSpan, _NoticeDetailContent, _NoticeUpdateLinkContainer, _NoticeUpdateLink, _NoticeDeleteButton, _NoticeDetailProfileImgContainer, _NoticeDetailProfileImg } from "@/theme/components/_Notice";
 import { deleteNotice, deleteNoticeVariables } from "@/__generated__/deleteNotice";
 import { UserRole } from "@/__generated__/globalTypes";
 import { notice, noticeVariables } from "@/__generated__/notice";
@@ -8,6 +8,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useHistory, useParams } from "react-router-dom";
+import { Comments } from "./comments";
 
 export const NOTICE = gql`
     query notice($input:OneNoticeInput!) {
@@ -28,6 +29,7 @@ export const NOTICE = gql`
                 owner {
                     id
                     name
+                    profileImg
                     role
                 }
             }
@@ -55,9 +57,7 @@ export const NoticeDetail = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [topHeight, setTopHeight] = useState<string>("");
 
-    const { data:notice } = useQuery<notice, noticeVariables>(
-        NOTICE,
-        {
+    const { data:notice } = useQuery<notice, noticeVariables>( NOTICE, {
             variables: {
                 input: {
                     noticeId:+id,
@@ -65,8 +65,7 @@ export const NoticeDetail = () => {
             },
         }
     );
-    console.log(notice);
-
+    
     const onCompleted = (data:deleteNotice) => {
         const { deleteNotice:{ok, error} } = data;
         if(ok) {
@@ -134,6 +133,19 @@ export const NoticeDetail = () => {
                         <img src={notice?.notice.notice?.coverImg} alt="컨텐츠 이미지" />
                     )}
                     <_NoticeDetailContent>{notice?.notice.notice?.contents}</_NoticeDetailContent>
+                </div>
+                <div>
+                    <_NoticeDetailProfileImgContainer>
+                        <_NoticeDetailProfileImg img={notice?.notice.notice?.owner.profileImg}></_NoticeDetailProfileImg>
+                    </_NoticeDetailProfileImgContainer>
+                    <div>
+                        <_NoticeDetailProfileName>{notice?.notice.notice?.owner.name}</_NoticeDetailProfileName>
+                    </div>
+                </div>
+                <div>
+                    <Comments
+                        noticeId={+id}
+                    />
                 </div>
             </_NoticeDetailContainer>
             <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"게시물을 삭제했습니다!"} modalButtonText={"Close"} top={topHeight}> </ModalBase>

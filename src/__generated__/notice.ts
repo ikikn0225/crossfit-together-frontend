@@ -20,6 +20,7 @@ export interface notice_notice_notice_owner {
   __typename: "User";
   id: number;
   name: string;
+  profileImg: string | null;
   role: UserRole;
 }
 

@@ -80,6 +80,10 @@ export interface AllBoardofRecordInput {
   id: number;
 }
 
+export interface AllCommentsInNoticeInput {
+  noticeId: number;
+}
+
 export interface AllLikesInWodInput {
   wodId: number;
 }
@@ -124,6 +128,11 @@ export interface CreateBorInput {
   wodId: number;
 }
 
+export interface CreateCommentInNoticeInput {
+  content: string;
+  noticeId: number;
+}
+
 export interface CreateLikeInWodInput {
   wodId: number;
 }
@@ -152,6 +161,10 @@ export interface CreateWodInput {
 }
 
 export interface DeleteBorInput {
+  id: number;
+}
+
+export interface DeleteCommentInNoticeInput {
   id: number;
 }
 
@@ -186,6 +199,11 @@ export interface DeleteWodInput {
 export interface EditBorInput {
   content?: string | null;
   borId: number;
+}
+
+export interface EditCommentInNoticeInput {
+  content?: string | null;
+  commentId: number;
 }
 
 export interface EditNamedWodRecordInput {
