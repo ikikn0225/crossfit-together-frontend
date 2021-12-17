@@ -24,6 +24,7 @@ query allCommentsInNotice($input:AllCommentsInNoticeInput!) {
             id
             content
             owner {
+                id
                 name
                 profileImg
             }
@@ -35,6 +36,7 @@ query allCommentsInNotice($input:AllCommentsInNoticeInput!) {
 
 interface ICommentsProps {
     noticeId:number;
+    meId:number;
 }
 
 interface ICommentProps {
@@ -45,6 +47,7 @@ interface ICommentProps {
 }
 
 interface IOwner {
+    id:number;
     name:string;
     profileImg:string|null;
 }
@@ -53,7 +56,7 @@ interface INoticeCommentForm {
     content: string;
 }
 
-export const Comments:React.FC<ICommentsProps> = ({noticeId}) => {
+export const Comments:React.FC<ICommentsProps> = ({noticeId, meId}) => {
     const client = useApolloClient();
     const ref = useRef<HTMLTextAreaElement>(null);
     const { data:comments } = useQuery<allCommentsInNotice>(NOTICE_COMMENTS, {
@@ -158,6 +161,7 @@ export const Comments:React.FC<ICommentsProps> = ({noticeId}) => {
                             createdAt={comment.createdAt}
                             owner={comment.owner}
                             noticeId={noticeId}
+                            meId={meId}
                         />
                     ))
                 )}

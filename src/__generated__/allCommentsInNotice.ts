@@ -11,6 +11,7 @@ import { AllCommentsInNoticeInput } from "./globalTypes";
 
 export interface allCommentsInNotice_allCommentsInNotice_comments_owner {
   __typename: "User";
+  id: number;
   name: string;
   profileImg: string | null;
 }

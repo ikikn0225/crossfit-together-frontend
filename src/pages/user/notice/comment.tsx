@@ -32,9 +32,11 @@ interface ICommentProps {
     createdAt:Date;
     owner:IOwner;
     noticeId:number;
+    meId:number;
 }
 
 interface IOwner {
+    id:number;
     name:string;
     profileImg:string|null;
 }
@@ -44,7 +46,7 @@ interface IEditCommentForm {
     content: string;
 }
 
-export const Comment:React.FC<ICommentProps> = ({id, content, createdAt, owner, noticeId}) => {
+export const Comment:React.FC<ICommentProps> = ({id, content, createdAt, owner, noticeId, meId}) => {
     const client = useApolloClient();
     const buttonsRef = useRef<HTMLDivElement>(null);
     const contentDivRef = useRef<HTMLDivElement>(null);
@@ -171,10 +173,13 @@ export const Comment:React.FC<ICommentProps> = ({id, content, createdAt, owner, 
                         <_CommentDate>{new Date(createdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }).substring(0, 13)}</_CommentDate>
                     </_CommentProfileSubInfo>
                 </_CommentProfileInfo>
-                <_CommentUpdateButtons ref={buttonsRef}>
-                    <span onClick={showCommentTextArea}>수정</span>
-                    <span onClick={()=>deleteComment(id)}>삭제</span>
-                </_CommentUpdateButtons>
+                {owner.id == meId
+                &&(
+                    <_CommentUpdateButtons ref={buttonsRef}>
+                        <span onClick={showCommentTextArea}>수정</span>
+                        <span onClick={()=>deleteComment(id)}>삭제</span>
+                    </_CommentUpdateButtons>
+                )}
             </_CommentProfileInfoContainer>
             <_CommentContentContainer ref={contentDivRef}>
                 <p>{content}</p>

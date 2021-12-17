@@ -143,9 +143,13 @@ export const NoticeDetail = () => {
                     </div>
                 </div>
                 <div>
-                    <Comments
-                        noticeId={+id}
-                    />
+                    {me?.me.id 
+                    &&(
+                        <Comments
+                            noticeId={+id}
+                            meId={me?.me.id}
+                        />
+                    )}
                 </div>
             </_NoticeDetailContainer>
             <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"게시물을 삭제했습니다!"} modalButtonText={"Close"} top={topHeight}> </ModalBase>
