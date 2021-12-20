@@ -151,7 +151,7 @@ export const Comments:React.FC<ICommentsProps> = ({noticeId, meId}) => {
                 {createCommentInNoticeResult?.createCommentInNotice.error && <FormError errorMessage={createCommentInNoticeResult.createCommentInNotice.error}/>}
             </_NoticeCommentForm>
             <_NoticeCommentsContainer>
-                {comments?.allCommentsInNotice.comments?.length !== 0 
+            {comments?.allCommentsInNotice.comments?.length !== 0 
                 &&(
                     comments?.allCommentsInNotice.comments?.map((comment:ICommentProps) => (
                         <Comment

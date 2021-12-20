@@ -44,7 +44,7 @@ export const LeaderBoard = () => {
             </Helmet>
             <_LeaderBoardImgContainer>
                 <_LeaderBoardImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit-workout-in-action.png"}></_LeaderBoardImg> 
-                <_LeaderBoardImgTitle>운동별 순위</_LeaderBoardImgTitle>
+                <_LeaderBoardImgTitle>명예의 전당</_LeaderBoardImgTitle>
             </_LeaderBoardImgContainer>
             <_LeaderBoardContainer>
                 <_LeaderBoardSubContainer>

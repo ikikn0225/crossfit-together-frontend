@@ -77,7 +77,7 @@ export const MyPageLeaderBoard = () => {
 
     return(
         <>
-            <_MyPageTitle>운동별 순위</_MyPageTitle>
+            <_MyPageTitle>명예의 전당</_MyPageTitle>
             <_MyPageLeaderBoardContentContainer>
                 <LeaderBoardTabContainer
                     toggle={tabToggleState}
@@ -94,7 +94,6 @@ export const MyPageLeaderBoard = () => {
                 ? (
                     <>
                         <_ToggleButton onClick={()=>handleTabListToggle(tabToggleState)} >
-                            <span>Close </span>
                             <_LeaderBoardFontAwesomeIcon icon={faSortUpSolid}/>
                         </_ToggleButton>
                     </>
@@ -103,7 +102,6 @@ export const MyPageLeaderBoard = () => {
                     <>
                         <_LeaderBoardListMore>...</_LeaderBoardListMore>
                         <_ToggleButton onClick={()=>handleTabListToggle(tabToggleState)} >
-                            <span>Open </span>
                             <_LeaderBoardFontAwesomeIcon icon={faSortDownSolid}/>
                         </_ToggleButton>
                     </>

@@ -24,7 +24,7 @@ export const Main = () => {
                     <_MainNavLiImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit_main_wod.jpeg"}></_MainNavLiImg>
                 </_MainNavLi>
                 <_MainNavLi>
-                    <_MainNavLink to="/leader-board">운동별 순위</_MainNavLink>
+                    <_MainNavLink to="/leader-board">명예의 전당</_MainNavLink>
                     <_MainNavLiImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit_main_lb.jpeg"}></_MainNavLiImg>
                 </_MainNavLi>
                 <_MainNavLi>
@@ -36,7 +36,7 @@ export const Main = () => {
                     <_MainNavLiImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit_main_ft.jpeg"}></_MainNavLiImg>
                 </_MainNavLi>
                 <_MainNavLi>
-                    <_MainNavLink to="/hold">일시정지</_MainNavLink>
+                    <_MainNavLink to="/hold">홀드</_MainNavLink>
                     <_MainNavLiImg backgroundImage={"https://crossfitogether0225.s3.amazonaws.com/crossfit_main_hold.jpeg"}></_MainNavLiImg>
                 </_MainNavLi>
             </_MainNavUl>

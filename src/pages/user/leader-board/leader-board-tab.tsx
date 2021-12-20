@@ -108,7 +108,6 @@ export const LeaderBoardTab:React.FC<ILeaderBoardTab> = (me) => {
                 ? (
                     <>
                         <_ToggleButton onClick={()=>handleTabListToggle(tabToggleState)} >
-                            <span>리스트 닫기 </span>
                             <_LeaderBoardFontAwesomeIcon icon={faSortUpSolid}/>
                         </_ToggleButton>
                     </>
@@ -117,7 +116,6 @@ export const LeaderBoardTab:React.FC<ILeaderBoardTab> = (me) => {
                     <>
                         <_LeaderBoardListMore>...</_LeaderBoardListMore>
                         <_ToggleButton onClick={()=>handleTabListToggle(tabToggleState)} >
-                            <span>리스트 보기 </span>
                             <_LeaderBoardFontAwesomeIcon icon={faSortDownSolid}/>
                         </_ToggleButton>
                     </>

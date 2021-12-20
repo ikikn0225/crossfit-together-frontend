@@ -96,6 +96,10 @@ export interface AllOneRmRecordsInput {
   oneRm: OneRmList;
 }
 
+export interface AllRepliesInNoticeInput {
+  commentId: number;
+}
+
 export interface AllSpecificFreeTrialsInput {
   freeTrialAt?: any | null;
 }
@@ -153,6 +157,11 @@ export interface CreateOneRmRecordInput {
   record: number;
 }
 
+export interface CreateReplyInNoticeInput {
+  content: string;
+  commentId: number;
+}
+
 export interface CreateWodInput {
   title: string;
   titleDate?: any | null;
@@ -192,6 +201,10 @@ export interface DeleteOneRmInput {
   oneRmId: number;
 }
 
+export interface DeleteReplyInNoticeInput {
+  id: number;
+}
+
 export interface DeleteWodInput {
   wodId: number;
 }
@@ -227,6 +240,11 @@ export interface EditPasswordInput {
   password?: string | null;
   currentPw: string;
   changePw: string;
+}
+
+export interface EditReplyInNoticeInput {
+  content?: string | null;
+  replyId: number;
 }
 
 export interface EditWodInput {

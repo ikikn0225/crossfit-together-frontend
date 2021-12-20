@@ -4,9 +4,10 @@ import { _CommentProfileInfoContainer, _CommentContainer, _CommentProfileInfo, _
 import { deleteCommentInNotice, deleteCommentInNoticeVariables } from "@/__generated__/deleteCommentInNotice";
 import { editCommentInNotice, editCommentInNoticeVariables } from "@/__generated__/editCommentInNotice";
 import { gql, useApolloClient, useMutation } from "@apollo/client"
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NOTICE_COMMENTS } from "./comments";
+import { Replies } from "./replies";
 
 const EDIT_COMMENT = gql`
     mutation editCommentInNotice($input:EditCommentInNoticeInput!) {
@@ -48,11 +49,8 @@ interface IEditCommentForm {
 
 export const Comment:React.FC<ICommentProps> = ({id, content, createdAt, owner, noticeId, meId}) => {
     const client = useApolloClient();
-    const buttonsRef = useRef<HTMLDivElement>(null);
     const contentDivRef = useRef<HTMLDivElement>(null);
-
-    const textAreaDivRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLTextAreaElement>(null);
+    const [editCommentState, setEditCommentState] = useState("normal");
 
     const onCompleted = (data:editCommentInNotice) => {
         const { editCommentInNotice:{ok} } = data;
@@ -108,21 +106,11 @@ export const Comment:React.FC<ICommentProps> = ({id, content, createdAt, owner, 
     });
 
     const showCommentTextArea = () => {
-        
-        if(buttonsRef.current && textAreaDivRef.current && contentRef.current && contentDivRef.current) {
-            buttonsRef.current.style.display = "none";
-            contentDivRef.current.style.display = "none";
-            textAreaDivRef.current.style.display = "block";
-            contentRef.current.focus();
-        }
+        setEditCommentState("edit")
     }
 
     const cancelEditComment = () => {
-        if(buttonsRef.current && textAreaDivRef.current && contentDivRef.current) {
-            textAreaDivRef.current.style.display = "none";
-            buttonsRef.current.style.display = "block";
-            contentDivRef.current.style.display = "block";
-        }
+        setEditCommentState("normal");
     }
 
     const handleResizeHeight = useCallback(() => {
@@ -146,12 +134,7 @@ export const Comment:React.FC<ICommentProps> = ({id, content, createdAt, owner, 
                 }
             })
             
-            if(buttonsRef.current && textAreaDivRef.current && contentDivRef.current) {
-                textAreaDivRef.current.style.display = "none";
-                buttonsRef.current.style.display = "block";
-                contentDivRef.current.style.display = "block";
-                contentDivRef.current.style.height = "auto";
-            }
+            setEditCommentState("normal");
         } catch (e:any) {
             console.log(e.response.data);
         }
@@ -175,34 +158,44 @@ export const Comment:React.FC<ICommentProps> = ({id, content, createdAt, owner, 
                 </_CommentProfileInfo>
                 {owner.id == meId
                 &&(
-                    <_CommentUpdateButtons ref={buttonsRef}>
+                    <_CommentUpdateButtons>
                         <span onClick={showCommentTextArea}>수정</span>
                         <span onClick={()=>deleteComment(id)}>삭제</span>
                     </_CommentUpdateButtons>
                 )}
             </_CommentProfileInfoContainer>
-            <_CommentContentContainer ref={contentDivRef}>
-                <p>{content}</p>
-            </_CommentContentContainer>
-            <_NoticeCommentFormContainer ref={textAreaDivRef}>
-                <_NoticeCommentForm onSubmit={handleSubmit(onSubmit)}>
-                    <_NoticeCommentTextArea
-                        {...register("content")}
-                        name="content"
-                        placeholder="댓글을 작성해주세요"
-                        className="textarea"
-                        ref={contentRef}
-                        onInput={handleResizeHeight}
-                        defaultValue={content}
-                    />
-                    {errors.content?.message && ( <FormError errorMessage={errors.content?.message} /> )}
-                    <_CommentButton>
-                        <button onClick={cancelEditComment}>취소</button>
-                        <button>댓글 수정</button>
-                    </_CommentButton>
-                    {editCommentInNoticeResult?.editCommentInNotice.error && <FormError errorMessage={editCommentInNoticeResult.editCommentInNotice.error}/>}
-                </_NoticeCommentForm>
-            </_NoticeCommentFormContainer>
+            {editCommentState == "normal"
+            && (
+                <_CommentContentContainer>
+                    <p>{content}</p>
+                </_CommentContentContainer>
+            )}
+
+            {editCommentState == "edit"
+            && (
+                <_NoticeCommentFormContainer>
+                    <_NoticeCommentForm onSubmit={handleSubmit(onSubmit)}>
+                        <_NoticeCommentTextArea
+                            {...register("content")}
+                            name="content"
+                            placeholder="댓글을 작성해주세요"
+                            className="textarea"
+                            onInput={handleResizeHeight}
+                            defaultValue={content}
+                        />
+                        {errors.content?.message && ( <FormError errorMessage={errors.content?.message} /> )}
+                        <_CommentButton>
+                            <button onClick={cancelEditComment}>취소</button>
+                            <button>댓글 수정</button>
+                        </_CommentButton>
+                        {editCommentInNoticeResult?.editCommentInNotice.error && <FormError errorMessage={editCommentInNoticeResult.editCommentInNotice.error}/>}
+                    </_NoticeCommentForm>
+                </_NoticeCommentFormContainer>
+            )}
+            <Replies
+                commentId={id}
+                meId={meId}
+            />
         </_CommentContainer>
     )
 }

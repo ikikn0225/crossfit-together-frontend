@@ -6,6 +6,8 @@ import { _TimeTableFileLabel } from "./_TimeTable";
 import { Link } from "react-router-dom";
 import { _ButtonCommon } from "./_Button";
 import { _MyPageProfileImg, _MyPageProfileImgContainer } from "./_MyPage";
+import { _ToggleButton } from "./_LeaderBoard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 export const _NoticeImgContainer = styled(_WodImgContainer)``;
@@ -357,6 +359,7 @@ export const _CommentContentContainer = styled.div`
 export const _CommentUpdateButtons = styled.div`
     font-size: 0.75rem;
     color: rgb(175, 175, 175);
+    cursor:pointer;
 
     & > span:nth-of-type(2) {
         margin-left: 0.5rem;
@@ -398,3 +401,59 @@ export const _CommentButton = styled.div`
         margin-left:0.5rem;
     }
 `;
+
+
+export const _RepliesContainer = styled.div`
+    margin-top:2rem;
+`;
+
+export const _RepliesToggleContainer = styled.div`
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgb(18, 184, 134);
+    font-weight: bold;
+    cursor: pointer;
+`;
+
+export const _RepliesToggleButton = styled(_ToggleButton)``;
+
+export const _RepliesFontAwesomeIcon = styled(FontAwesomeIcon)`
+    margin-right:0.5rem;
+`;
+
+export const _RepliesForm = styled(_NoticeCommentForm)`
+`;
+
+export const _RepliesTextArea = styled(_NoticeCommentTextArea)``;
+
+export const _RepliesButton = styled(_NoticeCommentButton)``;
+
+export const _RepliesListContainer = styled.div`
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 1.5rem;
+    border-radius: 4px;
+    margin-top: 1.3125rem;
+`;
+
+export const _ReplyContainer = styled(_CommentContainer)``;
+
+export const _ReplyProfileInfoContainer = styled(_CommentProfileInfoContainer)``;
+
+export const _ReplyProfileInfo = styled(_CommentProfileInfo)``;
+
+export const _ReplyProfileSubInfo = styled(_CommentProfileSubInfo)``;
+
+export const _ReplyProfileName = styled(_CommentProfileName)``;
+
+export const _ReplyDate = styled(_CommentDate)``;
+
+export const _ReplyUpdateButtons = styled(_CommentUpdateButtons)``;
+
+export const _ReplyContentContainer = styled(_CommentContentContainer)``;
+
+export const _ReplyFormContainer = styled.div``;
+export const _ReplyForm = styled(_NoticeCommentForm)``;
+export const _ReplyTextArea = styled(_NoticeCommentTextArea)``;
+export const _ReplyButton = styled(_CommentButton)``;

@@ -211,7 +211,7 @@ export const _LeaderBoardListInput = styled.input`
 export const _LeaderBoardListInputForm = styled.form``;
 
 export const _ToggleButton = styled.button`
-    font-size: 1.125rem;font-size: 1.125rem;
+    font-size: 1.125rem;
     height: 2.25rem;
     font-weight: bold;
     background-color: rgb(7,93,198);
