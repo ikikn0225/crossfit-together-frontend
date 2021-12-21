@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { _Container, _SubContainer } from "../theme/components/_Layout";
-import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect, _CreateAccountLoginLink, _CreateAccountFileLabel } from "../theme/components/_CreateAccount";
+import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect, _CreateAccountLoginLink, _CreateAccountFileLabel, _CreateAccountExtraLogin } from "../theme/components/_CreateAccount";
 import ModalBase from "./modal-base";
 
 export const ALL_AFFILIATED_BOXES = gql`
@@ -228,9 +228,9 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                     {createAccountMutationResult?.createAccount.error && <FormError errorMessage={createAccountMutationResult.createAccount.error}/>}
                 </_CreateAccountForm>
                 <_CreateAccountExtra>
-                    <div>
-                        이미 회원가입 하셨나요? <_CreateAccountLoginLink to="/" > 로그인하기</_CreateAccountLoginLink>
-                    </div>
+                    <_CreateAccountExtraLogin>
+                        <span>이미 회원가입 하셨나요?</span> <_CreateAccountLoginLink to="/" > 로그인하기</_CreateAccountLoginLink>
+                    </_CreateAccountExtraLogin>
                 </_CreateAccountExtra>
                 <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={"CrossfiTogether에 오신걸 환영합니다."} modalButtonText={"확인"}> </ModalBase>
             </_SubContainer>

@@ -49,3 +49,11 @@ export const _CreateAccountFileLabel = styled.label `
     padding:0.5rem;
     color:#282828;
 `;
+
+export const _CreateAccountExtraLogin = styled.div`
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+`;

@@ -11,7 +11,7 @@ import { FormError } from "../components/form-error";
 // import {logo_white} from "../../public/images/logo_white.jpg";
 import { loginMutation, loginMutationVariables } from "@/__generated__/loginMutation";
 import { _Container, _SubContainer } from "../theme/components/_Layout"
-import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginCreateAccountLink } from "../theme/components/_Login"
+import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginCreateAccountLink, _LoginExtraCreateAccount } from "../theme/components/_Login"
 import { setCookie } from "@/cookie";
 import { encryptValue } from "@/util/crypto";
 import { useCallback } from "react";
@@ -74,7 +74,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     ? <_LoginLogoImage src="../../public/images/logo_white_fake.jpg" />
                     : <_LoginLogoImage src="https://crossfitogether0225.s3.amazonaws.com/logo_black.jpg" />
                 } */}
-                <_LoginLogoImage src="https://crossfitogether0225.s3.amazonaws.com/logo_black.jpg" />
+                {/* <_LoginLogoImage src="https://crossfitogether0225.s3.amazonaws.com/logo_black.jpg" /> */}
                 <_LoginForm  onSubmit={handleSubmit(onSubmit)}>
                     <_LoginInput 
                         {...register("email", {
@@ -108,9 +108,9 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     {loginMutationResult?.login.error &&<FormError errorMessage={loginMutationResult.login.error} />}
                 </_LoginForm>
                 <_LoginExtra>
-                    <div>
-                        처음이신가요? <_LoginCreateAccountLink to="/create-account" >회원가입</_LoginCreateAccountLink>
-                    </div>
+                    <_LoginExtraCreateAccount>
+                        <span>처음이신가요?</span> <_LoginCreateAccountLink to="/create-account" >회원가입</_LoginCreateAccountLink>
+                    </_LoginExtraCreateAccount>
                 </_LoginExtra>
             </_SubContainer>
         </_Container>

@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Redirect, Route, Switch, useHistory } from "re
 import { useMe } from "../hooks/useMe";
 import styled from 'styled-components';
 import { useApolloClient } from "@apollo/client";
-import { LOCALSTORAGE_TOKEN } from "@/constants";
 import { NotFound } from "@/pages/404";
 import { _Container, _SubContainer } from "../theme/components/_Layout"
 import { NoBox } from "@/pages/user/no-box";
@@ -68,7 +67,7 @@ export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
     
     if(!data && error) {
         client.cache.reset().then(() => {
-            clearCookie('authorization');
+            clearCookie('accessToken');
             location.reload();
         })
         history.push("/");

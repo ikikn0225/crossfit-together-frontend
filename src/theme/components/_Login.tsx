@@ -31,3 +31,11 @@ export const _LoginCreateAccountLink = styled(Link)`
     float:right;
     color:${({ theme }) => theme.mode.primaryText};
 `;
+
+export const _LoginExtraCreateAccount = styled.div`
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+`;
