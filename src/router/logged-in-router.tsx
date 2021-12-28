@@ -67,7 +67,7 @@ export const LoggedInRouter = ({themeMode}:ILoggedInRouterTheme) => {
     
     if(!data && error) {
         client.cache.reset().then(() => {
-            clearCookie('accessToken');
+            clearCookie('authorization');
             location.reload();
         })
         history.push("/");
