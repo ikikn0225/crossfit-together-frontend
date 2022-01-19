@@ -120,7 +120,7 @@ export const TimeTable = () => {
                         <_TimeTableForm onSubmit={handleSubmit(onSubmit)}>
                             <_TimeTableFileInput 
                                 {...register("timeTableImg", {
-                                    required: "시간표 이미지를 추가해줏에ㅛ",
+                                    required: "시간표 이미지를 추가해주세요",
                                 })}
                                 type="file"
                                 accept="image/*"

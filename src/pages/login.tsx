@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import React from "react";
 import {Helmet} from "react-helmet-async";
 import { authTokenVar, isLoggedInVar } from "../apollo";
-import { LOCALSTORAGE_TOKEN } from "../constants";
+import { LOCALSTORAGE_REFRESH_TOKEN, LOCALSTORAGE_TOKEN } from "../constants";
 import { useForm, useFormState } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { Button } from "../components/button";
@@ -20,8 +20,9 @@ export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
         login(input:$loginInput) {
             ok
-            token
             error
+            token
+            refreshToken
         }
     }
 `;
@@ -40,11 +41,13 @@ export const Login = ({themeMode}:ILoginTheme) => {
         mode:"onChange",
     });
     const onCompleted = (data: loginMutation) => {
-        const { login:{ error, ok, token }, } = data;
+        const { login:{ error, ok, token, refreshToken }, } = data;
         if(ok && token) {
             // localStorage.setItem(LOCALSTORAGE_TOKEN, token);
-            setCookie(LOCALSTORAGE_TOKEN, `Bearer ${token}`, {path: '/', expires: new Date(Date.now()+(28800000))});
+            setCookie(LOCALSTORAGE_TOKEN, `Bearer ${token}`, {path: '/', expires: new Date(Date.now()+(604800000))});
+            // setCookie(LOCALSTORAGE_REFRESH_TOKEN, `Bearer ${refreshToken}`, {path: '/', expires: new Date(Date.now()+(604800000))});
             authTokenVar(`Bearer ${token}`);
+            // refreshTokenVar(`Bearer ${refreshToken}`);
             isLoggedInVar(true);
         }
     }

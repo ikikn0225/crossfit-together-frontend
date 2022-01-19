@@ -1,17 +1,23 @@
 import { ApolloClient, createHttpLink, InMemoryCache, makeVar, Reference } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { LOCALSTORAGE_TOKEN } from "./constants";
+import { LOCALSTORAGE_REFRESH_TOKEN, LOCALSTORAGE_TOKEN } from "./constants";
 import { getCookie } from "./cookie";
 import { concatPagination, relayStylePagination } from "@apollo/client/utilities";
 
-// const token = localStorage.getItem(LOCALSTORAGE_TOKEN);
 const token = getCookie(LOCALSTORAGE_TOKEN);
-// console.log(token);
+const refreshToken = getCookie(LOCALSTORAGE_REFRESH_TOKEN);
+// let integratedToken:string;
 
-// localStorage.clear();
-
+// if((token && refreshToken) || (!token && !refreshToken)) {
+//     integratedToken = token;
+// } else {
+//     integratedToken = refreshToken;
+// }
+// console.log("token: ", token);
+// console.log("integratedToken: ", integratedToken);
 export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
+// export const refreshTokenVar = makeVar(refreshToken);
 
 const httpLink = createHttpLink({
     uri: process.env.NODE_ENV === "production"
@@ -24,6 +30,7 @@ const authLink = setContext((_, { headers }) => {
         headers: {
             ...headers,
             authorization: authTokenVar() || "",
+            // refreshtoken: refreshTokenVar() || "",
         },
     };
 });
@@ -45,6 +52,11 @@ export const client = new ApolloClient({
                             return authTokenVar();
                         }
                     },
+                    // refreshtoken: {
+                    //     read() {
+                    //         return refreshTokenVar();
+                    //     }
+                    // },
                     wodList: relayStylePagination(),
                     distinctHoldList: relayStylePagination(),
                     distinctFreeTrialList: relayStylePagination(),

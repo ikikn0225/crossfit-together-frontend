@@ -105,8 +105,8 @@ export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId
             if(editFormRef.current && checkBtnRef.current && editBtnRef.current && editInputRef.current) {
                 checkBtnRef.current.style.display = "none";
                 editInputRef.current.style.display = "none";
-                editBtnRef.current.style.display = 'inline-block';
-                editFormRef.current.children[3].setAttribute("style", "display:block;");
+                editBtnRef.current.style.display = 'inline';
+                editFormRef.current.children[0].setAttribute("style", "display:inline;");
             }
         } catch (e:any) {
             console.log(e.response.data);
@@ -115,15 +115,15 @@ export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId
 
     const handleEditInput = (content:string) => {
         if(editFormRef.current && checkBtnRef.current && editBtnRef.current && editInputRef.current) {
-            checkBtnRef.current.style.display = 'block';
-            editInputRef.current.style.display = 'inline-block';
+            checkBtnRef.current.style.display = 'inline';
+            editInputRef.current.style.display = 'inline';
             editBtnRef.current.style.display = 'none';
-            editFormRef.current.children[3].setAttribute("style", "display:none;");
+            editFormRef.current.children[0].setAttribute("style", "display:none;");
             editInputRef.current.value = content;
         }
     }
 
-    const onClickWodDelete = async(borId:number) => {
+    const onClickRecordDelete = async(borId:number) => {
         if(deleteLoading === false) {
             deleteBor({
                 variables:{
@@ -138,16 +138,6 @@ export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId
     return (
         <_BoardListBoxContentContainer key={borId}>
             <_BoardListInputForm onSubmit={handleSubmit(onSubmit)} ref={editFormRef}>
-                <_BoardInputButton type="button" onClick={()=>onClickWodDelete(borId)} userId={userId} borOwnerId={borOwnerId}>
-                    <_BoardFontAwesomeIcon icon={faTimesSolid}/>
-                </_BoardInputButton>
-                <_BoardInputButton type="button" onClick={() => handleEditInput(content)} ref={editBtnRef} userId={userId} borOwnerId={borOwnerId}>
-                    <_BoardFontAwesomeIcon icon={faPencelAltSolid}/>
-                </_BoardInputButton>
-                <_BoardInputButton userId={userId} borOwnerId={borOwnerId} editCheck={true} ref={checkBtnRef}>
-                    <_BoardFontAwesomeIcon icon={faCheckSolid}/>
-                </_BoardInputButton>
-
                 <_BoardListBoxContent>{content}</_BoardListBoxContent>
                 <_BoardListBoxContentInput
                     {...register("content", {
@@ -156,6 +146,15 @@ export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId
                     name="content"
                     ref={editInputRef}
                 />
+                <_BoardInputButton type="button" onClick={()=>onClickRecordDelete(borId)} userId={userId} borOwnerId={borOwnerId}>
+                    <_BoardFontAwesomeIcon icon={faTimesSolid}/>
+                </_BoardInputButton>
+                <_BoardInputButton type="button" onClick={() => handleEditInput(content)} ref={editBtnRef} userId={userId} borOwnerId={borOwnerId}>
+                    <_BoardFontAwesomeIcon icon={faPencelAltSolid}/>
+                </_BoardInputButton>
+                <_BoardInputButton userId={userId} borOwnerId={borOwnerId} editCheck={true} ref={checkBtnRef}>
+                    <_BoardFontAwesomeIcon icon={faCheckSolid}/>
+                </_BoardInputButton>
             </_BoardListInputForm>
         </_BoardListBoxContentContainer>
     )

@@ -66,6 +66,7 @@ export const _BoardListBoxContentContainer = styled.div`
 
 export const _BoardListBoxContent = styled.div`
     // padding-bottom:1rem;
+    display:inline;
 `;
 
 export const _BoardListBoxContentInput = styled.input`
@@ -106,7 +107,7 @@ export const _BoardInputButton = styled.button<IFont>`
     color:#fff;
 
     ${(props)=>props.userId == props.borOwnerId
-        ? "display:block;"
+        ? "display:inline;"
         : "display:none;"
     }
 

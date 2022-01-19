@@ -9,6 +9,7 @@ const HeaderRightNav = ({ open, setOpen }:any) => {
     const logOutClick = () => {
         client.cache.reset().then(() => {
             clearCookie('authorization');
+            clearCookie('refreshToken');
             location.reload();
         })
         history.push("/");
