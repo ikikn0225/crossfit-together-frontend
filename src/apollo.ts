@@ -5,7 +5,7 @@ import { getCookie } from "./cookie";
 import { concatPagination, relayStylePagination } from "@apollo/client/utilities";
 
 const token = getCookie(LOCALSTORAGE_TOKEN);
-const refreshToken = getCookie(LOCALSTORAGE_REFRESH_TOKEN);
+// const refreshToken = getCookie(LOCALSTORAGE_REFRESH_TOKEN);
 // let integratedToken:string;
 
 // if((token && refreshToken) || (!token && !refreshToken)) {
