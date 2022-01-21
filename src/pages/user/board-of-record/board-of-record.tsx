@@ -109,6 +109,7 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
     const ShowRecordInput = () => {
         if(showDivRef.current && focusRef.current) {
             showDivRef.current.style.display = "block";
+            focusRef.current.value = "";
             focusRef.current.focus();
         }
     }

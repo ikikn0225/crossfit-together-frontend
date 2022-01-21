@@ -106,6 +106,7 @@ export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneR
     const ShowRecordInput = () => {
         if(showDivRef.current && focusRef.current) {
             showDivRef.current.style.display = "block";
+            focusRef.current.value = "";
             focusRef.current.focus();
         }
     }
