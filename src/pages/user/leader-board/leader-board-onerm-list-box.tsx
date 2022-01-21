@@ -21,6 +21,7 @@ import { allOneRmRecords } from "@/__generated__/allOneRmRecords";
 import { createOneRmRecord, createOneRmRecordVariables } from "@/__generated__/createOneRmRecord";
 import { OneRmList } from "@/__generated__/globalTypes";
 import { ALL_ONE_RM_RECORDS } from "./leader-board-tab";
+import JSConfetti from 'js-confetti';
 
 export const CREATE_ONE_RM_RECORD = gql`
     mutation createOneRmRecord($input:CreateOneRmRecordInput!) {
@@ -64,7 +65,12 @@ export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneR
         const onermEnum:OneRmList =  OneRmList[oneRmState.split(' ').join('_') as keyof typeof OneRmList];
         if(ok) {
             // handleModalOpen();
-            
+            const jsConfetti = new JSConfetti();
+            jsConfetti.addConfetti({
+                emojis: ['👑', '🏆', '🥇', '🏅', '🥉', '🎖'],
+                confettiRadius: 6,
+                emojiSize: 70,
+            });
             const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
             client.writeQuery({
                 query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},
