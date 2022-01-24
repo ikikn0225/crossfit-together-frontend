@@ -63,7 +63,7 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
             jsConfetti.addConfetti({
                 emojis: ['👍', '🏆', '🏋️', '💪', '🏋️‍♀️'],
                 confettiRadius: 6,
-                emojiSize: 150,
+                emojiSize: 120,
             });
             
             const existingBoards = client.readQuery({ query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}} });
