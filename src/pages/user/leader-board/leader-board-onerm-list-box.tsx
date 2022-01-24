@@ -68,7 +68,7 @@ export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneR
             jsConfetti.addConfetti({
                 emojis: ['👑', '🏆', '🥇', '🏅', '🥉', '🎖'],
                 confettiRadius: 6,
-                emojiSize: 70,
+                emojiSize: 150,
             });
             const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
             client.writeQuery({
