@@ -64,7 +64,6 @@ export const LeaderBoardListBoxOneRm:React.FC<ILeaderBoardContentProps> = ({oneR
         const { record } = getValues();
         const onermEnum:OneRmList =  OneRmList[oneRmState.split(' ').join('_') as keyof typeof OneRmList];
         if(ok) {
-            // handleModalOpen();
             const jsConfetti = new JSConfetti();
             jsConfetti.addConfetti({
                 emojis: ['👑', '🏆', '🥇', '🏅', '🥉', '🎖'],

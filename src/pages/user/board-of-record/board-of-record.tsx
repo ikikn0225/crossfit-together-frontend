@@ -10,6 +10,7 @@ import { createBor, createBorVariables } from "@/__generated__/createBor";
 import { useForm } from "react-hook-form";
 import { BoardListBoxContent } from "@/pages/user/board-of-record/board-of-record-content";
 import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
+import JSConfetti from 'js-confetti';
 
 export const CREATE_BOR = gql`
     mutation createBor($input:CreateBorInput!) {
@@ -58,26 +59,31 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
         const { createBor:{ok, borId} } = data;
         const { content } = getValues();
         if(ok) {
-            // handleModalOpen();
+            const jsConfetti = new JSConfetti();
+            jsConfetti.addConfetti({
+                emojis: ['👍', '🏆', '🏋️', '💪', '🏋️‍♀️'],
+                confettiRadius: 6,
+                emojiSize: 70,
+            });
             
-        const existingBoards = client.readQuery({ query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}} });
-        client.writeQuery({
-            query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}},
-            data: {
-                allBoardofRecords: {
-                    ...existingBoards.allBoardofRecords,
-                    bors: [
-                        {
-                            id:borId,
-                            content,
-                            wodId,
-                            __typename: 'Bor'
-                        },
-                        ...existingBoards.allBoardofRecords.bors,
-                    ],
+            const existingBoards = client.readQuery({ query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}} });
+            client.writeQuery({
+                query: ALL_BOARD_OF_RECORDS, variables: { input: {id:wodId}},
+                data: {
+                    allBoardofRecords: {
+                        ...existingBoards.allBoardofRecords,
+                        bors: [
+                            {
+                                id:borId,
+                                content,
+                                wodId,
+                                __typename: 'Bor'
+                            },
+                            ...existingBoards.allBoardofRecords.bors,
+                        ],
+                    },
                 },
-            },
-        });
+            });
         }
     }
 
