@@ -254,8 +254,22 @@ export const _WodListLikeContainer = styled.div`
 `;
 
 export const _WodFontAwesomeIcon = styled(FontAwesomeIcon)`
-    margin-right:5px;
 `;
 
 export const _WodCategoryFontAwesomeIcon = styled(FontAwesomeIcon)`
+`;
+
+interface IWodGoToTopButton {
+    active?:boolean;
+}
+export const _WodGoToTopButton = styled.button<IWodGoToTopButton>`
+    position: fixed;
+    bottom:40px;
+    right:40px;
+    background-color:#fff;
+    padding:0.6rem;
+    border-radius:100%;
+    cursor:pointer;
+    z-index: 10;
+    opacity: 1; 
 `;

@@ -19,7 +19,8 @@ import {
     _WodListDay,
     _WodCategoryContainer,
     _WodCategoryLink,
-    _WodFontAwesomeIcon
+    _WodFontAwesomeIcon,
+    _WodGoToTopButton
 } from "@/theme/components/_Wod"
 import { deleteWod, deleteWodVariables } from "@/__generated__/deleteWod";
 import { UserRole } from "@/__generated__/globalTypes";
@@ -33,6 +34,7 @@ import { CategoryList } from "./category-list";
 import { wodList } from "@/__generated__/wodList";
 import Spinner from "@/components/spinner";
 import 'regenerator-runtime';
+import { faArrowUp as faArrowUpSolid } from "@fortawesome/free-solid-svg-icons";
 
 export const WOD_LIST = gql`
     query wodList($first: Int, $after: Int, $slug: String) {
@@ -90,6 +92,8 @@ export const Wods = () => {
     const [topHeight, setTopHeight] = useState<string>("");
     const loader = useRef<HTMLDivElement>(null);
     const [wodTrigger, setWodTrigger] = useState<boolean>(false);
+    const [scrollY, setScrollY] = useState(0);
+    const [topBtnStatus, setTopBtnStatus] = useState(false); // 버튼 상태
 
     const onCompleted = (data:deleteWod) => {
         const { deleteWod:{ok, error} } = data;
@@ -165,6 +169,38 @@ export const Wods = () => {
             })
         }
     }
+
+    const handleTop = () => {  // 클릭하면 스크롤이 위로 올라가는 함수
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        scrollY(0);  // ScrollY 의 값을 초기화
+        setTopBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
+    }
+
+    const handleFollow = () => {
+        setScrollY(window.pageYOffset);
+        console.log(scrollY);
+        
+        if(scrollY > 200) {
+          // 100 이상이면 버튼이 보이게
+            setTopBtnStatus(true);
+        } else {
+          // 100 이하면 버튼이 사라지게
+            setTopBtnStatus(false);
+        }
+    }
+
+    useEffect(() => {
+        const watch = () => {
+            window.addEventListener('scroll', handleFollow)
+        }
+        watch();
+        return () => {
+            window.removeEventListener('scroll', handleFollow)
+        }
+    })
     
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -201,29 +237,34 @@ export const Wods = () => {
             <_WodListContainer>
                 <_WodListSubContainer>
                     <CategoryList />
+                    {topBtnStatus && (
+                        <_WodGoToTopButton onClick={handleTop}>
+                            <_WodFontAwesomeIcon icon={faArrowUpSolid}/>
+                        </_WodGoToTopButton>
+                    )}
                     {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
                             <div key={wod.node.title+1}>
-                            {data.me.role == UserRole.Coach && (
-                                <_WodUpdateWodLinkContainer>
-                                    <div>
-                                        <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>수정</_WodUpdateWodLink>
-                                    </div>
-                                    <div>
-                                        <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>삭제</_WodDeleteWodButton>
-                                    </div>
-                                </_WodUpdateWodLinkContainer>
-                            )}
-                            <Wod 
-                                key={wod.node.title}
-                                role={data.me.role}
-                                userId={data.me.id}
-                                id={wod.node.id}
-                                title={wod.node.title}
-                                titleDate={wod.node.titleDate}
-                                content={wod.node.content}
-                            />
+                                {data.me.role == UserRole.Coach && (
+                                    <_WodUpdateWodLinkContainer>
+                                        <div>
+                                            <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>수정</_WodUpdateWodLink>
+                                        </div>
+                                        <div>
+                                            <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>삭제</_WodDeleteWodButton>
+                                        </div>
+                                    </_WodUpdateWodLinkContainer>
+                                )}
+                                <Wod 
+                                    key={wod.node.title}
+                                    role={data.me.role}
+                                    userId={data.me.id}
+                                    id={wod.node.id}
+                                    title={wod.node.title}
+                                    titleDate={wod.node.titleDate}
+                                    content={wod.node.content}
+                                />
                             </div>
                         ))
                     )
