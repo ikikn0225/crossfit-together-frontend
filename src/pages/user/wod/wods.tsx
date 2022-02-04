@@ -175,7 +175,7 @@ export const Wods = () => {
             top: 0,
             behavior: "smooth"
         });
-        scrollY(0);  // ScrollY 의 값을 초기화
+        setScrollY(0);  // ScrollY 의 값을 초기화
         setTopBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
     }
 
@@ -239,7 +239,8 @@ export const Wods = () => {
                     <CategoryList />
                     {topBtnStatus && (
                         <_WodGoToTopButton onClick={handleTop}>
-                            <_WodFontAwesomeIcon icon={faArrowUpSolid}/>
+                            <span>TOP</span>
+                            {/* <_WodFontAwesomeIcon icon={faArrowUpSolid}/> */}
                         </_WodGoToTopButton>
                     )}
                     {wodList?.wodList.edges?.length !== 0

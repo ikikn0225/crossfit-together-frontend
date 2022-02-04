@@ -4,7 +4,7 @@ import { Wod } from "@/pages/user/wod/wod";
 import { useMe } from "@/hooks/useMe";
 import { _BoardCreateBoardContainer, _BoardCreateWodButton, _BoardCreateWodButtonContainer, _BoardImg, _BoardImgContainer, _BoardImgTitle, _BoardListContainer, _BoardListSubContainer, _BoardNoContent } from "@/theme/components/_BoardOfRecords"
 import { _Loading, _LoadingSpan } from "@/theme/components/_Loading";
-import { _WodNoContent } from "@/theme/components/_Wod";
+import { _WodGoToTopButton, _WodNoContent } from "@/theme/components/_Wod";
 import { allBoardofRecords } from "@/__generated__/allBoardofRecords";
 import { wodList } from "@/__generated__/wodList";
 import { useQuery } from "@apollo/client";
@@ -34,6 +34,8 @@ export const BoardOfRecords = () => {
     const { data, loading, error } = useMe();
     const loader = useRef<HTMLDivElement>(null);
     const [wodTrigger, setWodTrigger] = useState<boolean>(false);
+    const [scrollY, setScrollY] = useState(0);
+    const [topBtnStatus, setTopBtnStatus] = useState(false); // 버튼 상태
     const delay = true;
     const { loading:wodLoading, error:wodListError, data:wodList, fetchMore, refetch, networkStatus } = useQuery<wodList>(WOD_LIST, {
         fetchPolicy: 'cache-and-network',
@@ -75,6 +77,38 @@ export const BoardOfRecords = () => {
         }
     }, [handleObserver]);
 
+    const handleTop = () => {  // 클릭하면 스크롤이 위로 올라가는 함수
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+        setScrollY(0);  // ScrollY 의 값을 초기화
+        setTopBtnStatus(false); // BtnStatus의 값을 false로 바꿈 => 버튼 숨김
+    }
+
+    const handleFollow = () => {
+        setScrollY(window.pageYOffset);
+        console.log(scrollY);
+        
+        if(scrollY > 200) {
+          // 100 이상이면 버튼이 보이게
+            setTopBtnStatus(true);
+        } else {
+          // 100 이하면 버튼이 사라지게
+            setTopBtnStatus(false);
+        }
+    }
+
+    useEffect(() => {
+        const watch = () => {
+            window.addEventListener('scroll', handleFollow)
+        }
+        watch();
+        return () => {
+            window.removeEventListener('scroll', handleFollow)
+        }
+    })
+
     if (!data || loading || error) {
         return (
             <_Loading>
@@ -94,6 +128,12 @@ export const BoardOfRecords = () => {
             </_BoardImgContainer>
             <_BoardListContainer>
                 <_BoardListSubContainer>
+                    {topBtnStatus && (
+                        <_WodGoToTopButton onClick={handleTop}>
+                            <span>TOP</span>
+                            {/* <_WodFontAwesomeIcon icon={faArrowUpSolid}/> */}
+                        </_WodGoToTopButton>
+                    )}
                     {wodList?.wodList.edges?.length !== 0
                     ? (
                         wodList?.wodList.edges?.map((wod:IWodEdge) => (
