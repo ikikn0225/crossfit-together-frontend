@@ -63,12 +63,15 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
     });
 
     const handleModalOpen = (content:string) => {
-        setScrollY(window.pageYOffset-400);
+        const body = document.querySelector("body");
+        if(body) body.style.overflow = "hidden";
         setWodContent(content)
         setIsOpen(true);
     };
 
     const handleModalClose = () => {
+        const body = document.querySelector("body");
+        if(body) body.style.overflow = "auto";
         setIsOpen(false);
     };
 
@@ -79,9 +82,9 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
                 myBoardofRecord?.myBoardofRecords.bors.map((bor:IMyPageBorList) => (
                     bor.id !== undefined &&(
                         <div>
-                            <_MyPageListBoxContentContainer key={bor.id} myPageContent={"mypage"}>
+                            <_MyPageListBoxContentContainer onClick={()=>handleModalOpen(bor.wod.content)} key={bor.id} myPageContent={"mypage"}>
                                 <_MyPageListBoxContentLayout key={bor.id}>
-                                    <_MyPageWodDateSpan onClick={()=>handleModalOpen(bor.wod.content)}>{bor.wod.title}</_MyPageWodDateSpan>
+                                    <_MyPageWodDateSpan>{bor.wod.title}</_MyPageWodDateSpan>
                                     <_MyPageListBoxContent record={bor.id}>{bor.content}</_MyPageListBoxContent>
                                 </_MyPageListBoxContentLayout>
                             </_MyPageListBoxContentContainer>
