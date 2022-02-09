@@ -88,7 +88,6 @@ export const BoardOfRecords = () => {
 
     const handleFollow = () => {
         setScrollY(window.pageYOffset);
-        console.log(scrollY);
         
         if(scrollY > 200) {
           // 100 이상이면 버튼이 보이게
@@ -131,7 +130,6 @@ export const BoardOfRecords = () => {
                     {topBtnStatus && (
                         <_WodGoToTopButton onClick={handleTop}>
                             <span>TOP</span>
-                            {/* <_WodFontAwesomeIcon icon={faArrowUpSolid}/> */}
                         </_WodGoToTopButton>
                     )}
                     {wodList?.wodList.edges?.length !== 0

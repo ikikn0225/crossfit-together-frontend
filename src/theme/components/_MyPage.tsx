@@ -73,6 +73,7 @@ interface ITab {
     tabId:number;
 }
 export const _MyPageTab = styled.li<ITab>`
+    cursor:pointer;
     display: inline-block;
     border-right: 1px solid #636363;
     padding: 1rem;
@@ -146,6 +147,7 @@ export const _MyPageLeaderBoardContentContainer = styled.div`
 `;
 
 export const _MyPageWodDateSpan = styled.p`
+    cursor:pointer;
     font-weight:${(props) => props.theme.fontWeights.bold};
     font-size:${(props) => props.theme.fontSizes.lg};
 `;

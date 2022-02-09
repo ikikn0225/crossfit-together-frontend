@@ -2,6 +2,8 @@ import { _MyPageListBoxContent, _MyPageListBoxContentContainer, _MyPageListBoxCo
 import { myBoardofRecords } from "@/__generated__/myBoardofRecords";
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
+import { useState } from "react";
+import ModalBase from "../../modal-base";
 
 export const MY_BOARD_OF_RECORDS = gql`
 query myBoardofRecords($input:MyBoardofRecordInput!) {
@@ -18,6 +20,7 @@ query myBoardofRecords($input:MyBoardofRecordInput!) {
             wod {
                 id
                 title
+                content
             }
         }
     }
@@ -42,17 +45,31 @@ interface IOwner {
 interface IWod {
     id:number;
     title:string;
+    content:string;
 }
 
 export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = ({wodId}) => {
-        const { data:myBoardofRecord, loading:myBoardofRecordLoading } = useQuery<myBoardofRecords>(MY_BOARD_OF_RECORDS, {
+    const [isOpen, setIsOpen] = useState(false);
+    const [wodContent, setWodContent] = useState("");
+    const [scrollY, setScrollY] = useState(0);
+    const { data:myBoardofRecord, loading:myBoardofRecordLoading } = useQuery<myBoardofRecords>(MY_BOARD_OF_RECORDS, {
         variables: {
             input: {
                 id:wodId
             }
         }
     });
-    
+
+    const handleModalOpen = (content:string) => {
+        setScrollY(window.pageYOffset-400);
+        setWodContent(content)
+        setIsOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setIsOpen(false);
+    };
+
     return(
         <>
             {myBoardofRecord?.myBoardofRecords.bors.length !== 0 
@@ -61,13 +78,14 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
                     bor.id !== undefined &&(
                         <_MyPageListBoxContentContainer key={bor.id} myPageContent={"mypage"}>
                             <_MyPageListBoxContentLayout key={bor.id}>
-                                <_MyPageWodDateSpan>{bor.wod.title}</_MyPageWodDateSpan>
+                                <_MyPageWodDateSpan onClick={()=>handleModalOpen(bor.wod.content)}>{bor.wod.title}</_MyPageWodDateSpan>
                                 <_MyPageListBoxContent record={bor.id}>{bor.content}</_MyPageListBoxContent>
                             </_MyPageListBoxContentLayout>
                         </_MyPageListBoxContentContainer>
                     )
                 ))
             )}
+            <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={wodContent} modalButtonText={"확인"} top={scrollY+"px"}> </ModalBase>
         </>
     )
 }

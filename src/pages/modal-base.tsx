@@ -12,7 +12,7 @@ export type ModalBaseProps = {
     onClose: () => void;
     modalContentText:string;
     modalButtonText:string;
-    top?:string;
+    top?:number|string;
 };
 
 const ModalBase = ({ children, visible, onClose, modalContentText, modalButtonText, top }: ModalBaseProps) => {

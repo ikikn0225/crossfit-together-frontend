@@ -19,6 +19,7 @@ export interface myBoardofRecords_myBoardofRecords_bors_wod {
   __typename: "Wod";
   id: number;
   title: string;
+  content: string;
 }
 
 export interface myBoardofRecords_myBoardofRecords_bors {

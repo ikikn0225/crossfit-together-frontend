@@ -2,7 +2,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 interface IModalSection {
     visible: boolean;
-    top: string|undefined;
+    top: number|string|undefined;
 }
 
 // animations
@@ -57,6 +57,8 @@ export const _ModalSection = styled.div<IModalSection>`
 export const _ModalContent = styled.div`
     color:#000;
     padding: 16px 0;
+    white-space: pre-wrap;
+    line-height:30px;
 `;
 
 export const _ModalCloseButton = styled.button`
