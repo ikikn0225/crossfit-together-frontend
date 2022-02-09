@@ -1,9 +1,11 @@
-import { _MyPageListBoxContent, _MyPageListBoxContentContainer, _MyPageListBoxContentLayout, _MyPageWodDateSpan } from "@/theme/components/_MyPage";
+import { _MyPageListBoxContent, _MyPageListBoxContentContainer, _MyPageListBoxContentLayout, _MypageModal, _MypageModalCloseButton, _MypageModalContent, _MyPageWodDateSpan } from "@/theme/components/_MyPage";
 import { myBoardofRecords } from "@/__generated__/myBoardofRecords";
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { useState } from "react";
 import ModalBase from "../../modal-base";
+import styled, { css, keyframes } from 'styled-components';
+import CommonModal from "@/components/modal";
 
 export const MY_BOARD_OF_RECORDS = gql`
 query myBoardofRecords($input:MyBoardofRecordInput!) {
@@ -76,16 +78,18 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
             &&(
                 myBoardofRecord?.myBoardofRecords.bors.map((bor:IMyPageBorList) => (
                     bor.id !== undefined &&(
-                        <_MyPageListBoxContentContainer key={bor.id} myPageContent={"mypage"}>
-                            <_MyPageListBoxContentLayout key={bor.id}>
-                                <_MyPageWodDateSpan onClick={()=>handleModalOpen(bor.wod.content)}>{bor.wod.title}</_MyPageWodDateSpan>
-                                <_MyPageListBoxContent record={bor.id}>{bor.content}</_MyPageListBoxContent>
-                            </_MyPageListBoxContentLayout>
-                        </_MyPageListBoxContentContainer>
+                        <div>
+                            <_MyPageListBoxContentContainer key={bor.id} myPageContent={"mypage"}>
+                                <_MyPageListBoxContentLayout key={bor.id}>
+                                    <_MyPageWodDateSpan onClick={()=>handleModalOpen(bor.wod.content)}>{bor.wod.title}</_MyPageWodDateSpan>
+                                    <_MyPageListBoxContent record={bor.id}>{bor.content}</_MyPageListBoxContent>
+                                </_MyPageListBoxContentLayout>
+                            </_MyPageListBoxContentContainer>
+                            <CommonModal isOpen={isOpen} wodContent={wodContent} handleModalClose={handleModalClose}></CommonModal>
+                        </div>
                     )
                 ))
             )}
-            <ModalBase visible={isOpen} onClose={handleModalClose} modalContentText={wodContent} modalButtonText={"확인"} top={scrollY+"px"}> </ModalBase>
         </>
     )
 }

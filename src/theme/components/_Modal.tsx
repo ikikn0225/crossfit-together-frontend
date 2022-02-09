@@ -2,7 +2,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 interface IModalSection {
     visible: boolean;
-    top: number|string|undefined;
+    top: string|undefined;
 }
 
 // animations

@@ -292,3 +292,42 @@ export const _MyPageChangePwInput = styled.input`
     border-color: ${(props) => props.theme.mode.border}
     border-radius: 2px;
 `;
+
+interface IModal {
+    visible:boolean;
+}
+export const _MypageModal = styled.div<IModal>`
+    position: fixed;
+    ${(props)=>props.visible
+        ? "display:block;"
+        : "display:none;"
+    }
+    // display: none;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+`;
+export const _MypageModalContent = styled.div`
+    overflow-y: auto;
+    display: block;
+    position: relative;
+    width: 70%;
+    margin: 25% auto 0;
+    max-height: 70vh;
+    padding: 5px;
+    background: #fff;
+    color:#000;
+    white-space: pre-wrap;
+    line-height:30px;
+`;
+
+export const _MypageModalCloseButton = styled.button`
+    padding: 10px 10px;
+    color:#fff;
+    border:solid 1px #075DC6;
+    background: #075DC6;
+    cursor: pointer;
+    float: right;
+`;
