@@ -9,7 +9,6 @@ export const _CommonModal = styled.div<IModal>`
         ? "display:block;"
         : "display:none;"
     }
-    // display: none;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -30,11 +29,22 @@ export const _CommonModalContent = styled.div`
     line-height:30px;
 `;
 
+export const _CommonModalCloseButtonDiv = styled.div`
+    text-align:end;
+
+    & > button {
+        padding: 10px 10px;
+        color:#fff;
+        border:solid 1px #075DC6;
+        background: #075DC6;
+        cursor: pointer;
+    }
+`;
+
 export const _CommonModalCloseButton = styled.button`
     padding: 10px 10px;
     color:#fff;
     border:solid 1px #075DC6;
     background: #075DC6;
     cursor: pointer;
-    float: right;
 `;

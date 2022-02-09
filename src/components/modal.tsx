@@ -1,4 +1,4 @@
-import { _CommonModal, _CommonModalCloseButton, _CommonModalContent } from '@/theme/components/_CommonModal';
+import { _CommonModal, _CommonModalCloseButton, _CommonModalCloseButtonDiv, _CommonModalContent } from '@/theme/components/_CommonModal';
 import React, { useState } from 'react';
 
 interface IModal {
@@ -13,7 +13,9 @@ const CommonModal:React.FC<IModal> = ({isOpen, wodContent, handleModalClose}) =>
         <>
         <_CommonModal isOpen={isOpen}>
             <_CommonModalContent> 
-                <_CommonModalCloseButton onClick={handleModalClose}> 확인 </_CommonModalCloseButton>
+                <_CommonModalCloseButtonDiv>
+                    <button onClick={handleModalClose}> 확인 </button>
+                </_CommonModalCloseButtonDiv>
                 {wodContent}
             </_CommonModalContent>
         </_CommonModal>
