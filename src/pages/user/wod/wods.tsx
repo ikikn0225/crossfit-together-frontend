@@ -183,10 +183,10 @@ export const Wods = () => {
         setScrollY(window.pageYOffset);
         
         if(scrollY > 200) {
-          // 100 이상이면 버튼이 보이게
+          // 200 이상이면 버튼이 보이게
             setTopBtnStatus(true);
         } else {
-          // 100 이하면 버튼이 사라지게
+          // 200 이하면 버튼이 사라지게
             setTopBtnStatus(false);
         }
     }

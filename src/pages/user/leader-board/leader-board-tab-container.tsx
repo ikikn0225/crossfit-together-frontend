@@ -20,6 +20,7 @@ export const LeaderBoardTabContainer:React.FC<ILeaderBoardTabContainer> = ({
 
     const handleTabOneRmList = (oneRm:string) => {
         setOneRmState(oneRm);
+        window.scrollTo({ top: document.body.scrollHeight, behavior:'smooth' });
     }
 
     const handleTabNamedWodList = (namedWod:string) => { 
