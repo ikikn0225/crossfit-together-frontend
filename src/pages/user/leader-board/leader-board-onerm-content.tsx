@@ -65,6 +65,7 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
         if(ok) {
             const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
             const existingEditOneRms = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+            console.log(onermEnum);
             console.log(existingEditOneRms);
             
             client.writeQuery({ 

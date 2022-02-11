@@ -17,7 +17,7 @@ import { deleteBor, deleteBorVariables } from "@/__generated__/deleteBor";
 import { _LeaderBoardCreateBoardContainer, _LeaderBoardCreateWodButton, _LeaderBoardFontAwesomeIcon, _LeaderBoardInputButton, _LeaderBoardListBox, _LeaderBoardListBoxContent, _LeaderBoardListBoxContentContainer, _LeaderBoardListBoxNewContentContainer, _LeaderBoardListInput, _LeaderBoardListInputForm, _LeaderBoardNoContent } from "@/theme/components/_LeaderBoard";
 import Spinner from "@/components/spinner";
 import { NamedWodsList } from "@/__generated__/globalTypes";
-import { ALL_NAMED_WOD_RECORDS, ALL_ONE_RM_RECORDS } from "./leader-board-tab";
+import { ALL_NAMED_WOD_RECORDS } from "./leader-board-tab";
 import { allNamedWodRecords } from "@/__generated__/allNamedWodRecords";
 import { namedWodList } from "./leader-board-tab-enum";
 import { LeaderBoardListBoxNamedWodContent } from "./leader-board-namedwod-content";
