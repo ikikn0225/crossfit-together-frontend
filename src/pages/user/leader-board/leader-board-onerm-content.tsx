@@ -63,7 +63,7 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
     const onCompleted = (data:editOneRmRecord) => {
         const { editOneRmRecord:{ok, error} } = data;
         if(ok) {
-            const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
+            const onermEnum:OneRmList =  OneRmList[onermstate.split(' ').join('_') as keyof typeof OneRmList];
             const existingEditOneRms = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
             console.log(onermEnum);
             console.log(existingEditOneRms);
@@ -88,7 +88,7 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
     
     const [ deleteOneRmRecord, { loading:deleteLoading } ] = useMutation<deleteOneRmRecord, deleteOneRmRecordVariables>(DELETE_ONE_RM_RECORDS, {
         onCompleted({ deleteOneRmRecord }) {
-            const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
+            const onermEnum:OneRmList =  OneRmList[onermstate.split(' ').join('_') as keyof typeof OneRmList];
             const existingDeleteOneRms = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
             client.writeQuery({ 
                 query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},

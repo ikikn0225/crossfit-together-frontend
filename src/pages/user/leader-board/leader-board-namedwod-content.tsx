@@ -62,7 +62,7 @@ export const LeaderBoardListBoxNamedWodContent:React.FC<ILeaderBoardContentProps
     const onCompleted = (data:editNamedWodRecord) => {
         const { editNamedWodRecord:{ok, error} } = data;
         if(ok) {
-            const namedwodEnum:NamedWodsList =  NamedWodsList[namedwodstate as keyof typeof NamedWodsList];
+            const namedwodEnum:NamedWodsList =  NamedWodsList[namedwodstate.split(' ').join('_') as keyof typeof NamedWodsList];
             const existingBoards = client.readQuery({ query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}} });
             client.writeQuery({ 
                 query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}},
@@ -84,7 +84,7 @@ export const LeaderBoardListBoxNamedWodContent:React.FC<ILeaderBoardContentProps
     
     const [ deleteNamedWodRecord, { loading:deleteLoading } ] = useMutation<deleteNamedWodRecord, deleteNamedWodRecordVariables>(DELETE_NAMED_WOD_RECORDS, {
         onCompleted({ deleteNamedWodRecord }) {
-            const namedwodEnum:NamedWodsList =  NamedWodsList[namedwodstate as keyof typeof NamedWodsList];
+            const namedwodEnum:NamedWodsList =  NamedWodsList[namedwodstate.split(' ').join('_') as keyof typeof NamedWodsList];
             const existingBoards = client.readQuery({ query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}} });
             client.writeQuery({ 
                 query: ALL_NAMED_WOD_RECORDS, variables: { input: {namedWod:namedwodEnum}},
