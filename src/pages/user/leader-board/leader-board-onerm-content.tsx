@@ -64,13 +64,15 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
         const { editOneRmRecord:{ok, error} } = data;
         if(ok) {
             const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
-            const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+            const existingEditOneRms = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+            console.log(existingEditOneRms);
+            
             client.writeQuery({ 
                 query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},
                 data: {
                     allOneRmRecords: {
-                        ...existingBoards.allOneRmRecords,
-                        lbOneRms: [ editOneRmRecord, ...existingBoards.allOneRmRecords.lbOneRms
+                        ...existingEditOneRms.allOneRmRecords,
+                        lbOneRms: [ editOneRmRecord, ...existingEditOneRms.allOneRmRecords.lbOneRms
                         ],
                     },
                 },
@@ -86,13 +88,13 @@ export const LeaderBoardListBoxOneRmContent:React.FC<ILeaderBoardContentProps> =
     const [ deleteOneRmRecord, { loading:deleteLoading } ] = useMutation<deleteOneRmRecord, deleteOneRmRecordVariables>(DELETE_ONE_RM_RECORDS, {
         onCompleted({ deleteOneRmRecord }) {
             const onermEnum:OneRmList =  OneRmList[onermstate as keyof typeof OneRmList];
-            const existingBoards = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
+            const existingDeleteOneRms = client.readQuery({ query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}} });
             client.writeQuery({ 
                 query: ALL_ONE_RM_RECORDS, variables: { input: {oneRm:onermEnum}},
                 data: {
                     allOneRmRecords: {
-                        ...existingBoards.allOneRmRecords,
-                        lbOneRms: [deleteOneRmRecord, ...existingBoards.allOneRmRecords.lbOneRms
+                        ...existingDeleteOneRms.allOneRmRecords,
+                        lbOneRms: [deleteOneRmRecord, ...existingDeleteOneRms.allOneRmRecords.lbOneRms
                         ],
                     },
                 },

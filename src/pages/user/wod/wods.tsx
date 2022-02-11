@@ -181,7 +181,6 @@ export const Wods = () => {
 
     const handleFollow = () => {
         setScrollY(window.pageYOffset);
-        console.log(scrollY);
         
         if(scrollY > 200) {
           // 100 이상이면 버튼이 보이게
