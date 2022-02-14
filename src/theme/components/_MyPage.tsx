@@ -122,11 +122,18 @@ export const _MyPageListBoxContent = styled.div<IContent>`
     }
 `;
 
-export const _MyPageNoContent = styled(_WodNoContent)`
+interface INoContent {
+    hold?:boolean;
+}
+
+export const _MyPageNoContent = styled(_WodNoContent)<INoContent>`
     margin-top:1rem;
     margin-bottom:1rem;
     padding-bottom:100px;
-    border:1px solid #3d3d3d;
+    ${(props)=>props.hold
+        ? ""
+        : "border:1px solid #3d3d3d;"
+    }
 `;
 
 export const _MyPageContents = styled.div`
@@ -330,4 +337,19 @@ export const _MypageModalCloseButton = styled.button`
     background: #075DC6;
     cursor: pointer;
     float: right;
+`;
+
+export const _MyPageFontAwesomeIcon = styled(FontAwesomeIcon)`
+    color:#707070;
+`;
+
+export const _MyPageModalButton = styled.button`
+    font-size: 1.125rem;
+    height: 2.25rem;
+    font-weight: bold;
+    background-color: rgb(7,93,198);
+    border: 1px solid rgb(7,93,198);
+    color: #fff;
+    cursor: pointer;
+    width:100%;
 `;

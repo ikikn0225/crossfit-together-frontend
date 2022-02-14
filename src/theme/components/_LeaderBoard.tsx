@@ -81,6 +81,10 @@ export const _LeaderBoardTabList = styled.li<ITabList>`
         border: 1px solid rgb(7,93,198);
     }
 
+    & > div {
+        text-align: end;
+    }
+
     ${(props)=>props.oneRmState && props.oneRmState == props.oneRmList
         && "background-color: rgb(7,93,198); border: 1px solid rgb(7,93,198);"
     }

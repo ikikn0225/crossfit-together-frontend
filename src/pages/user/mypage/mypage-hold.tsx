@@ -24,7 +24,7 @@ export const MyPageHold = () => {
                     ))
                 )
                 :(
-                    <_MyPageNoContent>Sorry, No Rep!</_MyPageNoContent>
+                    <_MyPageNoContent hold>Sorry, No Rep!</_MyPageNoContent>
                 )}
                 {myPageHoldLoading && 
                     <Spinner />

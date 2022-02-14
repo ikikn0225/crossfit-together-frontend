@@ -88,7 +88,7 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
                                     <_MyPageListBoxContent record={bor.id}>{bor.content}</_MyPageListBoxContent>
                                 </_MyPageListBoxContentLayout>
                             </_MyPageListBoxContentContainer>
-                            <CommonModal isOpen={isOpen} wodContent={wodContent} handleModalClose={handleModalClose}></CommonModal>
+                            <CommonModal isOpen={isOpen} content={wodContent} handleModalClose={handleModalClose}></CommonModal>
                         </div>
                     )
                 ))

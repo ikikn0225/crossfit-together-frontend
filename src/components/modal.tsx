@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 
 interface IModal {
     isOpen:boolean;
-    wodContent:string;
+    content:string;
     handleModalClose:()=>void;
 }
 
-const CommonModal:React.FC<IModal> = ({isOpen, wodContent, handleModalClose}) => {
+const CommonModal:React.FC<IModal> = ({isOpen, content, handleModalClose}) => {
     
     return (
         <>
@@ -16,7 +16,7 @@ const CommonModal:React.FC<IModal> = ({isOpen, wodContent, handleModalClose}) =>
                 <_CommonModalCloseButtonDiv>
                     <button onClick={handleModalClose}> 확인 </button>
                 </_CommonModalCloseButtonDiv>
-                {wodContent}
+                {content}
             </_CommonModalContent>
         </_CommonModal>
         </>

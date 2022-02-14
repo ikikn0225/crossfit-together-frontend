@@ -166,19 +166,19 @@ export const MyPage = () => {
             <_MyPageContainer>
                 <_MyPageSubContainer>
                     <_MyPageTabContainer>
-                        <_MyPageTab active={menuFirstState} tabId={1} onClick={()=>handleMenu(1)}>순위</_MyPageTab>
-                        <_MyPageTab active={menuFirstState} tabId={2} onClick={()=>handleMenu(2)}>기록</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={1} onClick={()=>handleMenu(1)}>기록</_MyPageTab>
+                        <_MyPageTab active={menuFirstState} tabId={2} onClick={()=>handleMenu(2)}>순위</_MyPageTab>
                         <_MyPageTab active={menuFirstState} tabId={3} onClick={()=>handleMenu(3)}>체험</_MyPageTab>
                         <_MyPageTab active={menuFirstState} tabId={4} onClick={()=>handleMenu(4)}>정지</_MyPageTab>
                     </_MyPageTabContainer>
                     <_MyPageContents>
                         {menuFirstState == 1
                         && (
-                            <MyPageLeaderBoard />
+                            <MyPageBoardOfRecord me={me?.me} />
                         )}
                         {menuFirstState == 2
                         && (
-                            <MyPageBoardOfRecord me={me?.me} />
+                            <MyPageLeaderBoard />
                         )}
                         {menuFirstState == 3
                         && (
