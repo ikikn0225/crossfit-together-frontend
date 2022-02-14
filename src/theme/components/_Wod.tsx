@@ -274,4 +274,5 @@ export const _WodGoToTopButton = styled.button<IWodGoToTopButton>`
     cursor:pointer;
     z-index: 10;
     opacity: 1; 
+    border:1px;
 `;

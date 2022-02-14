@@ -141,7 +141,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                             required: "이름을 적어주세요",
                         })}
                         name="name"
-                        placeholder="이름"
+                        placeholder="*이름"
                         className="input"
                     />
                     {errors.name?.message && (  
@@ -154,7 +154,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         })}
                         name="email"
                         type="email"
-                        placeholder="이메일"
+                        placeholder="*이메일"
                         className="input"
                     />
                     {errors.email?.message && (  
@@ -169,7 +169,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         })}
                         name="password"
                         type="password"
-                        placeholder="비밀번호"
+                        placeholder="*비밀번호"
                         className="input"
                     />
                     {errors.password?.message && (
@@ -219,7 +219,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
                         onChange={changeInput}
                         id="input-file"
                     />
-                    <_CreateAccountFileLabel htmlFor="input-file"> 프로필 사진 선택하기 </_CreateAccountFileLabel>
+                    <_CreateAccountFileLabel htmlFor="input-file"> *프로필 사진 선택하기 </_CreateAccountFileLabel>
                     <img src={file? URL.createObjectURL(file) : undefined} id="preview"/>
                     {errors.file?.message && (
                         <FormError errorMessage={errors.file?.message} />

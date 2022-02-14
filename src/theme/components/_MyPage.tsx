@@ -99,7 +99,7 @@ export const _MyPageListBoxContentContainer = styled.div<IMyPageContent>`
     border:1px solid #3d3d3d;
 
     ${(props)=>props.myPageContent
-        ? "margin-top:1rem; margin-bottom:1rem; padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem;"
+        ? "margin-top:1rem; margin-bottom:1rem; padding-left: 1rem; padding-top: 1rem; padding-bottom: 1rem; cursor:pointer;"
         : "margin-top:1rem; margin-bottom:1rem; padding-top:100px; padding-bottom:100px; width:100%;"
     }
 `;
@@ -154,7 +154,6 @@ export const _MyPageLeaderBoardContentContainer = styled.div`
 `;
 
 export const _MyPageWodDateSpan = styled.p`
-    cursor:pointer;
     font-weight:${(props) => props.theme.fontWeights.bold};
     font-size:${(props) => props.theme.fontSizes.lg};
 `;
