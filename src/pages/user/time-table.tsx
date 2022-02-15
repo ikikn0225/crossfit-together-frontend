@@ -14,6 +14,7 @@ import { useHistory } from "react-router";
 import ModalBase from "../modal-base";
 import { useMyBox } from "@/hooks/useMyBox";
 import { _Container, _SubContainer } from "@/theme/components/_Layout";
+import imageCompression from 'browser-image-compression';
 
 export const ADD_TIME_TABLE = gql`
     mutation addTimeTable($input:AddTimeTableInput!) {
@@ -31,7 +32,7 @@ interface ITimeTableForm {
 export const TimeTable = () => {
     const { data:me, loading:meLoading, error:meError } = useMe();
     const {data:myAffiliatedBox} = useMyBox();
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState<File|null>(null);
     const [isOpen, setIsOpen] = useState(false);
     
     const handleModalOpen = () => {
@@ -92,8 +93,18 @@ export const TimeTable = () => {
         }
     }
 
-    const changeInput = (e:any) => {
-        setFile(e.target.files[0]);
+    const changeInput = async (e:any) => {
+        let imgFile = e.target.files[0];	// 입력받은 file객체
+        const options = {
+            maxSizeMB: 2, 
+            maxWidthOrHeight: 500
+        }
+        try {
+            const compressedFile = await imageCompression(imgFile, options);
+            setFile(compressedFile);
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     if (!me || meLoading || meError) {

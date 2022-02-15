@@ -48,8 +48,8 @@ export const _NoticeListContainer = styled(_WodListContainer)``;
 export const _NoticeListSubContainer = styled.div`
     width:auto;
     overflow: hidden;
-    padding-left:2rem;
-    padding-right:2rem;
+    padding-left:1rem;
+    padding-right:1rem;
 `;
 
 export const _NoticeNoContent = styled(_WodNoContent)``;

@@ -25,6 +25,7 @@
     "@types/styled-components": "^5.1.11",
     "apollo": "2.33.4",
     "apollo-codegen-typescript": "^0.40.3",
+    "browser-image-compression": "^1.0.17",
     "crypto-js": "4.1.1",
     "crypto-ts": "^1.0.2",
     "eslint-import-resolver-alias": "^1.1.2",

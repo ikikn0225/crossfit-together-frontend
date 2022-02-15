@@ -8,6 +8,7 @@ import { createNotice, createNoticeVariables } from "@/__generated__/createNotic
 import { Button } from "@/components/button";
 import ModalBase from "@/pages/modal-base";
 import { FormError } from "@/components/form-error";
+import imageCompression from 'browser-image-compression'; 
 
 export const CREATE_NOTICE = gql`
     mutation createNotice($input:CreateNoticeInput!) {
@@ -26,7 +27,7 @@ interface ICreateNoticeForm {
 
 export const CreateNotice = () => {
     const history = useHistory();
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState<File|null>(null);
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLTextAreaElement>(null);
 
@@ -35,7 +36,6 @@ export const CreateNotice = () => {
         if(ok) {
             handleModalOpen();
         }
-
     }
     const [createNotice, { loading, data:createNoticeResult }] = useMutation<createNotice, createNoticeVariables>(CREATE_NOTICE, {
         onCompleted,   
@@ -59,30 +59,31 @@ export const CreateNotice = () => {
                     }
                 })
                 return;
-            }
-            const actualFile = file;
-            const formBody = new FormData();
-            formBody.append("file", actualFile);
-            let uri:string;
-            process.env.NODE_ENV === "production"
-            ? uri='https://crossfitogether0225.herokuapp.com/uploads'
-            : uri='http://localhost:4000/uploads'
-            const { url: coverImg } = await (
-                await fetch(uri, {
-                    method:"POST",
-                    body:formBody,
-                })
-            ).json();
-
-            createNotice({
-                variables: {
-                    input: {
-                        title,
-                        contents,
-                        coverImg
+            }else {
+                const actualFile = file;
+                const formBody = new FormData();
+                formBody.append("file", actualFile);
+                let uri:string;
+                process.env.NODE_ENV === "production"
+                ? uri='https://crossfitogether0225.herokuapp.com/uploads'
+                : uri='http://localhost:4000/uploads'
+                const { url: coverImg } = await (
+                    await fetch(uri, {
+                        method:"POST",
+                        body:formBody,
+                    })
+                ).json();
+    
+                createNotice({
+                    variables: {
+                        input: {
+                            title,
+                            contents,
+                            coverImg
+                        }
                     }
-                }
-            })
+                })
+            }
             
         } catch (e:any) {
             console.log(e.response.data);
@@ -107,8 +108,18 @@ export const CreateNotice = () => {
         ref.current.style.height = ref.current.scrollHeight + 'px';
     }, []);
 
-    const changeInput = (e:any) => {
-        setFile(e.target.files[0]);
+    const changeInput = async (e:any) => {
+        let imgFile = e.target.files[0];	// 입력받은 file객체
+        const options = {
+            maxSizeMB: 2, 
+            maxWidthOrHeight: 500
+        }
+        try {
+            const compressedFile = await imageCompression(imgFile, options);
+            setFile(compressedFile);
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     return(

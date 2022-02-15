@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { _Container, _SubContainer } from "../theme/components/_Layout";
 import { _CreateAccountForm ,_CreateAccountInput ,_CreateAccountExtra ,_CreateAccountFileInput ,_CreateAccountSelect, _CreateAccountLoginLink, _CreateAccountFileLabel, _CreateAccountExtraLogin } from "../theme/components/_CreateAccount";
 import ModalBase from "./modal-base";
+import imageCompression from 'browser-image-compression';
 
 export const ALL_AFFILIATED_BOXES = gql`
     query allAffiliatedBoxesQuery {
@@ -55,7 +56,7 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
             role: UserRole.Coach,
         }
     });
-    const [file, setFile] = useState("");
+    const [file, setFile] = useState<File|null>(null);
     const [imageUrl, setImageUrl] = useState("");
     const [uploading, setUploading] = useState(false);
     const [roleStatus, setRoleStatus] = useState("");
@@ -83,42 +84,53 @@ export const CreateAccount = ({themeMode}:ILoginTheme) => {
     });
     const { data:boxes } = useQuery<allAffiliatedBoxesQuery>(ALL_AFFILIATED_BOXES);
 
-    const changeInput = (e:any) => {
-        setFile(e.target.files[0]);
+    const changeInput = async (e:any) => {
+        let imgFile = e.target.files[0];	// 입력받은 file객체
+        const options = {
+            maxSizeMB: 2, 
+            maxWidthOrHeight: 500
+        }
+        try {
+            const compressedFile = await imageCompression(imgFile, options);
+            setFile(compressedFile);
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     const onSubmit = async() => {
         try {
             const { name, email, password, role, myBox } = getValues();
-            
-            const actualFile = file;
-            const formBody = new FormData();
-            formBody.append("file", actualFile);
-            let uri:string;
-            process.env.NODE_ENV === "production"
-            ? uri='https://crossfitogether0225.herokuapp.com/uploads'
-            : uri='http://localhost:4000/uploads'
-            const { url: profileImg } = await (
-                await fetch(uri, {
-                    method:"POST",
-                    body:formBody,
-                })
-            ).json();
-            
-            setImageUrl(profileImg);
-            
-            createAccountMutation({
-                variables: {
-                    createAccountInput: {
-                        name,
-                        profileImg,
-                        email,
-                        password,
-                        role,
-                        myBox
+            if(file) {
+                const actualFile = file;
+                const formBody = new FormData();
+                formBody.append("file", actualFile);
+                let uri:string;
+                process.env.NODE_ENV === "production"
+                ? uri='https://crossfitogether0225.herokuapp.com/uploads'
+                : uri='http://localhost:4000/uploads'
+                const { url: profileImg } = await (
+                    await fetch(uri, {
+                        method:"POST",
+                        body:formBody,
+                    })
+                ).json();
+                
+                setImageUrl(profileImg);
+                
+                createAccountMutation({
+                    variables: {
+                        createAccountInput: {
+                            name,
+                            profileImg,
+                            email,
+                            password,
+                            role,
+                            myBox
+                        }
                     }
-                }
-            })
+                })
+            }
         } catch (e:any) {
             console.log(e.response.data);
         }
