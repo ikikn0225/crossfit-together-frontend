@@ -100,14 +100,17 @@ export const NoticeDetail = () => {
             })
         }
     }
+console.log(notice?.notice.notice?.owner.id);
+console.log(notice?.notice.notice?.owner.role);
+console.log(UserRole.Coach);
+console.log(me?.me.id);
 
     return (
         <>
             <Helmet>
                 <title>Notice | CrossfiTogether</title>
             </Helmet>
-            {notice?.notice.notice?.owner.role == UserRole.Coach 
-            || notice?.notice.notice?.owner.id == me?.me.id 
+            {(notice?.notice.notice?.owner.role == UserRole.Coach || notice?.notice.notice?.owner.id == me?.me.id)
             && (
                 <_NoticeUpdateLinkContainer>
                     <div>
