@@ -100,11 +100,7 @@ export const NoticeDetail = () => {
             })
         }
     }
-console.log(notice?.notice.notice?.owner.id);
-console.log(notice?.notice.notice?.owner.role);
-console.log(UserRole.Coach);
-console.log(me?.me.id);
-
+    
     return (
         <>
             <Helmet>
