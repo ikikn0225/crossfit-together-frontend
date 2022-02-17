@@ -262,6 +262,7 @@ export interface LoginInput {
 
 export interface MyBoardofRecordInput {
   id: number;
+  userId: number;
 }
 
 export interface MyFreeTrialInput {

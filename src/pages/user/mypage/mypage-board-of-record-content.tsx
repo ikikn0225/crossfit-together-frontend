@@ -31,6 +31,7 @@ query myBoardofRecords($input:MyBoardofRecordInput!) {
 
 interface IMyPageBoardOfRecordContent {
     wodId:number;
+    userId:number;
 }
 
 interface IMyPageBorList {
@@ -50,14 +51,25 @@ interface IWod {
     content:string;
 }
 
-export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = ({wodId}) => {
+interface IUser {
+    id:number;
+    email:string;
+    affiliatedBoxId:number|null;
+    name:string;
+    profileImg:string|null;
+    role:string;
+    verified:boolean;
+}
+
+export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = ({wodId, userId}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [wodContent, setWodContent] = useState("");
     const [scrollY, setScrollY] = useState(0);
     const { data:myBoardofRecord, loading:myBoardofRecordLoading } = useQuery<myBoardofRecords>(MY_BOARD_OF_RECORDS, {
         variables: {
             input: {
-                id:wodId
+                id:wodId,
+                userId
             }
         }
     });
@@ -81,9 +93,9 @@ export const MyPageBoardOfRecordContent:React.FC<IMyPageBoardOfRecordContent> = 
             &&(
                 myBoardofRecord?.myBoardofRecords.bors.map((bor:IMyPageBorList) => (
                     bor.id !== undefined &&(
-                        <div>
+                        <div key={bor.id}>
                             <_MyPageListBoxContentContainer onClick={()=>handleModalOpen(bor.wod.content)} key={bor.id} myPageContent={"mypage"}>
-                                <_MyPageListBoxContentLayout key={bor.id}>
+                                <_MyPageListBoxContentLayout>
                                     <_MyPageWodDateSpan>{bor.wod.title}</_MyPageWodDateSpan>
                                     <_MyPageListBoxContent record={bor.id}>{bor.content}</_MyPageListBoxContent>
                                 </_MyPageListBoxContentLayout>

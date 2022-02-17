@@ -27,10 +27,10 @@ query allMyBoardofRecords {
 `;
 
 interface IMyPageBoardOfRecord {
-    me:IMe;
+    me:IUser;
 }
 
-interface IMe {
+interface IUser {
     id:number;
     email:string;
     affiliatedBoxId:number|null;
@@ -95,7 +95,7 @@ export const MyPageBoardOfRecord:React.FC<IMyPageBoardOfRecord> = (me) => {
                         wodList?.wodList.edges?.length !== 0
                         && (
                             wodList?.wodList.edges?.map((wod:IWodEdge) => (
-                                <MyPageBoardOfRecordContent key={wod.node.title} wodId={wod.node.id} />
+                                <MyPageBoardOfRecordContent key={wod.node.title} wodId={wod.node.id} userId={me.me.id} />
                             ))
                         )
                     )
