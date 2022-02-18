@@ -139,7 +139,7 @@ export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId
     return (
         <_BoardListBoxContentContainer key={borId}>
             <_BoardListInputForm onSubmit={handleSubmit(onSubmit)} ref={editFormRef}>
-                <_BoardListBoxProfileLink to={`/profile/${userId}`}>{userName}</_BoardListBoxProfileLink>
+                <_BoardListBoxProfileLink to={`/profile/${borOwnerId}`}>{userName}</_BoardListBoxProfileLink>
                 <span> - </span>
                 <_BoardListBoxContent>{content}</_BoardListBoxContent>
                 <_BoardListBoxContentInput
