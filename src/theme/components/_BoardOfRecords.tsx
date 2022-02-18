@@ -123,3 +123,8 @@ export const _BoardListInput = styled.input`
 export const _BoardListInputForm = styled.form``;
 
 export const _BoardCreateBoardContainer = styled(_WodUpdateWodLinkContainer)``;
+
+export const _BoardListBoxProfileLink = styled(Link)`
+    display:inline-block;
+    color:#fff;
+`;

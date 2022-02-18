@@ -1,4 +1,4 @@
-import { _BoardFontAwesomeIcon, _BoardInputButton, _BoardListBoxContent, _BoardListBoxContentContainer, _BoardListBoxContentInput, _BoardListInput, _BoardListInputForm } from "@/theme/components/_BoardOfRecords"
+import { _BoardFontAwesomeIcon, _BoardInputButton, _BoardListBoxContent, _BoardListBoxContentContainer, _BoardListBoxContentInput, _BoardListBoxProfileLink, _BoardListInput, _BoardListInputForm } from "@/theme/components/_BoardOfRecords"
 import { faCheckSquare as faCheckSquareSolid, faWindowClose as faWindowCloseSolid, faCheck as faCheckSolid, faTimes as faTimesSolid, faPencilAlt as faPencelAltSolid } from "@fortawesome/free-solid-svg-icons";
 import { faCheckSquare, faWindowClose } from "@fortawesome/free-regular-svg-icons";
 import { useRef } from "react";
@@ -31,6 +31,7 @@ export const DELETE_BOR = gql`
 interface IBorEditContentProps {
     borId:number;
     userId:number;
+    userName:string;
     wodId:number;
     borOwnerId:number;
     content:string;
@@ -41,7 +42,7 @@ interface IBoardEditForm {
 }
 
 
-export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId, userId, borOwnerId, content}) => {
+export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId, userId, userName, borOwnerId, content}) => {
     const client = useApolloClient();
     const editFormRef = useRef<HTMLFormElement>(null);
     const checkBtnRef = useRef<HTMLButtonElement>(null);
@@ -138,6 +139,8 @@ export const BoardListBoxContent:React.FC<IBorEditContentProps> = ({borId, wodId
     return (
         <_BoardListBoxContentContainer key={borId}>
             <_BoardListInputForm onSubmit={handleSubmit(onSubmit)} ref={editFormRef}>
+                <_BoardListBoxProfileLink to={`/profile/${userId}`}>{userName}</_BoardListBoxProfileLink>
+                <span> - </span>
                 <_BoardListBoxContent>{content}</_BoardListBoxContent>
                 <_BoardListBoxContentInput
                     {...register("content", {

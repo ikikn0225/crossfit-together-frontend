@@ -12,6 +12,7 @@ import { AllBoardofRecordInput } from "./globalTypes";
 export interface allBoardofRecords_allBoardofRecords_bors_owner {
   __typename: "User";
   id: number;
+  name: string;
 }
 
 export interface allBoardofRecords_allBoardofRecords_bors {

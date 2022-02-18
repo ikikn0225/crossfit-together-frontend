@@ -35,6 +35,7 @@ interface IBorList {
 
 interface IOwner {
     id:number;
+    name:string;
 }
 
 interface IBoardForm {
@@ -158,6 +159,7 @@ export const BoardOfRecord:React.FC<IBorProps> = ({wodId, userId}) => {
                             borId={bor.id}
                             wodId={wodId}
                             userId={userId}
+                            userName={bor.owner.name}
                             borOwnerId={bor.owner.id}
                             content={bor.content}
                         />

@@ -23,6 +23,7 @@ export const ALL_BOARD_OF_RECORDS = gql`
                 content
                 owner {
                     id
+                    name
                 }
             }
         }
