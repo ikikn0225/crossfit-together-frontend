@@ -248,12 +248,8 @@ export const Wods = () => {
                             <div key={wod.node.title+1}>
                                 {data.me.role == UserRole.Coach && (
                                     <_WodUpdateWodLinkContainer>
-                                        <div>
-                                            <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>수정</_WodUpdateWodLink>
-                                        </div>
-                                        <div>
-                                            <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>삭제</_WodDeleteWodButton>
-                                        </div>
+                                        <_WodUpdateWodLink to={`/edit-wod/${wod.node.id}`}>수정</_WodUpdateWodLink>
+                                        <_WodDeleteWodButton onClick={() => onClickWodDelete(wod.node.id)}>삭제</_WodDeleteWodButton>
                                     </_WodUpdateWodLinkContainer>
                                 )}
                                 <Wod 

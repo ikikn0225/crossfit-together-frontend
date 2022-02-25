@@ -83,7 +83,8 @@ export const _WodUpdateWodLinkContainer = styled.div`
 `;
 
 export const _WodUpdateWodLink = styled(Link)`
-    padding:5px;
+    padding:5px 20px;
+    margin-right: 1rem;
     background-color: rgb(7,93,198);
     // background-color: black;
     border-color:rgb(7,93,198);
@@ -94,6 +95,7 @@ export const _WodUpdateWodLink = styled(Link)`
     outline: none;
     border: none;
     text-decoration:unset;
+    cursor:pointer;
 
     @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
         font-size: 1.3rem;
@@ -110,11 +112,31 @@ export const _WodUpdateWodLink = styled(Link)`
 `;
 
 export const _WodDeleteWodButton = styled(_ButtonCommon)`
+    padding:5px 20px;
     background-color:#FF0000;
     // background-color: black;
     font-size: 1.125rem;
     font-weight: bold;
+    color:${({ theme }) => theme.mode.primaryText};
+    border-radius: 3px;
+    border-color:#FF0000;    
+    outline: none;
+    border: none;
+    text-decoration:unset;
     cursor:pointer;
+
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletS} {
+        font-size: 1.3rem;
+        height: 2.5rem;
+        font-weight: 600;
+        margin:30px;
+    }
+    @media only screen and ${(props)=>props.theme.reactiveTheme?.tabletM} {
+        font-size: 1.5rem;
+        height: 2.75rem;
+        font-weight: 700;
+        margin:50px;
+    }
 `;
 
 export const _WodListContainer = styled.div`
