@@ -15,6 +15,7 @@ import { _LoginLogoImage, _LoginForm, _LoginInput, _LoginExtra, _LoginCreateAcco
 import { setCookie } from "@/cookie";
 import { encryptValue } from "@/util/crypto";
 import { useCallback } from "react";
+import CommonModal from "@/components/modal";
 
 export const LOGIN_MUTATION = gql`
     mutation loginMutation($loginInput: LoginInput!) {
@@ -40,6 +41,10 @@ export const Login = ({themeMode}:ILoginTheme) => {
     const { register, getValues, formState: { errors }, handleSubmit, formState } = useForm<ILoginForm>({
         mode:"onChange",
     });
+    const handleModalClose = () => {
+        const body = document.querySelector("body");
+        if(body) body.style.overflow = "auto";
+    };
     const onCompleted = (data: loginMutation) => {
         const { login:{ error, ok, token, refreshToken }, } = data;
         if(ok && token) {
@@ -116,6 +121,7 @@ export const Login = ({themeMode}:ILoginTheme) => {
                     </_LoginExtraCreateAccount>
                 </_LoginExtra>
             </_SubContainer>
+            <CommonModal isOpen={true} content={"2022.2.28일 하루동안 점검합니다.\n로그인이 불가합니다.\n참고부탁드립니다."} handleModalClose={handleModalClose}></CommonModal>
         </_Container>
     );
 };
