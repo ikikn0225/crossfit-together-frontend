@@ -158,7 +158,6 @@ export const LeaderBoardListBoxNamedWodContent:React.FC<ILeaderBoardContentProps
                     <_LeaderBoardFontAwesomeIcon icon={faCrownSolid}/>
                 </_LeaderBoardFontAwesomeIconContainer>
                 <_LeaderBoardListBoxContent record={record}>{record}</_LeaderBoardListBoxContent>
-                <span>LB</span>
                 <_LeaderBoardListBoxContentInput
                     {...register("record", {
                         required: "Record is required",
